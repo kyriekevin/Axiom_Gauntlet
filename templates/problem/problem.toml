@@ -1,0 +1,22 @@
+version = 1
+uid = ${uid}
+platform = ${platform}
+problem_id = ${problem_id}
+title = ${title}
+url = ${url}
+state = "draft"
+tags = ${tags}
+
+[difficulty]
+scheme = ${difficulty_scheme}
+value = ${difficulty_value}
+normalized = ${difficulty_normalized}
+
+${solutions}
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
