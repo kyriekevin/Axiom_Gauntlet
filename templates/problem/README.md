@@ -1,5 +1,7 @@
 # ${canonical_id}. ${title}
 
+[English](README.md) | [简体中文](README_zh-CN.md)
+
 > Source: [${platform_label}](${url}) · UID: `${uid}`
 
 ## Core insight

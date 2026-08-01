@@ -1,6 +1,8 @@
 # Problem Note Style Guide
 
-This guide defines the human-readable contract for every `problems/<platform>/<id>/README.md`. Machine-readable facts belong in the adjacent `problem.toml`; the note should focus on understanding and recall.
+[English](STYLE_GUIDE.md) | [简体中文](STYLE_GUIDE_zh-CN.md)
+
+This guide defines the human-readable contract for `README.md` and `README_zh-CN.md` in every problem directory. Machine-readable facts belong in the adjacent `problem.toml`; the notes should focus on understanding and recall.
 
 ## Required structure
 
@@ -45,8 +47,9 @@ Use a local SVG or PNG under the problem's `assets/` directory only when Mermaid
 
 ## Language and expression
 
-- Use English for filenames, metadata, headings, code identifiers, and code comments.
-- Explanatory prose may be written in English or Simplified Chinese. Keep one note internally consistent instead of switching languages sentence by sentence.
+- Keep the English note in `README.md` and the Simplified Chinese note in `README_zh-CN.md`; link them to each other at the top.
+- Use English for metadata, code identifiers, and code comments. The Chinese note may introduce important terms bilingually, such as “invariant（不变量）”.
+- Keep the two notes semantically aligned without forcing sentence-by-sentence literal translation.
 - Lead with the insight, then add only the detail needed to reconstruct the solution.
 - Prefer concrete claims over diary narration: write “maintain a decreasing deque” rather than “then I thought of using a deque.”
 - Define symbols before using them and keep terminology consistent with the implementation.

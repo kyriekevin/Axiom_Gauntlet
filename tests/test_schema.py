@@ -36,36 +36,68 @@ def _record_ac(problem_dir: Path, language: str = "cpp") -> None:
     )
 
 
-def _complete_readme(problem_dir: Path) -> None:
+def _complete_readmes(problem_dir: Path) -> None:
     (problem_dir / "README.md").write_text(
         """# Example
 
 ## Core insight
 
-使用哈希表保存已经访问过的数字及其下标。
+Store each visited number and its index in a hash table.
 
 ## Approach
 
-依次扫描数组，先查找目标差值，再记录当前数字。
+Scan the array, look up the complement, and then record the current number.
 
 ## Why it works
 
-扫描到答案右端点时，左端点已在表中，因此一定返回合法下标。
+When the right endpoint is reached, the left endpoint is already stored, so the pair is found.
 
 ## Complexity
 
-- 时间：O(n)
-- 空间：O(n)
+- Time: O(n)
+- Space: O(n)
 
 ## Pitfalls
 
-必须先查询再插入，避免同一元素被使用两次。
+Look up before inserting so the same element cannot be used twice.
 
 ## Review log
 
 | Date | Event | Result | Reflection |
 | --- | --- | --- | --- |
 | 2026-08-01 | Initial solve | Accepted | Recheck the lookup-before-insert invariant. |
+""",
+        encoding="utf-8",
+    )
+    (problem_dir / "README_zh-CN.md").write_text(
+        """# 示例
+
+## 核心洞察
+
+使用哈希表保存已经访问过的数字及其下标。
+
+## 解题思路
+
+依次扫描数组，先查找目标差值，再记录当前数字。
+
+## 正确性说明
+
+扫描到答案右端点时，左端点已在表中，因此一定返回合法下标。
+
+## 复杂度
+
+- 时间：O(n)
+- 空间：O(n)
+
+## 易错点
+
+必须先查询再插入，避免同一元素被使用两次。
+
+## 复习记录
+
+| 日期 | 事件 | 结果 | 反思 |
+| --- | --- | --- | --- |
+| 2026-08-01 | 首次解题 | 通过 | 复查先查询后插入的不变量。 |
 """,
         encoding="utf-8",
     )
@@ -97,6 +129,7 @@ def test_scaffold_creates_draft_with_multiple_languages(tmp_path: Path) -> None:
     assert (problem_dir / "solution.cpp").is_file()
     assert (problem_dir / "solution.py").is_file()
     assert (problem_dir / "solution.go").is_file()
+    assert (problem_dir / "README_zh-CN.md").is_file()
     problem = load_problem(problem_dir / "problem.toml")
     assert problem.uid == "leetcode:0001"
     assert problem.problem_id == "1"
@@ -120,6 +153,23 @@ def test_scaffold_refuses_to_overwrite_by_default(tmp_path: Path) -> None:
     create_problem(root, **arguments)
     with pytest.raises(FileExistsError):
         create_problem(root, **arguments)
+
+
+def test_validator_requires_both_language_notes(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    problem_dir = create_problem(
+        root,
+        platform="leetcode",
+        problem_id="1",
+        title="Two Sum",
+        url="https://leetcode.com/problems/two-sum/",
+    )
+    chinese_readme = problem_dir / "README_zh-CN.md"
+    chinese_readme.unlink()
+
+    issues = validate_problem_dir(problem_dir)
+
+    assert any(issue.path == chinese_readme and issue.code == "readme.missing" for issue in issues)
 
 
 def test_accepted_requires_ac_and_existing_solution(tmp_path: Path) -> None:
@@ -172,7 +222,7 @@ def test_documented_requires_complete_readme(tmp_path: Path) -> None:
     assert any(issue.code == "readme.section-incomplete" for issue in issues)
     assert any(issue.code == "state.note-required" for issue in issues)
 
-    _complete_readme(problem_dir)
+    _complete_readmes(problem_dir)
     metadata_path.write_text(
         metadata_path.read_text(encoding="utf-8")
         + '\n[[activity]]\ntype = "note"\ndate = 2026-08-01\n',

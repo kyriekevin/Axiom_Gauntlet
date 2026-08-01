@@ -84,6 +84,7 @@ def create_problem(
     template_dir = root / "templates" / "problem"
     metadata_template = _load_template(template_dir / "problem.toml")
     readme_template = _load_template(template_dir / "README.md")
+    chinese_readme_template = _load_template(template_dir / "README_zh-CN.md")
 
     solution_tables = "\n\n".join(
         "\n".join(
@@ -107,13 +108,15 @@ def create_problem(
         difficulty_normalized=_toml_literal(normalized_difficulty),
         solutions=solution_tables,
     )
-    readme = readme_template.substitute(
+    readme_values = dict(
         canonical_id=canonical_id,
         platform_label=_PLATFORM_LABELS[platform],
         title=title,
         url=url,
         uid=expected_uid(platform, normalized_id),
     )
+    readme = readme_template.substitute(readme_values)
+    chinese_readme = chinese_readme_template.substitute(readme_values)
 
     target = root / "problems" / platform / canonical_id
     if target.exists() and any(target.iterdir()) and not force:
@@ -121,6 +124,7 @@ def create_problem(
     target.mkdir(parents=True, exist_ok=True)
     (target / "problem.toml").write_text(metadata, encoding="utf-8", newline="\n")
     (target / "README.md").write_text(readme, encoding="utf-8", newline="\n")
+    (target / "README_zh-CN.md").write_text(chinese_readme, encoding="utf-8", newline="\n")
     for language in language_list:
         (target / LANGUAGE_FILES[language]).write_text(
             _SOLUTION_PLACEHOLDERS[language], encoding="utf-8", newline="\n"

@@ -23,14 +23,24 @@ from .model import (
     normalize_problem_id,
 )
 
-REQUIRED_DOCUMENTED_SECTIONS = (
-    "Core insight",
-    "Approach",
-    "Why it works",
-    "Complexity",
-    "Pitfalls",
-    "Review log",
-)
+REQUIRED_DOCUMENTED_SECTIONS = {
+    "README.md": (
+        "Core insight",
+        "Approach",
+        "Why it works",
+        "Complexity",
+        "Pitfalls",
+        "Review log",
+    ),
+    "README_zh-CN.md": (
+        "核心洞察",
+        "解题思路",
+        "正确性说明",
+        "复杂度",
+        "易错点",
+        "复习记录",
+    ),
+}
 _TAG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 _HEADING_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
 _COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
@@ -62,7 +72,7 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
     directory = Path(problem_dir)
     issues: list[ValidationIssue] = []
     metadata_path = directory / "problem.toml"
-    readme_path = directory / "README.md"
+    readme_paths = tuple(directory / name for name in REQUIRED_DOCUMENTED_SECTIONS)
 
     if not metadata_path.is_file():
         issues.append(
@@ -84,10 +94,21 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
     existing_solutions = _validate_solutions(directory, problem, issues)
     activity_types = _validate_activity(metadata_path, problem, issues)
 
-    if not readme_path.is_file():
-        issues.append(ValidationIssue(readme_path, "readme.missing", "README.md is required"))
-    elif problem.state == "documented":
-        _validate_documented_readme(readme_path, issues)
+    for readme_path in readme_paths:
+        if not readme_path.is_file():
+            issues.append(
+                ValidationIssue(
+                    readme_path,
+                    "readme.missing",
+                    f"{readme_path.name} is required",
+                )
+            )
+        elif problem.state == "documented":
+            _validate_documented_readme(
+                readme_path,
+                REQUIRED_DOCUMENTED_SECTIONS[readme_path.name],
+                issues,
+            )
 
     if problem.state in {"accepted", "documented"}:
         if "ac" not in activity_types:
@@ -489,7 +510,11 @@ def _validate_activity(
     return activity_types
 
 
-def _validate_documented_readme(readme_path: Path, issues: list[ValidationIssue]) -> None:
+def _validate_documented_readme(
+    readme_path: Path,
+    required_sections: tuple[str, ...],
+    issues: list[ValidationIssue],
+) -> None:
     try:
         text = readme_path.read_text(encoding="utf-8")
     except OSError as error:
@@ -497,7 +522,7 @@ def _validate_documented_readme(readme_path: Path, issues: list[ValidationIssue]
         return
 
     sections = _markdown_sections(text)
-    for heading in REQUIRED_DOCUMENTED_SECTIONS:
+    for heading in required_sections:
         content = sections.get(heading)
         if content is None:
             issues.append(
@@ -531,15 +556,18 @@ def _section_is_complete(heading: str, content: str) -> bool:
     without_comments = _COMMENT_RE.sub("", content).strip()
     if not without_comments or _PLACEHOLDER_RE.search(without_comments):
         return False
-    if heading == "Complexity":
+    if heading in {"Complexity", "复杂度"}:
         time_match = re.search(r"(?:时间|time)\s*[:：]\s*(\S.+)", without_comments, re.I)
         space_match = re.search(r"(?:空间|space)\s*[:：]\s*(\S.+)", without_comments, re.I)
         return time_match is not None and space_match is not None
-    if heading == "Review log":
+    if heading in {"Review log", "复习记录"}:
         table_rows = [
             line
             for line in without_comments.splitlines()
-            if line.strip().startswith("|") and "---" not in line and "Date" not in line
+            if line.strip().startswith("|")
+            and "---" not in line
+            and "Date" not in line
+            and "日期" not in line
         ]
         return bool(table_rows)
     meaningful = re.findall(r"[A-Za-z0-9_\u3400-\u9fff]", without_comments)

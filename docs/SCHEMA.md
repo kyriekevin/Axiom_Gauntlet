@@ -1,7 +1,9 @@
 # Problem schema
 
+[English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
+
 `problem.toml` is the machine-readable source of truth. `README.md`, solution
-files, and heatmaps must agree with it; generators should
+files, translated notes, and heatmaps must agree with it; generators should
 never infer identity from a title.
 
 ## Directory identity
@@ -10,6 +12,9 @@ Every problem lives at:
 
 ```text
 problems/<platform>/<canonical-id>/
+├── problem.toml
+├── README.md
+└── README_zh-CN.md
 ```
 
 Supported platforms and canonical IDs are:
@@ -104,8 +109,8 @@ draft -> accepted -> documented
 - `accepted`: requires at least one AC event and at least one existing,
   non-placeholder file listed in `[[solutions]]`.
 - `documented`: has the same AC/code requirements as `accepted`, requires a
-  `note` activity event, and its `README.md` must complete `Core insight`,
-  `Approach`, `Why it works`, `Complexity`, `Pitfalls`, and `Review log`.
+  `note` activity event, and both language versions of its note must complete
+  their required reasoning, correctness, complexity, pitfalls, and review sections.
 
 `Visualization` is deliberately optional. The template includes stable diagram
 markers so a future skill can insert Mermaid or a checked-in asset without making
