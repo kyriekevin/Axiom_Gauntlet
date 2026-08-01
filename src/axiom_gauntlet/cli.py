@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Sequence
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -48,6 +48,23 @@ def _parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("validate", help="Validate all problem entries.")
 
+    accept = subparsers.add_parser("accept", help="Record a platform-confirmed AC event.")
+    accept.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    accept.add_argument("problem_id")
+    accept.add_argument(
+        "--language",
+        required=True,
+        choices=("cpp", "python", "py", "go"),
+    )
+    accept.add_argument("--date", type=_iso_date, default=None)
+
+    document = subparsers.add_parser(
+        "document", help="Record completed bilingual notes for an accepted problem."
+    )
+    document.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    document.add_argument("problem_id")
+    document.add_argument("--date", type=_iso_date, default=None)
+
     render = subparsers.add_parser("render", help="Generate platform activity heatmaps.")
     render.add_argument(
         "--year",
@@ -64,6 +81,20 @@ def _default_difficulty_scheme(platform: str) -> str:
     if platform == "codeforces":
         return "rating"
     return "level"
+
+
+def _iso_date(value: str) -> date:
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError("date must use YYYY-MM-DD") from error
+    if parsed.isoformat() != value:
+        raise argparse.ArgumentTypeError("date must use YYYY-MM-DD")
+    return parsed
+
+
+def _event_date(value: date | None) -> date:
+    return value or datetime.now(SHANGHAI).date()
 
 
 def _run_new(args: argparse.Namespace) -> int:
@@ -97,6 +128,33 @@ def _run_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_accept(args: argparse.Namespace) -> int:
+    from .lifecycle import record_acceptance
+
+    directory = record_acceptance(
+        args.root,
+        platform=args.platform,
+        problem_id=args.problem_id,
+        language=args.language,
+        event_date=_event_date(args.date),
+    )
+    print(f"Accepted: {directory.relative_to(args.root)}")
+    return 0
+
+
+def _run_document(args: argparse.Namespace) -> int:
+    from .lifecycle import record_documentation
+
+    directory = record_documentation(
+        args.root,
+        platform=args.platform,
+        problem_id=args.problem_id,
+        event_date=_event_date(args.date),
+    )
+    print(f"Documented: {directory.relative_to(args.root)}")
+    return 0
+
+
 def _run_render(args: argparse.Namespace) -> int:
     from .heatmap import render_all
 
@@ -119,6 +177,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_new(args)
         if args.command == "validate":
             return _run_validate(args)
+        if args.command == "accept":
+            return _run_accept(args)
+        if args.command == "document":
+            return _run_document(args)
         if args.command == "render":
             return _run_render(args)
     except (FileExistsError, ValueError) as error:

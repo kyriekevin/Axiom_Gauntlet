@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Practice"
+  short_description: "Guide algorithm practice from draft to notes"
+  default_prompt: "Use $axiom-practice to guide me through an algorithm problem without spoiling the solution."
