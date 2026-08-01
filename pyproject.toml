@@ -28,6 +28,7 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = ["problems/leetcode"]
 
 [tool.ruff.lint]
 select = ["B", "E", "F", "I", "UP"]
