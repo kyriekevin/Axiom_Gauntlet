@@ -1,0 +1,36 @@
+version = 1
+uid = "leetcode:0486"
+platform = "leetcode"
+problem_id = "486"
+title = "Predict the Winner"
+url = "https://leetcode.com/problems/predict-the-winner/"
+state = "accepted"
+tags = ["dynamic-programming", "game-theory"]
+
+[difficulty]
+scheme = "level"
+value = "medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+[[activity]]
+type = "ac"
+date = 2026-08-01
+language = "python"
+[[activity]]
+type = "ac"
+date = 2026-08-01
+language = "cpp"
