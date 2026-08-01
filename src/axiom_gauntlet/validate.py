@@ -135,7 +135,7 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
                     f"state {problem.state!r} requires an existing solution file",
                 )
             )
-        elif not any(_has_solution_content(path) for path in existing_solutions):
+        elif not any(has_solution_content(path) for path in existing_solutions):
             issues.append(
                 ValidationIssue(
                     metadata_path,
@@ -144,7 +144,7 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
                 )
             )
         elif ac_languages and not any(
-            _has_solution_content(directory / LANGUAGE_FILES[language]) for language in ac_languages
+            has_solution_content(directory / LANGUAGE_FILES[language]) for language in ac_languages
         ):
             issues.append(
                 ValidationIssue(
@@ -596,9 +596,12 @@ def _section_is_complete(heading: str, content: str) -> bool:
     return len(meaningful) >= 6
 
 
-def _has_solution_content(path: Path) -> bool:
+def has_solution_content(path: str | Path) -> bool:
+    """Return whether a solution file contains non-placeholder code."""
+
+    solution_path = Path(path)
     try:
-        text = path.read_text(encoding="utf-8")
+        text = solution_path.read_text(encoding="utf-8")
     except (OSError, UnicodeError):
         return False
     return bool(text.strip()) and not _PLACEHOLDER_RE.search(text)

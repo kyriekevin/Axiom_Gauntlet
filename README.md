@@ -31,6 +31,17 @@ uv run axiom new leetcode 1 \
   --language cpp
 ```
 
+After the online judge explicitly confirms acceptance, record the result. Complete both language
+notes before advancing the entry to `documented`:
+
+```bash
+uv run axiom accept leetcode 1 --language cpp --date 2026-08-01
+uv run axiom document leetcode 1 --date 2026-08-01
+```
+
+The repo-local `axiom-practice` skill provides the conversational workflow around these commands:
+spoiler-controlled help, acceptance confirmation, code review, and bilingual note writing.
+
 See the [problem schema](docs/SCHEMA.md) and [note style guide](docs/STYLE_GUIDE.md) for the current
 repository contracts. Run the complete local gate with `make verify`.
 

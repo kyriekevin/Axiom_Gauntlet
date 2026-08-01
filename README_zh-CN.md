@@ -29,6 +29,17 @@ uv run axiom new leetcode 1 \
   --language cpp
 ```
 
+只有在线评测平台明确返回 Accepted 后，才记录结果；完成中英文两份笔记后，再将题目推进到
+`documented`：
+
+```bash
+uv run axiom accept leetcode 1 --language cpp --date 2026-08-01
+uv run axiom document leetcode 1 --date 2026-08-01
+```
+
+仓库内的 `axiom-practice` Skill 为这些命令提供对话式工作流，包括渐进提示、AC 确认、代码
+Review 和双语笔记整理。
+
 当前仓库契约见[题目 Schema](docs/SCHEMA_zh-CN.md)与[题解写作规范](docs/STYLE_GUIDE_zh-CN.md)。
 使用 `make verify` 运行完整的本地门禁。
 

@@ -102,3 +102,73 @@ def test_new_command_turns_scaffold_errors_into_cli_errors(
     error = capsys.readouterr().err
     assert "problem directory already exists" in error
     assert "Traceback" not in error
+
+
+def test_accept_command_records_confirmed_solution(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+    assert (
+        main(
+            [
+                "--root",
+                str(root),
+                "new",
+                "leetcode",
+                "1",
+                "--title",
+                "Two Sum",
+                "--url",
+                "https://leetcode.com/problems/two-sum/",
+                "--language",
+                "cpp",
+            ]
+        )
+        == 0
+    )
+    capsys.readouterr()
+    problem_dir = root / "problems" / "leetcode" / "0001"
+    (problem_dir / "solution.cpp").write_text(
+        "int main() { return 0; }\n",
+        encoding="utf-8",
+    )
+
+    result = main(
+        [
+            "--root",
+            str(root),
+            "accept",
+            "leetcode",
+            "1",
+            "--language",
+            "cpp",
+            "--date",
+            "2026-08-01",
+        ]
+    )
+
+    assert result == 0
+    assert capsys.readouterr().out.strip() == "Accepted: problems/leetcode/0001"
+    problem = load_problem(problem_dir / "problem.toml")
+    assert problem.state == "accepted"
+
+
+def test_lifecycle_command_rejects_noncanonical_date(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+
+    with pytest.raises(SystemExit, match="2"):
+        main(
+            [
+                "--root",
+                str(root),
+                "document",
+                "leetcode",
+                "1",
+                "--date",
+                "20260801",
+            ]
+        )
+
+    assert "date must use YYYY-MM-DD" in capsys.readouterr().err
