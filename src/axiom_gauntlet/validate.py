@@ -92,7 +92,7 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
     _validate_identity(directory, problem, issues)
     _validate_metadata(metadata_path, problem, issues)
     existing_solutions = _validate_solutions(directory, problem, issues)
-    activity_types = _validate_activity(metadata_path, problem, issues)
+    activity_types, ac_languages = _validate_activity(metadata_path, problem, issues)
 
     for readme_path in readme_paths:
         if not readme_path.is_file():
@@ -143,6 +143,16 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
                     f"state {problem.state!r} requires non-placeholder solution code",
                 )
             )
+        elif ac_languages and not any(
+            _has_solution_content(directory / LANGUAGE_FILES[language]) for language in ac_languages
+        ):
+            issues.append(
+                ValidationIssue(
+                    metadata_path,
+                    "state.solution-placeholder",
+                    f"state {problem.state!r} requires non-placeholder code for an AC language",
+                )
+            )
         if problem.state == "documented" and "note" not in activity_types:
             issues.append(
                 ValidationIssue(
@@ -151,14 +161,23 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
                     "state 'documented' requires at least one note activity event",
                 )
             )
-    elif problem.state == "draft" and "ac" in activity_types:
-        issues.append(
-            ValidationIssue(
-                metadata_path,
-                "state.ac-in-draft",
-                "a problem with an AC event must advance to accepted or documented",
+    elif problem.state == "draft":
+        if "ac" in activity_types:
+            issues.append(
+                ValidationIssue(
+                    metadata_path,
+                    "state.ac-in-draft",
+                    "a problem with an AC event must advance to accepted or documented",
+                )
             )
-        )
+        if "review" in activity_types:
+            issues.append(
+                ValidationIssue(
+                    metadata_path,
+                    "state.review-in-draft",
+                    "a review requires a previously accepted problem",
+                )
+            )
 
     return sorted(issues)
 
@@ -450,8 +469,9 @@ def _validate_solutions(
 
 def _validate_activity(
     metadata_path: Path, problem: Problem, issues: list[ValidationIssue]
-) -> set[str]:
+) -> tuple[set[str], set[str]]:
     activity_types: set[str] = set()
+    ac_languages: set[str] = set()
     solution_languages = {solution.language for solution in problem.solutions}
     for index, event in enumerate(problem.activity):
         label = f"activity[{index}]"
@@ -499,6 +519,8 @@ def _validate_activity(
                         f"{label} language must match a listed solution",
                     )
                 )
+            else:
+                ac_languages.add(language)
         elif event.event_type == "review" and event.result not in {"pass", "fail"}:
             issues.append(
                 ValidationIssue(
@@ -507,7 +529,7 @@ def _validate_activity(
                     f"{label} review event requires result = pass or fail",
                 )
             )
-    return activity_types
+    return activity_types, ac_languages
 
 
 def _validate_documented_readme(

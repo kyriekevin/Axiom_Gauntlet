@@ -199,6 +199,52 @@ def test_accepted_requires_ac_and_existing_solution(tmp_path: Path) -> None:
     assert validate_problem_dir(problem_dir) == []
 
 
+def test_accepted_requires_code_for_the_ac_language(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    problem_dir = create_problem(
+        root,
+        platform="leetcode",
+        problem_id="1",
+        title="Two Sum",
+        url="https://leetcode.com/problems/two-sum/",
+        languages=("cpp", "python"),
+    )
+    metadata_path = problem_dir / "problem.toml"
+    metadata = metadata_path.read_text(encoding="utf-8")
+    metadata = metadata.replace('state = "draft"', 'state = "accepted"')
+    metadata += '\n[[activity]]\ntype = "ac"\ndate = 2026-08-01\nlanguage = "cpp"\n'
+    metadata_path.write_text(metadata, encoding="utf-8")
+    (problem_dir / "solution.py").write_text("print(0)\n", encoding="utf-8")
+
+    issues = validate_problem_dir(problem_dir)
+
+    assert any(issue.code == "state.solution-placeholder" for issue in issues)
+
+    (problem_dir / "solution.cpp").write_text("int main() { return 0; }\n", encoding="utf-8")
+    assert validate_problem_dir(problem_dir) == []
+
+
+def test_draft_rejects_review_activity(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    problem_dir = create_problem(
+        root,
+        platform="leetcode",
+        problem_id="1",
+        title="Two Sum",
+        url="https://leetcode.com/problems/two-sum/",
+    )
+    metadata_path = problem_dir / "problem.toml"
+    metadata_path.write_text(
+        metadata_path.read_text(encoding="utf-8")
+        + '\n[[activity]]\ntype = "review"\ndate = 2026-08-01\nresult = "pass"\n',
+        encoding="utf-8",
+    )
+
+    issues = validate_problem_dir(problem_dir)
+
+    assert any(issue.code == "state.review-in-draft" for issue in issues)
+
+
 def test_documented_requires_complete_readme(tmp_path: Path) -> None:
     root = _empty_repo(tmp_path)
     problem_dir = create_problem(
