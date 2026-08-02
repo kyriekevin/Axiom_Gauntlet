@@ -36,11 +36,13 @@ space_complexity = "O(n)"
 type = "ac"
 date = 2026-08-01
 language = "python"
+reflection = "复查先查询后插入的不变量。"
 ```
 
 解答语言元数据支持 `cpp`、`python` 和 `go`，分别对应 `solution.cpp`、`solution.py` 和
 `solution.go`。每个 Accepted 语言都必须有非占位代码，以及时间和辅助空间复杂度。AC 事件只能
 在平台确认后记录。
+可选的 `reflection` 用于保留简短的题目特有观察，而不把轻量题目卡重新扩展成完整题解。
 
 当前主生命周期为 `draft -> accepted`。题目级 `documented`、`note` 与 `review` 为旧记录保留
 兼容；新的可复用文档和复习活动属于知识主题。题目 README 只作为轻量来源卡片，不再承担完整

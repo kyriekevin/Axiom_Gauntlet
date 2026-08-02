@@ -44,6 +44,7 @@ def record_acceptance(
     event_date: date,
     time_complexity: str,
     space_complexity: str,
+    reflection: str | None = None,
 ) -> Path:
     """Record a platform-confirmed AC event and advance a draft to accepted."""
 
@@ -57,6 +58,10 @@ def record_acceptance(
         raise ValueError("time_complexity must not be empty")
     if not space_complexity:
         raise ValueError("space_complexity must not be empty")
+    if reflection is not None:
+        reflection = reflection.strip()
+        if not reflection:
+            raise ValueError("reflection must not be empty when provided")
     solution_languages = {solution.language for solution in problem.solutions}
     if normalized_language not in solution_languages:
         raise ValueError(
@@ -88,6 +93,7 @@ def record_acceptance(
             event_type="ac",
             event_date=event_date,
             language=normalized_language,
+            reflection=reflection,
         )
 
     _mutate_and_validate(metadata_path, directory, mutate)
@@ -125,6 +131,7 @@ def _append_activity(
     event_type: str,
     event_date: date,
     language: str | None = None,
+    reflection: str | None = None,
 ) -> None:
     activity = document.get("activity")
     if activity is None:
@@ -135,6 +142,8 @@ def _append_activity(
     event.add("date", event_date)
     if language is not None:
         event.add("language", language)
+    if reflection is not None:
+        event.add("reflection", reflection)
     activity.append(event)
 
 

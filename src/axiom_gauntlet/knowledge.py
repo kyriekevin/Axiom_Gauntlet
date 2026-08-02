@@ -244,7 +244,8 @@ def create_topic(
 
 
 def document_topic(repo_root: str | Path, topic_path: str, event_date: date) -> Path:
-    directory = Path(repo_root) / "knowledge" / normalize_topic_path(topic_path)
+    root = Path(repo_root)
+    directory = root / "knowledge" / normalize_topic_path(topic_path)
     manifest = directory / "topic.toml"
     topic = load_topic(manifest)
     if any(event.event_type == "note" and event.date == event_date for event in topic.activity):
@@ -254,12 +255,13 @@ def document_topic(repo_root: str | Path, topic_path: str, event_date: date) -> 
         document["state"] = "documented"
         _append_activity(document, "note", event_date)
 
-    _mutate_topic(manifest, directory, mutate)
+    _mutate_topic(root, manifest, directory, mutate)
     return directory
 
 
 def review_topic(repo_root: str | Path, topic_path: str, event_date: date, result: str) -> Path:
-    directory = Path(repo_root) / "knowledge" / normalize_topic_path(topic_path)
+    root = Path(repo_root)
+    directory = root / "knowledge" / normalize_topic_path(topic_path)
     manifest = directory / "topic.toml"
     topic = load_topic(manifest)
     if topic.state != "documented":
@@ -273,7 +275,7 @@ def review_topic(repo_root: str | Path, topic_path: str, event_date: date, resul
     def mutate(document: TOMLDocument) -> None:
         _append_activity(document, "review", event_date, result)
 
-    _mutate_topic(manifest, directory, mutate)
+    _mutate_topic(root, manifest, directory, mutate)
     return directory
 
 
@@ -396,12 +398,25 @@ def _validate_sections(path: Path, required: tuple[str, ...]) -> list[str]:
     return issues
 
 
-def _mutate_topic(manifest: Path, directory: Path, mutate: Any) -> None:
+def _mutate_topic(root: Path, manifest: Path, directory: Path, mutate: Any) -> None:
     original = manifest.read_text(encoding="utf-8")
     document = tomlkit.parse(original)
     mutate(document)
     _atomic_write(manifest, tomlkit.dumps(document))
     issues = validate_topic_dir(directory)
+    if not issues:
+        from .validate import validate_repository
+
+        reference_codes = {
+            "knowledge.duplicate-path",
+            "knowledge.example-missing",
+            "knowledge.link-missing",
+        }
+        issues.extend(
+            str(issue)
+            for issue in validate_repository(root)
+            if issue.path == manifest and issue.code in reference_codes
+        )
     if issues:
         _atomic_write(manifest, original)
         raise ValueError("knowledge transition failed validation: " + "; ".join(issues))

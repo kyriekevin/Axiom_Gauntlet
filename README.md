@@ -40,6 +40,11 @@ uv run axiom knowledge new dynamic-programming/interval-dp \
   --title "Interval DP" \
   --title-zh-cn "区间动态规划" \
   --tag dynamic-programming
+```
+
+Complete the generated English and Simplified Chinese topic notes, then record and render them:
+
+```bash
 uv run axiom knowledge document dynamic-programming/interval-dp --date 2026-08-02
 uv run axiom knowledge render
 ```

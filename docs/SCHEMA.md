@@ -37,11 +37,14 @@ space_complexity = "O(n)"
 type = "ac"
 date = 2026-08-01
 language = "python"
+reflection = "Recheck the lookup-before-insert invariant."
 ```
 
 Supported solution metadata values are `cpp`, `python`, and `go`, mapped to `solution.cpp`,
 `solution.py`, and `solution.go`. Every accepted language requires an existing non-placeholder file
 and both complexity fields. An AC event is recorded only after platform confirmation.
+An optional `reflection` preserves a concise problem-specific observation without expanding the
+lightweight problem card into a full tutorial.
 
 The active lifecycle is `draft -> accepted`. `documented`, problem-level `note`, and problem-level
 `review` remain readable for compatibility with earlier entries, but new reusable documentation and

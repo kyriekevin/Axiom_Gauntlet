@@ -37,6 +37,11 @@ uv run axiom knowledge new dynamic-programming/interval-dp \
   --title "Interval DP" \
   --title-zh-cn "区间动态规划" \
   --tag dynamic-programming
+```
+
+完成生成的中英文知识笔记后，再记录生命周期并生成索引：
+
+```bash
 uv run axiom knowledge document dynamic-programming/interval-dp --date 2026-08-02
 uv run axiom knowledge render
 ```

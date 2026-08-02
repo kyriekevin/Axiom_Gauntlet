@@ -123,3 +123,23 @@ def test_repository_rejects_dangling_knowledge_references(tmp_path: Path) -> Non
 
     assert any(issue.code == "knowledge.link-missing" for issue in issues)
     assert any(issue.code == "knowledge.example-missing" for issue in issues)
+
+
+def test_documentation_rolls_back_dangling_references(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    directory = create_topic(
+        root,
+        topic_path="dynamic-programming/interval-dp",
+        title="Interval DP",
+        title_zh_cn="区间动态规划",
+        links=("dynamic-programming/missing-topic",),
+        examples=(("leetcode:9999", "missing-example"),),
+    )
+    _complete_notes(directory)
+    manifest = directory / "topic.toml"
+    original = manifest.read_text(encoding="utf-8")
+
+    with pytest.raises(ValueError, match="knowledge.(link|example)-missing"):
+        document_topic(root, "dynamic-programming/interval-dp", date(2026, 8, 2))
+
+    assert manifest.read_text(encoding="utf-8") == original

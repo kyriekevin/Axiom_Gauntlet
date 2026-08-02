@@ -41,20 +41,22 @@ Report the created path and leave the state as `draft`.
 ## Record acceptance
 
 Require explicit confirmation that the online judge returned Accepted. Preserve the exact accepted
-implementation unless the user asks to change it. Before the transition, discuss and record both
-time and auxiliary-space complexity, including non-obvious variables.
+implementation unless the user asks to change it. Review the accepted code for correctness,
+counterexamples, boundary cases, clarity, complexity, and useful alternative approaches. Before the
+transition, record both time and auxiliary-space complexity, including non-obvious variables. When
+the review yields a concise problem-specific lesson, preserve it as the optional activity reflection.
 
 ```bash
 uv run axiom accept <platform> <id> \
   --language <language> \
   --date <YYYY-MM-DD> \
   --time-complexity "O(...)" \
-  --space-complexity "O(...)"
+  --space-complexity "O(...)" \
+  --reflection "<problem-specific observation>"
 ```
 
-Review the accepted code for correctness, counterexamples, boundary cases, clarity, complexity,
-and useful alternative approaches. Distinguish a general technique from a constraint-specific
-shortcut. Report suggestions before editing; do not present an unsubmitted rewrite as confirmed AC.
+Distinguish a general technique from a constraint-specific shortcut. Report suggestions before
+editing; do not present an unsubmitted rewrite as confirmed AC.
 
 Keep each problem README as a lightweight source card. Capture only problem-specific evidence in
 `problem.toml` and solution files. Do not duplicate a reusable explanation beside every similar

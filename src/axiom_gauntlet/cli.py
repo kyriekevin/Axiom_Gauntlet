@@ -59,6 +59,10 @@ def _parser() -> argparse.ArgumentParser:
     accept.add_argument("--date", type=_iso_date, default=None)
     accept.add_argument("--time-complexity", required=True)
     accept.add_argument("--space-complexity", required=True)
+    accept.add_argument(
+        "--reflection",
+        help="Record a concise problem-specific observation from the accepted session.",
+    )
 
     document = subparsers.add_parser(
         "document", help="Record completed bilingual notes for an accepted problem."
@@ -176,6 +180,7 @@ def _run_accept(args: argparse.Namespace) -> int:
         event_date=_event_date(args.date),
         time_complexity=args.time_complexity,
         space_complexity=args.space_complexity,
+        reflection=args.reflection,
     )
     print(f"Accepted: {directory.relative_to(args.root)}")
     return 0

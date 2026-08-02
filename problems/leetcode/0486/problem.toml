@@ -38,3 +38,4 @@ language = "python"
 type = "ac"
 date = 2026-08-01
 language = "cpp"
+reflection = "The 2D score-difference DP is clear; re-derive O(n) space compression during delayed review."

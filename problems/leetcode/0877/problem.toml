@@ -28,3 +28,4 @@ space_complexity = "O(n^2)"
 type = "ac"
 date = 2026-08-02
 language = "python"
+reflection = "Interval score-difference DP is reliable; revisit O(n) space compression and the parity strategy during delayed review."
