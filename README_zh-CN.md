@@ -4,21 +4,12 @@
 
 > **Nightglass Protocol** 的算法试炼场。
 
-Axiom Gauntlet 是我练习算法、看见自己成长的地方，也是 Nightglass Protocol 的第一座试炼场。
+Axiom Gauntlet 把日常解题证据与可复用知识分开：Accepted 代码和平台确认结果保存在
+`problems/`，延迟复盘再把多道题共享的推理沉淀到 `knowledge/` 双语知识库。
 
-我会在这里做题、复盘，也会在以后回来重新挑战自己。一次 Accepted 代表赢下了一场战斗；真正
-想积累的，是面对陌生问题时找到突破口、理清思路，并把它写成正确代码的能力。
+## 工作流
 
-## 当前版本
-
-第一版脚手架已经提供：
-
-- 使用独立中英文笔记的结构化题目目录；
-- 仓库校验与可重复生成的活动热力图；
-- 用于创建、校验和渲染题目记录的轻量 `axiom` CLI；
-- 在每个 Pull Request 上运行的测试和 CI 检查。
-
-创建一道草稿题目：
+创建草稿时不复制完整题面：
 
 ```bash
 uv sync --locked --all-groups
@@ -29,23 +20,38 @@ uv run axiom new leetcode 1 \
   --language cpp
 ```
 
-只有在线评测平台明确返回 Accepted 后，才记录结果；完成中英文两份笔记后，再将题目推进到
-`documented`：
+只有在线评测平台明确返回 Accepted 后，才记录实际通过的语言及其复杂度：
 
 ```bash
-uv run axiom accept leetcode 1 --language cpp --date 2026-08-01
-uv run axiom document leetcode 1 --date 2026-08-01
+uv run axiom accept leetcode 1 \
+  --language cpp \
+  --date 2026-08-01 \
+  --time-complexity "O(n)" \
+  --space-complexity "O(n)"
 ```
 
-仓库内的 `axiom-practice` Skill 为这些命令提供对话式工作流，包括渐进提示、AC 确认、代码
-Review 和双语笔记整理。
+延迟复盘时，把相似题归入规范知识主题，不在每道题旁重复同一份教程：
 
-当前仓库契约见[题目 Schema](docs/SCHEMA_zh-CN.md)与[题解写作规范](docs/STYLE_GUIDE_zh-CN.md)。
-使用 `make verify` 运行完整的本地门禁。
+```bash
+uv run axiom knowledge new dynamic-programming/interval-dp \
+  --title "Interval DP" \
+  --title-zh-cn "区间动态规划" \
+  --tag dynamic-programming
+uv run axiom knowledge document dynamic-programming/interval-dp --date 2026-08-02
+uv run axiom knowledge render
+```
+
+`axiom-practice` 负责日常解题、AC 记录、复杂度和代码 Review；`axiom-review` 负责周度
+归纳、知识页维护和确实有帮助的图解。
+
+当前契约见[题目与知识 Schema](docs/SCHEMA_zh-CN.md)、
+[知识笔记架构](docs/KNOWLEDGE_ARCHITECTURE_zh-CN.md)和
+[知识笔记写作规范](docs/STYLE_GUIDE_zh-CN.md)。使用 `make verify` 运行完整本地门禁。
 
 ## 活动
 
-活动热力图根据题目中记录的事件生成，而不是统计 Git commit 数量。
+题目活动热力图根据 `problem.toml` 事件生成，而不是统计 Git commit；知识维护使用独立生成的
+[`LOG.md`](knowledge/LOG.md)。
 
 ![LeetCode 活动热力图](assets/heatmaps/leetcode.svg)
 
@@ -55,5 +61,4 @@ Review 和双语笔记整理。
 
 ## 持续集成
 
-Pull Request 会运行完整验证门禁。另一条工作流会在 `main` 的相关内容变化后以及每日定时运行，
-校验源数据并刷新提交到仓库中的活动热力图。
+Pull Request 会运行完整验证门禁，并检查热力图与知识索引是否为最新版本。

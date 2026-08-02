@@ -15,6 +15,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
+    (root / "knowledge").mkdir(parents=True)
     for platform in ("leetcode", "acwing", "codeforces"):
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
@@ -114,6 +115,8 @@ def test_record_acceptance_advances_draft_and_preserves_comments(tmp_path: Path)
         problem_id="1",
         language="cpp",
         event_date=date(2026, 8, 1),
+        time_complexity="O(n)",
+        space_complexity="O(n)",
     )
 
     problem = load_problem(directory / "problem.toml")
@@ -135,6 +138,8 @@ def test_record_acceptance_rejects_placeholder_without_mutating_metadata(tmp_pat
             problem_id="1",
             language="cpp",
             event_date=date(2026, 8, 1),
+            time_complexity="O(n)",
+            space_complexity="O(n)",
         )
 
     assert metadata_path.read_text(encoding="utf-8") == original
@@ -151,6 +156,8 @@ def test_record_acceptance_requires_the_selected_language_code(tmp_path: Path) -
             problem_id="1",
             language="cpp",
             event_date=date(2026, 8, 1),
+            time_complexity="O(n)",
+            space_complexity="O(n)",
         )
 
 
@@ -163,11 +170,13 @@ def test_record_documentation_rolls_back_until_both_notes_are_complete(tmp_path:
         problem_id="1",
         language="cpp",
         event_date=date(2026, 8, 1),
+        time_complexity="O(n)",
+        space_complexity="O(n)",
     )
     metadata_path = directory / "problem.toml"
     accepted_metadata = metadata_path.read_text(encoding="utf-8")
 
-    with pytest.raises(ValueError, match="readme.section-incomplete"):
+    with pytest.raises(ValueError, match="readme.section-missing"):
         record_documentation(
             root,
             platform="leetcode",

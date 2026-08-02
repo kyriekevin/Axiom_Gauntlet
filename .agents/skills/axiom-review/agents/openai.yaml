@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Review"
+  short_description: "Synthesize problems into reusable knowledge"
+  default_prompt: "Use $axiom-review to consolidate accepted problems into the knowledge wiki."

@@ -15,10 +15,14 @@ normalized = "medium"
 [[solutions]]
 file = "solution.py"
 language = "python"
+time_complexity = "O(n^2)"
+space_complexity = "O(n^2)"
 
 [[solutions]]
 file = "solution.cpp"
 language = "cpp"
+time_complexity = "O(n^2)"
+space_complexity = "O(n^2)"
 
 # Add an activity only after the platform confirms the result.
 #

@@ -1,121 +1,93 @@
-# Problem schema
+# Repository Schema
 
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
-`problem.toml` is the machine-readable source of truth. `README.md`, solution
-files, translated notes, and heatmaps must agree with it; generators should
-never infer identity from a title.
+The repository has two machine-readable sources of truth: `problem.toml` records solving evidence;
+`topic.toml` records reusable knowledge. Generated heatmaps and knowledge indexes must agree with
+them.
 
-## Directory identity
+## Problem records
 
-Every problem lives at:
-
-```text
-problems/<platform>/<canonical-id>/
-├── problem.toml
-├── README.md
-└── README_zh-CN.md
-```
-
-Supported platforms and canonical IDs are:
-
-| Platform | `problem_id` in TOML | Canonical directory ID | Example UID |
-| --- | --- | --- | --- |
-| LeetCode | Positive integer without leading zeroes | At least four digits, zero-padded | `leetcode:0001` |
-| AcWing | Positive integer without leading zeroes | Same integer | `acwing:785` |
-| Codeforces | Contest number plus uppercase index | No leading contest zeroes | `codeforces:4A` |
-
-Thus input `leetcode/1`, `acwing/0785`, and `codeforces/004a` become paths
-`leetcode/0001`, `acwing/785`, and `codeforces/4A`. Titles and difficulty do not
-belong in paths because both can change.
-
-## TOML fields
+Each problem lives at `problems/<platform>/<canonical-id>/`. LeetCode IDs are padded to at least four
+digits, AcWing IDs are normalized positive integers, and Codeforces IDs use an unpadded contest
+number plus uppercase index. The stable UID is `<platform>:<canonical-id>`.
 
 ```toml
 version = 1
-uid = "codeforces:4A"
-platform = "codeforces"
-problem_id = "4A"
-title = "Watermelon"
-url = "https://codeforces.com/problemset/problem/4/A"
-state = "documented"
-tags = ["math"]
+uid = "leetcode:0001"
+platform = "leetcode"
+problem_id = "1"
+title = "Two Sum"
+url = "https://leetcode.com/problems/two-sum/"
+state = "accepted"
+tags = ["array", "hash-table"]
 
 [difficulty]
-scheme = "rating"
-value = 800
+scheme = "level"
+value = "Easy"
 normalized = "easy"
 
 [[solutions]]
-file = "solution.cpp"
-language = "cpp"
+file = "solution.py"
+language = "python"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
 
 [[activity]]
 type = "ac"
 date = 2026-08-01
-language = "cpp"
+language = "python"
+```
+
+Supported solution metadata values are `cpp`, `python`, and `go`, mapped to `solution.cpp`,
+`solution.py`, and `solution.go`. Every accepted language requires an existing non-placeholder file
+and both complexity fields. An AC event is recorded only after platform confirmation.
+
+The active lifecycle is `draft -> accepted`. `documented`, problem-level `note`, and problem-level
+`review` remain readable for compatibility with earlier entries, but new reusable documentation and
+reviews belong to knowledge topics. Problem READMEs are lightweight source cards rather than full
+tutorials.
+
+## Knowledge topics
+
+Every topic lives at `knowledge/<category>/<topic>/`; the path has at least two lowercase kebab-case
+parts. `topic.toml` is authoritative:
+
+```toml
+version = 1
+path = "dynamic-programming/interval-dp"
+title = "Interval DP"
+title_zh_cn = "区间动态规划"
+state = "documented"
+tags = ["dynamic-programming", "interval"]
+links = ["dynamic-programming/memoization"]
+
+[[examples]]
+uid = "leetcode:0486"
+role = "endpoint-game-general-model"
 
 [[activity]]
 type = "note"
-date = 2026-08-01
+date = 2026-08-02
 
 [[activity]]
 type = "review"
-date = 2026-08-08
-language = "cpp"
+date = 2026-08-09
 result = "pass"
 ```
 
-Required top-level fields are `version`, `uid`, `platform`, `problem_id`,
-`title`, `url`, `state`, `tags`, and `[difficulty]`. `[[solutions]]` and
-`[[activity]]` may be absent while a problem is a draft.
+`links` must resolve to existing topic paths and example UIDs must resolve to existing problems.
+Tags are unique lowercase kebab-case values. Topic states are `draft` and `documented`; documenting
+requires complete semantically aligned English and Simplified Chinese notes. Later reviews use
+`result = "pass"` or `result = "fail"` and do not erase earlier evidence.
 
-- `version` is currently `1`.
-- `platform` is `leetcode`, `acwing`, or `codeforces`.
-- `uid` is `<platform>:<canonical-id>`.
-- `tags` are unique lowercase kebab-case values.
-- `difficulty.scheme` is `level`, `rating`, or `unknown`.
-- `difficulty.value` preserves the platform value, such as `"Easy"` or `800`.
-- `difficulty.normalized` is `easy`, `medium`, `hard`, or `unknown`; it is only
-  a display/filtering aid, not a claim that platform scales are equivalent.
+Use the CLI rather than editing lifecycle fields by hand:
 
-## Solutions and activity
-
-One problem may contain any combination of:
-
-| Language | Metadata value | File |
-| --- | --- | --- |
-| C++ | `cpp` | `solution.cpp` |
-| Python | `python` | `solution.py` |
-| Go | `go` | `solution.go` |
-
-The `py` spelling is accepted by the scaffold CLI as an input alias, but TOML
-always stores `python`. Every listed file must exist in the problem directory.
-
-An activity `type` is `ac`, `note`, or `review`. AC events require a canonical
-`language` matching a listed solution. A `note` records a day on which the
-explanation materially changed. Review events require `result = "pass"` or
-`result = "fail"`. Dates use the unquoted TOML local-date form
-`YYYY-MM-DD`; quoted ISO dates are also accepted by the loader.
-
-## State machine
-
-```text
-draft -> accepted -> documented
+```bash
+uv run axiom knowledge new <category/topic> --title "..." --title-zh-cn "..."
+uv run axiom knowledge document <category/topic> --date <YYYY-MM-DD>
+uv run axiom knowledge review <category/topic> --date <YYYY-MM-DD> --result <pass|fail>
+uv run axiom knowledge render
 ```
 
-- `draft`: work may be incomplete. Scaffolded solution files are placeholders,
-  and there must not yet be an AC event.
-- `accepted`: requires at least one AC event and at least one existing,
-  non-placeholder file listed in `[[solutions]]`.
-- `documented`: has the same AC/code requirements as `accepted`, requires a
-  `note` activity event, and both language versions of its note must complete
-  their required reasoning, correctness, complexity, pitfalls, and review sections.
-
-`Visualization` is deliberately optional. The template includes stable diagram
-markers so a future skill can insert Mermaid or a checked-in asset without making
-every small problem generate decorative artwork.
-
-Review events do not create a fourth terminal state. A failed later review is
-valuable learning history and does not erase the fact that the problem was
-previously accepted and documented.
+`knowledge/INDEX.md`, `INDEX_zh-CN.md`, and `LOG.md` are generated files.

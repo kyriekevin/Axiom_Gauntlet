@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
+from .knowledge import TopicMetadataError, discover_topics, load_topic, validate_topic_dir
 from .model import (
     LANGUAGE_FILES,
     NORMALIZED_DIFFICULTIES,
@@ -153,6 +154,19 @@ def validate_problem_dir(problem_dir: str | Path) -> list[ValidationIssue]:
                     f"state {problem.state!r} requires non-placeholder code for an AC language",
                 )
             )
+        for language in sorted(ac_languages):
+            solution = next((item for item in problem.solutions if item.language == language), None)
+            if solution is not None and (
+                solution.time_complexity is None or solution.space_complexity is None
+            ):
+                issues.append(
+                    ValidationIssue(
+                        metadata_path,
+                        "solution.complexity-required",
+                        f"accepted language {language!r} requires time_complexity and "
+                        "space_complexity",
+                    )
+                )
         if problem.state == "documented" and "note" not in activity_types:
             issues.append(
                 ValidationIssue(
@@ -251,6 +265,59 @@ def validate_repository(repo_root: str | Path) -> list[ValidationIssue]:
                 )
             else:
                 seen_uids[problem.uid] = problem_dir
+
+    knowledge_root = root / "knowledge"
+    if not knowledge_root.is_dir():
+        issues.append(
+            ValidationIssue(
+                knowledge_root,
+                "repository.knowledge-missing",
+                "knowledge directory is required",
+            )
+        )
+        return sorted(issues)
+
+    topics = {}
+    for manifest in discover_topics(root):
+        directory = manifest.parent
+        for message in validate_topic_dir(directory):
+            issues.append(ValidationIssue(manifest, "knowledge.invalid", message))
+        try:
+            topic = load_topic(manifest)
+        except TopicMetadataError:
+            continue
+        previous = topics.get(topic.path)
+        if previous is not None and previous != manifest:
+            issues.append(
+                ValidationIssue(
+                    manifest,
+                    "knowledge.duplicate-path",
+                    f"knowledge path {topic.path!r} is already used by {previous}",
+                )
+            )
+        else:
+            topics[topic.path] = manifest
+
+    for manifest in topics.values():
+        topic = load_topic(manifest)
+        for link in topic.links:
+            if link not in topics:
+                issues.append(
+                    ValidationIssue(
+                        manifest,
+                        "knowledge.link-missing",
+                        f"linked knowledge path {link!r} does not exist",
+                    )
+                )
+        for example in topic.examples:
+            if example.uid not in seen_uids:
+                issues.append(
+                    ValidationIssue(
+                        manifest,
+                        "knowledge.example-missing",
+                        f"example uid {example.uid!r} does not exist",
+                    )
+                )
 
     return sorted(issues)
 

@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: sync lock-check lint format format-check test validate render render-check verify
+.PHONY: sync lock-check lint format format-check test validate render render-check knowledge-render knowledge-render-check verify
 
 sync:
 	$(UV) sync --locked --all-groups
@@ -29,4 +29,10 @@ render:
 render-check:
 	$(UV) run axiom render --check
 
-verify: lock-check lint format-check test validate render-check
+knowledge-render:
+	$(UV) run axiom knowledge render
+
+knowledge-render-check:
+	$(UV) run axiom knowledge render --check
+
+verify: lock-check lint format-check test validate render-check knowledge-render-check

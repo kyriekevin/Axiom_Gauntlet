@@ -42,6 +42,8 @@ def record_acceptance(
     problem_id: str,
     language: str,
     event_date: date,
+    time_complexity: str,
+    space_complexity: str,
 ) -> Path:
     """Record a platform-confirmed AC event and advance a draft to accepted."""
 
@@ -49,6 +51,12 @@ def record_acceptance(
     metadata_path = directory / "problem.toml"
     problem = load_problem(metadata_path)
     normalized_language = normalize_language(language)
+    time_complexity = time_complexity.strip()
+    space_complexity = space_complexity.strip()
+    if not time_complexity:
+        raise ValueError("time_complexity must not be empty")
+    if not space_complexity:
+        raise ValueError("space_complexity must not be empty")
     solution_languages = {solution.language for solution in problem.solutions}
     if normalized_language not in solution_languages:
         raise ValueError(
@@ -70,6 +78,11 @@ def record_acceptance(
     def mutate(document: TOMLDocument) -> None:
         if problem.state == "draft":
             document["state"] = "accepted"
+        for solution in document.get("solutions", []):
+            if solution.get("language") == normalized_language:
+                solution["time_complexity"] = time_complexity
+                solution["space_complexity"] = space_complexity
+                break
         _append_activity(
             document,
             event_type="ac",

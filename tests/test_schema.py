@@ -14,6 +14,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
+    (root / "knowledge").mkdir(parents=True)
     for platform in ("leetcode", "acwing", "codeforces"):
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
@@ -27,6 +28,11 @@ def _record_ac(problem_dir: Path, language: str = "cpp") -> None:
     metadata_path = problem_dir / "problem.toml"
     metadata = metadata_path.read_text(encoding="utf-8")
     metadata = metadata.replace('state = "draft"', 'state = "accepted"')
+    metadata = metadata.replace(
+        f'language = "{language}"',
+        f'language = "{language}"\ntime_complexity = "O(n)"\nspace_complexity = "O(n)"',
+        1,
+    )
     metadata += f'\n[[activity]]\ntype = "ac"\ndate = 2026-08-01\nlanguage = "{language}"\n'
     metadata_path.write_text(metadata, encoding="utf-8")
     extension = {"cpp": "cpp", "python": "py", "go": "go"}[language]
@@ -212,6 +218,11 @@ def test_accepted_requires_code_for_the_ac_language(tmp_path: Path) -> None:
     metadata_path = problem_dir / "problem.toml"
     metadata = metadata_path.read_text(encoding="utf-8")
     metadata = metadata.replace('state = "draft"', 'state = "accepted"')
+    metadata = metadata.replace(
+        'language = "cpp"',
+        'language = "cpp"\ntime_complexity = "O(1)"\nspace_complexity = "O(1)"',
+        1,
+    )
     metadata += '\n[[activity]]\ntype = "ac"\ndate = 2026-08-01\nlanguage = "cpp"\n'
     metadata_path.write_text(metadata, encoding="utf-8")
     (problem_dir / "solution.py").write_text("print(0)\n", encoding="utf-8")
@@ -265,7 +276,7 @@ def test_documented_requires_complete_readme(tmp_path: Path) -> None:
     )
 
     issues = validate_problem_dir(problem_dir)
-    assert any(issue.code == "readme.section-incomplete" for issue in issues)
+    assert any(issue.code == "readme.section-missing" for issue in issues)
     assert any(issue.code == "state.note-required" for issue in issues)
 
     _complete_readmes(problem_dir)

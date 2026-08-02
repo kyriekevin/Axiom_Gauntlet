@@ -1,28 +1,24 @@
 ---
 name: axiom-practice
-description: Guide the Axiom Gauntlet algorithm-practice workflow from creating a problem through independent solving, platform-confirmed acceptance, code review, and bilingual documentation. Use when the user wants to start or continue an OJ problem, asks for spoiler-controlled hints or debugging, provides an Accepted screenshot or confirmation, requests review of accepted code, or wants the discussion turned into English and Simplified Chinese problem notes. Do not use for problem recommendation, spaced-review scheduling, or knowledge-wiki maintenance.
+description: Guide a weekday Axiom Gauntlet problem from scaffolding through independent solving, platform-confirmed acceptance, complexity recording, and code review. Use when the user starts or continues an OJ problem, asks for spoiler-controlled hints or debugging, provides an Accepted screenshot or confirmation, or requests review of accepted code. Do not use for problem recommendation, spaced-review scheduling, or cross-problem knowledge-wiki maintenance.
 ---
 
 # Axiom Practice
 
-Keep the conversation as the human interface and use the repository CLI for deterministic state
-changes. Preserve independent problem solving while turning confirmed work into durable notes.
+Keep daily practice focused on solving. Use the repository CLI for deterministic bookkeeping and
+leave reusable knowledge synthesis to `axiom-review`.
 
 ## Establish context
 
 1. Read the root `AGENTS.md` and the target `problem.toml` when it exists.
-2. Read `docs/SCHEMA.md` and `docs/STYLE_GUIDE.md` only when their contract is needed.
-3. Use Asia/Shanghai calendar dates and pass explicit `--date YYYY-MM-DD` values to lifecycle
-   commands.
-4. Keep selection recommendations, spaced-review queues, and cross-problem wiki work out of scope.
+2. Read `docs/SCHEMA.md` only when the machine contract is needed.
+3. Use Asia/Shanghai dates and pass explicit `--date YYYY-MM-DD` values.
+4. Keep recommendations, review scheduling, and knowledge-wiki editing out of scope.
 
 ## Start a problem
 
-Gather or derive the platform, canonical problem ID, title, source URL, difficulty, useful tags, and
-implementation language. Prefer the official problem page when web lookup is needed. Never copy the
-full statement into the repository.
-
-Create the draft with `uv run axiom new`. Reuse an existing entry instead of overwriting it.
+Gather the platform, ID, title, official URL, difficulty, useful tags, and language. Never copy the
+full statement into the repository. Reuse an existing entry instead of overwriting it.
 
 ```bash
 uv run axiom new <platform> <id> \
@@ -44,46 +40,29 @@ Report the created path and leave the state as `draft`.
 
 ## Record acceptance
 
-Require an explicit statement that the online judge returned Accepted. A legible screenshot or
-submission link can support the confirmation but is optional. Do not store screenshots unless the
-user asks.
-
-Before changing state:
-
-1. Save the exact accepted implementation in the listed `solution.<ext>` file.
-2. Confirm the selected language matches `problem.toml`.
-3. Run relevant local checks without treating them as the verdict.
-4. Call the lifecycle command with the confirmed language and date.
+Require explicit confirmation that the online judge returned Accepted. Preserve the exact accepted
+implementation unless the user asks to change it. Before the transition, discuss and record both
+time and auxiliary-space complexity, including non-obvious variables.
 
 ```bash
-uv run axiom accept <platform> <id> --language <language> --date <YYYY-MM-DD>
+uv run axiom accept <platform> <id> \
+  --language <language> \
+  --date <YYYY-MM-DD> \
+  --time-complexity "O(...)" \
+  --space-complexity "O(...)"
 ```
 
-After recording AC, review the code for correctness, counterexamples, complexity, boundary cases,
-clarity, and better approaches. Report suggestions first. Do not rewrite accepted code unless the
-user explicitly requests changes; distinguish tested improvements from platform-confirmed code.
+Review the accepted code for correctness, counterexamples, boundary cases, clarity, complexity,
+and useful alternative approaches. Distinguish a general technique from a constraint-specific
+shortcut. Report suggestions before editing; do not present an unsubmitted rewrite as confirmed AC.
 
-## Build bilingual notes
-
-Discuss the user's reasoning in Chinese first when that is their natural language. Write
-`README_zh-CN.md` as natural Chinese, introducing important English terms where useful. Then write
-`README.md` as a semantically aligned English explanation rather than a literal translation.
-
-Complete the required insight, approach, correctness, complexity, pitfalls, and review-log
-sections. Keep machine facts in `problem.toml`, complete code in solution files, and full problem
-statements at the official source.
-
-Once both notes are complete, record the transition:
-
-```bash
-uv run axiom document <platform> <id> --date <YYYY-MM-DD>
-```
-
-If validation rejects the transition, fix the notes or metadata rather than bypassing the CLI.
+Keep each problem README as a lightweight source card. Capture only problem-specific evidence in
+`problem.toml` and solution files. Do not duplicate a reusable explanation beside every similar
+problem.
 
 ## Finish the session
 
-Run:
+Run the relevant checks, then the complete gate before handoff:
 
 ```bash
 uv run axiom validate
@@ -91,5 +70,6 @@ uv run axiom render
 make verify
 ```
 
-Summarize the problem state, accepted language, code-review conclusions, note files changed, and
-verification results. Never claim an online-judge verdict that the user did not confirm.
+Summarize the state, accepted language, recorded complexities, code-review conclusions, and checks.
+If broader synthesis is valuable, defer it to a later `notes/YYYY-MM-DD` branch with
+`axiom-review`; do not start that work implicitly.
