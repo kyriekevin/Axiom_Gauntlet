@@ -1,0 +1,28 @@
+version = 1
+uid = "leetcode:0877"
+platform = "leetcode"
+problem_id = "877"
+title = "Stone Game"
+url = "https://leetcode.com/problems/stone-game/"
+state = "accepted"
+tags = ["array", "math", "dynamic-programming", "game-theory"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-02
+# language = "python"
+[[activity]]
+type = "ac"
+date = 2026-08-02
+language = "python"
