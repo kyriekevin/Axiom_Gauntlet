@@ -18,8 +18,8 @@
 
 ## Complexity
 
-- Time:
-- Space:
+- Time: `O(n^2)` to compute the score difference for every interval.
+- Auxiliary space: `O(n^2)` for the DP table; the same recurrence can be compressed to `O(n)` space.
 
 ## Pitfalls
 
@@ -35,3 +35,4 @@
 
 | Date | Event | Result | Reflection |
 | --- | --- | --- | --- |
+| 2026-08-02 | Initial solve and code review | Python Accepted | Interval score-difference DP is a reliable general approach; revisit the `O(n)` space optimization and this problem's parity strategy during the weekly review. |
