@@ -48,6 +48,8 @@ class Difficulty:
 class Solution:
     file: str
     language: str
+    time_complexity: str | None = None
+    space_complexity: str | None = None
 
 
 @dataclass(frozen=True)
@@ -56,6 +58,7 @@ class Activity:
     date: date
     language: str | None = None
     result: str | None = None
+    reflection: str | None = None
 
 
 @dataclass(frozen=True)
@@ -128,11 +131,22 @@ class Problem:
                 if not isinstance(item, Mapping):
                     errors.append(f"{label} must be a table")
                     continue
-                _report_unknown_keys(item, {"file", "language"}, label, errors)
+                _report_unknown_keys(
+                    item,
+                    {"file", "language", "time_complexity", "space_complexity"},
+                    label,
+                    errors,
+                )
                 solutions.append(
                     Solution(
                         file=_string(item, "file", errors, f"{label}."),
                         language=_string(item, "language", errors, f"{label}."),
+                        time_complexity=_optional_string(
+                            item, "time_complexity", errors, f"{label}."
+                        ),
+                        space_complexity=_optional_string(
+                            item, "space_complexity", errors, f"{label}."
+                        ),
                     )
                 )
 
@@ -146,7 +160,12 @@ class Problem:
                 if not isinstance(item, Mapping):
                     errors.append(f"{label} must be a table")
                     continue
-                _report_unknown_keys(item, {"type", "date", "language", "result"}, label, errors)
+                _report_unknown_keys(
+                    item,
+                    {"type", "date", "language", "result", "reflection"},
+                    label,
+                    errors,
+                )
                 event_date = _date(item.get("date"), f"{label}.date", errors)
                 activity.append(
                     Activity(
@@ -154,6 +173,7 @@ class Problem:
                         date=event_date,
                         language=_optional_string(item, "language", errors, f"{label}."),
                         result=_optional_string(item, "result", errors, f"{label}."),
+                        reflection=_optional_string(item, "reflection", errors, f"{label}."),
                     )
                 )
 

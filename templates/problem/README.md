@@ -4,34 +4,10 @@
 
 > Source: [${platform_label}](${url}) · UID: `${uid}`
 
-## Core insight
+Machine-readable state, accepted implementations, and complexity live in
+[`problem.toml`](problem.toml). Reusable explanations live in the repository knowledge index.
 
-<!-- State the decisive observation in one or two sentences. -->
+## Related knowledge
 
-## Approach
-
-<!-- Explain the algorithm as a short sequence of ideas. -->
-
-## Why it works
-
-<!-- Give the invariant, induction, exchange argument, or other fitting proof. -->
-
-## Complexity
-
-- Time:
-- Space:
-
-## Pitfalls
-
-<!-- Record boundary cases, failed approaches, and implementation traps. -->
-
-## Visualization
-
-<!-- diagram:start -->
-<!-- Add Mermaid or a local asset only when it materially improves understanding. -->
-<!-- diagram:end -->
-
-## Review log
-
-| Date | Event | Result | Reflection |
-| --- | --- | --- | --- |
+See the generated [knowledge index](../../../knowledge/INDEX.md). Problem relationships are kept in
+knowledge topic manifests rather than duplicated here by hand.

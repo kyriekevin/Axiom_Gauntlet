@@ -1,73 +1,41 @@
-# Problem Note Style Guide
+# Knowledge Note Style Guide
 
 [English](STYLE_GUIDE.md) | [简体中文](STYLE_GUIDE_zh-CN.md)
 
-This guide defines the human-readable contract for `README.md` and `README_zh-CN.md` in every problem directory. Machine-readable facts belong in the adjacent `problem.toml`; the notes should focus on understanding and recall.
+Problem READMEs are lightweight source cards. Reusable reasoning belongs in bilingual pages under
+`knowledge/<category>/<topic>/`, with relationships and lifecycle facts in `topic.toml`.
 
 ## Required structure
 
-Use the following sections in this order:
+- **Overview** defines the reusable idea and its scope.
+- **Recognition** records signals that suggest the model applies.
+- **Model** defines states, choices, invariants, or mathematical objects before formulas.
+- **Derivation** reconstructs recursion, memoization, iteration order, and correctness from the
+  model rather than presenting a memorized recurrence.
+- **Variants** separates general alternatives and optimizations from constraint-specific shortcuts.
+- **Examples** explains what each linked problem contributes without copying its statement.
+- **Review log** preserves actual recall outcomes and actionable follow-ups.
 
-```markdown
-# <Problem ID>. <Problem Title>
-
-> Source: [<Platform>](<canonical problem URL>)
-
-## Core insight
-
-## Approach
-
-## Why it works
-
-## Complexity
-
-## Pitfalls
-
-## Review log
-```
-
-The sections have distinct jobs:
-
-- **Core insight** states the decisive observation in one or two sentences.
-- **Approach** explains the algorithm as a short sequence of ideas, not as a line-by-line translation of the code.
-- **Why it works** gives a convincing correctness argument. Use an invariant, exchange argument, induction, case analysis, or another fitting proof shape.
-- **Complexity** states time and auxiliary-space complexity, defines non-obvious variables, and distinguishes average from worst-case behavior when relevant.
-- **Pitfalls** records failed approaches, boundary conditions, implementation traps, and platform-specific surprises worth remembering.
-- **Review log** preserves dated attempts and what changed in the solver's understanding.
-
-Optional sections such as `## Visualization`, `## Alternative approaches`, and `## Follow-ups` may be inserted when they add real explanatory value.
+Optional sections such as `Visualization`, `Proof details`, and `Exercises` are welcome when they
+improve reconstruction. A subsection becomes its own topic only when it has an independent
+definition, is reused by multiple pages, or has its own review prompts and examples.
 
 ## Visual explanations
 
-Visualization is optional. Do not add a diagram merely to fill the template.
+Do not add decorative diagrams. Use a visual when relationships, state dependencies, or a sequence
+of transformations are materially easier to reconstruct from it. Prefer a compact, reviewable
+diagram when sufficient. Use a checked-in PNG or SVG under the topic's `assets/` directory for a
+carefully composed walkthrough that Mermaid cannot express clearly. Include useful alt text and
+keep the prose understandable without the image.
 
-When a diagram is useful, prefer Mermaid embedded directly in Markdown because it is reviewable, diffable, and maintainable. Good uses include state transitions, trees, graphs, pointer movement, and multi-step control flow.
+One visual should explain the shared knowledge class, not be duplicated for every example problem.
+Attribute external ideas or visuals that materially shaped the note.
 
-Use a local SVG or PNG under the problem's `assets/` directory only when Mermaid cannot express the idea clearly, such as detailed geometry, dense array-state illustrations, or a carefully composed visual walkthrough. Every visual must have a short introduction and useful alt text; the prose must still communicate the essential idea if the image fails to render.
+## Language and review
 
-## Language and expression
+Keep English in `README.md` and natural Simplified Chinese in `README_zh-CN.md`. They should be
+semantically aligned, not literal translations. Define symbols before use, keep terminology
+consistent, avoid diary narration, and keep complete accepted code in `problems/`.
 
-- Keep the English note in `README.md` and the Simplified Chinese note in `README_zh-CN.md`; link them to each other at the top.
-- Use English for metadata, code identifiers, and code comments. The Chinese note may introduce important terms bilingually, such as “invariant（不变量）”.
-- Keep the two notes semantically aligned without forcing sentence-by-sentence literal translation.
-- Lead with the insight, then add only the detail needed to reconstruct the solution.
-- Prefer concrete claims over diary narration: write “maintain a decreasing deque” rather than “then I thought of using a deque.”
-- Define symbols before using them and keep terminology consistent with the implementation.
-- Keep code out of the note unless a very small fragment is essential to the explanation; complete accepted implementations belong in `solution.<ext>` files.
-- Do not copy the complete problem statement, sample set, or editorial. Link to the canonical source and summarize only the constraints or setup needed for the explanation.
-- Attribute any external idea, proof, or visualization that materially shaped the note.
-
-## Review log
-
-Append one row for each meaningful revisit; never rewrite older rows to make the learning path look cleaner.
-
-```markdown
-## Review log
-
-| Date | Event | Result | Reflection |
-| --- | --- | --- | --- |
-| 2026-08-01 | Initial solve | Accepted | Missed one empty-input boundary case before submission. |
-| 2026-08-15 | Independent review | Recalled with hint | Revisit the invariant before the next review. |
-```
-
-Use an ISO date (`YYYY-MM-DD`). The event should distinguish the initial solve, documentation pass, independent review, contest revisit, or another meaningful activity. Record the actual outcome and one actionable observation; a bare “reviewed” entry is not useful.
+Append review rows instead of rewriting history. Use ISO dates, record the actual result, and leave
+one concrete observation that can change the next review.

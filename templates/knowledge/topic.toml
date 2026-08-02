@@ -1,0 +1,9 @@
+version = 1
+path = ${path}
+title = ${title}
+title_zh_cn = ${title_zh_cn}
+state = "draft"
+tags = ${tags}
+links = ${links}
+
+${examples}

@@ -13,6 +13,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
+    (root / "knowledge").mkdir(parents=True)
     for platform in ("leetcode", "acwing", "codeforces"):
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
@@ -144,6 +145,12 @@ def test_accept_command_records_confirmed_solution(
             "cpp",
             "--date",
             "2026-08-01",
+            "--time-complexity",
+            "O(n)",
+            "--space-complexity",
+            "O(n)",
+            "--reflection",
+            "Recheck lookup order.",
         ]
     )
 
@@ -151,6 +158,9 @@ def test_accept_command_records_confirmed_solution(
     assert capsys.readouterr().out.strip() == "Accepted: problems/leetcode/0001"
     problem = load_problem(problem_dir / "problem.toml")
     assert problem.state == "accepted"
+    assert problem.solutions[0].time_complexity == "O(n)"
+    assert problem.solutions[0].space_complexity == "O(n)"
+    assert problem.activity[0].reflection == "Recheck lookup order."
 
 
 def test_lifecycle_command_rejects_noncanonical_date(
@@ -172,3 +182,35 @@ def test_lifecycle_command_rejects_noncanonical_date(
         )
 
     assert "date must use YYYY-MM-DD" in capsys.readouterr().err
+
+
+def test_knowledge_new_and_render_commands(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+    shutil.copytree(
+        REPOSITORY_ROOT / "templates" / "knowledge",
+        root / "templates" / "knowledge",
+    )
+
+    result = main(
+        [
+            "--root",
+            str(root),
+            "knowledge",
+            "new",
+            "dynamic-programming/interval-dp",
+            "--title",
+            "Interval DP",
+            "--title-zh-cn",
+            "区间动态规划",
+            "--tag",
+            "dynamic-programming",
+        ]
+    )
+
+    assert result == 0
+    assert capsys.readouterr().out.strip() == ("knowledge/dynamic-programming/interval-dp")
+    assert main(["--root", str(root), "knowledge", "render"]) == 0
+    capsys.readouterr()
+    assert main(["--root", str(root), "knowledge", "render", "--check"]) == 0

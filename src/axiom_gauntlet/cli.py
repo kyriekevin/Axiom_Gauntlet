@@ -57,6 +57,12 @@ def _parser() -> argparse.ArgumentParser:
         choices=("cpp", "python", "py", "go"),
     )
     accept.add_argument("--date", type=_iso_date, default=None)
+    accept.add_argument("--time-complexity", required=True)
+    accept.add_argument("--space-complexity", required=True)
+    accept.add_argument(
+        "--reflection",
+        help="Record a concise problem-specific observation from the accepted session.",
+    )
 
     document = subparsers.add_parser(
         "document", help="Record completed bilingual notes for an accepted problem."
@@ -64,6 +70,41 @@ def _parser() -> argparse.ArgumentParser:
     document.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
     document.add_argument("problem_id")
     document.add_argument("--date", type=_iso_date, default=None)
+
+    knowledge = subparsers.add_parser("knowledge", help="Maintain reusable knowledge topics.")
+    knowledge_commands = knowledge.add_subparsers(dest="knowledge_command", required=True)
+
+    knowledge_new = knowledge_commands.add_parser("new", help="Create a knowledge-topic draft.")
+    knowledge_new.add_argument("path")
+    knowledge_new.add_argument("--title", required=True)
+    knowledge_new.add_argument("--title-zh-cn", required=True)
+    knowledge_new.add_argument("--tag", action="append", default=[])
+    knowledge_new.add_argument("--link", action="append", default=[])
+    knowledge_new.add_argument(
+        "--example",
+        action="append",
+        default=[],
+        metavar="UID=ROLE",
+        help="Link a problem UID with its role; repeat for multiple examples.",
+    )
+
+    knowledge_document = knowledge_commands.add_parser(
+        "document", help="Record a completed knowledge note."
+    )
+    knowledge_document.add_argument("path")
+    knowledge_document.add_argument("--date", type=_iso_date, default=None)
+
+    knowledge_review = knowledge_commands.add_parser(
+        "review", help="Record a later knowledge review."
+    )
+    knowledge_review.add_argument("path")
+    knowledge_review.add_argument("--date", type=_iso_date, default=None)
+    knowledge_review.add_argument("--result", choices=("pass", "fail"), required=True)
+
+    knowledge_render = knowledge_commands.add_parser(
+        "render", help="Generate knowledge indexes and activity log."
+    )
+    knowledge_render.add_argument("--check", action="store_true")
 
     render = subparsers.add_parser("render", help="Generate platform activity heatmaps.")
     render.add_argument(
@@ -137,6 +178,9 @@ def _run_accept(args: argparse.Namespace) -> int:
         problem_id=args.problem_id,
         language=args.language,
         event_date=_event_date(args.date),
+        time_complexity=args.time_complexity,
+        space_complexity=args.space_complexity,
+        reflection=args.reflection,
     )
     print(f"Accepted: {directory.relative_to(args.root)}")
     return 0
@@ -153,6 +197,49 @@ def _run_document(args: argparse.Namespace) -> int:
     )
     print(f"Documented: {directory.relative_to(args.root)}")
     return 0
+
+
+def _parse_example(value: str) -> tuple[str, str]:
+    uid, separator, role = value.partition("=")
+    if not separator or not uid.strip() or not role.strip():
+        raise ValueError("knowledge examples must use UID=ROLE")
+    return uid.strip(), role.strip()
+
+
+def _run_knowledge(args: argparse.Namespace) -> int:
+    from .knowledge import create_topic, document_topic, render_indexes, review_topic
+
+    if args.knowledge_command == "new":
+        created = create_topic(
+            args.root,
+            topic_path=args.path,
+            title=args.title,
+            title_zh_cn=args.title_zh_cn,
+            tags=args.tag,
+            links=args.link,
+            examples=tuple(_parse_example(value) for value in args.example),
+        )
+        print(created.relative_to(args.root))
+        return 0
+    if args.knowledge_command == "document":
+        directory = document_topic(args.root, args.path, _event_date(args.date))
+        print(f"Documented knowledge: {directory.relative_to(args.root)}")
+        return 0
+    if args.knowledge_command == "review":
+        directory = review_topic(args.root, args.path, _event_date(args.date), args.result)
+        print(f"Reviewed knowledge: {directory.relative_to(args.root)}")
+        return 0
+    if args.knowledge_command == "render":
+        changed = render_indexes(args.root, check=args.check)
+        if args.check and changed:
+            print("error: generated knowledge indexes are out of date")
+            return 1
+        if args.check:
+            print("Knowledge indexes are up to date.")
+        else:
+            print("Rendered knowledge indexes.")
+        return 0
+    raise AssertionError(f"unhandled knowledge command: {args.knowledge_command}")
 
 
 def _run_render(args: argparse.Namespace) -> int:
@@ -181,6 +268,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_accept(args)
         if args.command == "document":
             return _run_document(args)
+        if args.command == "knowledge":
+            return _run_knowledge(args)
         if args.command == "render":
             return _run_render(args)
     except (FileExistsError, ValueError) as error:
