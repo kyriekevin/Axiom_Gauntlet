@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:785"
+platform = "acwing"
+problem_id = "785"
+title = "快速排序"
+url = "https://www.acwing.com/problem/content/787/"
+state = "accepted"
+tags = ["sorting", "divide-and-conquer", "quick-sort"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n log n) average, O(n^2) worst"
+space_complexity = "O(log n) average, O(n) worst"
+[[activity]]
+type = "ac"
+date = 2026-08-03
+language = "cpp"
+reflection = "Hoare partition with a middle-value pivot handles duplicates cleanly; retain the accepted template and remember its quadratic-time and linear-stack worst case."
