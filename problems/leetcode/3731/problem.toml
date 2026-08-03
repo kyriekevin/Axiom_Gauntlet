@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:3731"
+platform = "leetcode"
+problem_id = "3731"
+title = "Find Missing Elements"
+url = "https://leetcode.com/problems/find-missing-elements/"
+state = "accepted"
+tags = ["array", "hash-table", "sorting"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n + R)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-04
+language = "python"
+reflection = "Distinguish the input length n from the value span R: scanning the full interval costs O(R), even though set construction is O(n)."
