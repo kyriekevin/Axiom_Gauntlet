@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:3310"
+platform = "leetcode"
+problem_id = "3310"
+title = "Remove Methods From Project"
+url = "https://leetcode.com/problems/remove-methods-from-project/"
+state = "accepted"
+tags = ["graph", "depth-first-search", "breadth-first-search"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n + m)"
+space_complexity = "O(n + m)"
+[[activity]]
+type = "ac"
+date = 2026-08-05
+language = "python"
+reflection = "The removable set is exactly the nodes reachable from k; any incoming edge from outside invalidates the whole removal. Prefer iterative traversal in Python to avoid recursion-depth risk."

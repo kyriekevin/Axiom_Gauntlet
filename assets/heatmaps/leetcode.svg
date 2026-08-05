@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="883" height="247" viewBox="0 0 883 247" role="img" aria-labelledby="leetcode-2026-title leetcode-2026-desc">
   <title id="leetcode-2026-title">LeetCode activity in 2026</title>
-  <desc id="leetcode-2026-desc">5 counted activities across 4 active days. AC, note, and review events are included.</desc>
+  <desc id="leetcode-2026-desc">6 counted activities across 5 active days. AC, note, and review events are included.</desc>
   <rect width="883" height="247" rx="16" fill="#0d111b"/>
   <circle cx="25" cy="25" r="4" fill="#ff5f57"/>
   <circle cx="39" cy="25" r="4" fill="#febc2e"/>
@@ -8,7 +8,7 @@
   <text x="70" y="31" fill="#f0f3f8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700">LeetCode Activity</text>
   <text x="857" y="31" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">2026</text>
   <text x="25" y="56" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">AC · NOTE · REVIEW</text>
-  <text x="857" y="56" text-anchor="end" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">5 EVENTS · 4 ACTIVE DAYS</text>
+  <text x="857" y="56" text-anchor="end" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">6 EVENTS · 5 ACTIVE DAYS</text>
   <text x="58" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Jan</text>
   <text x="118" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Feb</text>
   <text x="178" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Mar</text>
@@ -672,8 +672,8 @@
   <rect x="523" y="103" width="11" height="11" rx="2" fill="#513b11" data-date="2026-08-04" data-count="1" data-level="1">
     <title>2026-08-04: 1 event</title>
   </rect>
-  <rect x="523" y="118" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-05" data-count="0" data-level="0">
-    <title>2026-08-05: 0 events</title>
+  <rect x="523" y="118" width="11" height="11" rx="2" fill="#513b11" data-date="2026-08-05" data-count="1" data-level="1">
+    <title>2026-08-05: 1 event</title>
   </rect>
   <rect x="523" y="133" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-06" data-count="0" data-level="0">
     <title>2026-08-06: 0 events</title>
