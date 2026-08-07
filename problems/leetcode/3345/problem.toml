@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:3345"
+platform = "leetcode"
+problem_id = "3345"
+title = "Smallest Divisible Digit Product I"
+url = "https://leetcode.com/problems/smallest-divisible-digit-product-i/"
+state = "accepted"
+tags = ["math", "enumeration"]
+
+[difficulty]
+scheme = "level"
+value = "easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(k log(n + k)), where k <= 10"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-07
+language = "python"
+reflection = "Enumerating candidates is bounded: within at most ten checks, a number ending in zero has digit product zero and is divisible by every positive t."
