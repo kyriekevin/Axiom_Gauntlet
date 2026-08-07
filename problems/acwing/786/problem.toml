@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:786"
+platform = "acwing"
+problem_id = "786"
+title = "第k个数"
+url = "https://www.acwing.com/problem/content/788/"
+state = "accepted"
+tags = ["sorting", "divide-and-conquer", "quickselect"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n) average, O(n^2) worst"
+space_complexity = "O(log n) average, O(n) worst"
+[[activity]]
+type = "ac"
+date = 2026-08-07
+language = "cpp"
+reflection = "Hoare partition exits with l >= r, not necessarily l == r; r is the inclusive boundary of the left partition and must stay consistent with the recursion ranges."
