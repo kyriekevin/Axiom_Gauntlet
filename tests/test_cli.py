@@ -244,3 +244,21 @@ def test_knowledge_new_and_render_commands(
     assert main(["--root", str(root), "knowledge", "render"]) == 0
     capsys.readouterr()
     assert main(["--root", str(root), "knowledge", "render", "--check"]) == 0
+
+
+def test_render_command_updates_homepage_activity(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+    for filename in ("README.md", "README_zh-CN.md"):
+        (root / filename).write_text(
+            "# Test\n\n<!-- recent-problems:start -->\n<!-- recent-problems:end -->\n",
+            encoding="utf-8",
+        )
+
+    assert main(["--root", str(root), "render", "--year", "2026"]) == 0
+    assert "Rendered homepage activity for 2026." in capsys.readouterr().out
+    assert (root / "assets" / "heatmaps" / "total.svg").is_file()
+    assert "No accepted problems yet." in (root / "README.md").read_text(encoding="utf-8")
+    assert main(["--root", str(root), "render", "--year", "2026", "--check"]) == 0
+    assert "Homepage activity is up to date." in capsys.readouterr().out

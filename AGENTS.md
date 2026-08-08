@@ -18,4 +18,6 @@
 - Use Conventional Commits for human-authored and automated commits.
 - Do not edit files under `assets/heatmaps/` by hand. Regenerate them with
   `uv run axiom render`.
+- Do not edit README content between the `recent-problems` markers by hand. Regenerate it with
+  `uv run axiom render`.
 - Before handing off changes, run `make verify`.

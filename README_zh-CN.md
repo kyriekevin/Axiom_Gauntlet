@@ -4,63 +4,30 @@
 
 > **Nightglass Protocol** 的算法试炼场。
 
-Axiom Gauntlet 把日常解题证据与可复用知识分开：Accepted 代码和平台确认结果保存在
-`problems/`，延迟复盘再把多道题共享的推理沉淀到 `knowledge/` 双语知识库。
+一个用于保持思维与代码能力的轻量算法练习仓库。`problems/` 保存 Accepted 解答和平台确认
+证据，`knowledge/` 将多道题共享的推理沉淀为可复用的双语知识。
 
-## 工作流
+## 最近完成
 
-创建草稿时不复制完整题面：
+<!-- recent-problems:start -->
 
-```bash
-uv sync --locked --all-groups
-uv run axiom new leetcode 1 \
-  --title "Two Sum" \
-  --url "https://leetcode.com/problems/two-sum/" \
-  --difficulty easy \
-  --language cpp
-```
+| 日期 | 题目 | 平台 | 语言 |
+| --- | --- | --- | --- |
+| 2026-08-07 | [第k个数](problems/acwing/786/) | AcWing | C++ |
+| 2026-08-07 | [Smallest Divisible Digit Product I](problems/leetcode/3345/) | LeetCode | Python |
+| 2026-08-05 | [Remove Methods From Project](problems/leetcode/3310/) | LeetCode | Python |
+| 2026-08-04 | [Find Missing Elements](problems/leetcode/3731/) | LeetCode | Python |
+| 2026-08-03 | [快速排序](problems/acwing/785/) | AcWing | C++ |
 
-只有在线评测平台明确返回 Accepted 后，才记录实际通过的语言及其复杂度：
-
-```bash
-uv run axiom accept leetcode 1 \
-  --language cpp \
-  --date 2026-08-01 \
-  --time-complexity "O(n)" \
-  --space-complexity "O(n)"
-```
-
-延迟复盘时，把相似题归入规范知识主题，不在每道题旁重复同一份教程：
-
-```bash
-uv run axiom knowledge new dynamic-programming/interval-dp \
-  --title "Interval DP" \
-  --title-zh-cn "区间动态规划" \
-  --tag dynamic-programming
-```
-
-完成生成的中英文知识笔记后，再记录生命周期并生成索引：
-
-```bash
-uv run axiom knowledge document dynamic-programming/interval-dp --date 2026-08-02
-uv run axiom knowledge render
-```
-
-`axiom-practice` 负责日常解题、AC 记录、复杂度和代码 Review；`axiom-review` 负责周度
-归纳、知识页维护和确实有帮助的图解。
-OJ 平台支持由 [`platforms.toml`](src/axiom_gauntlet/platforms.toml) 注册表数据驱动。
-
-当前契约见[题目与知识 Schema](docs/SCHEMA_zh-CN.md)、
-[知识笔记架构](docs/KNOWLEDGE_ARCHITECTURE_zh-CN.md)和
-[知识笔记写作规范](docs/STYLE_GUIDE_zh-CN.md)。使用 `make verify` 运行完整本地门禁。
+<!-- recent-problems:end -->
 
 ## 活动
 
-总计题目活动热力图汇总所有已支持平台的 `problem.toml` 事件，而不是统计 Git commit；知识
-维护使用独立生成的 [`LOG.md`](knowledge/LOG.md)。
+总计活动热力图汇总所有已支持平台记录的题目事件，而不是统计 Git commit。
 
 ![总计题目活动热力图](assets/heatmaps/total.svg)
 
-## 持续集成
+## 知识
 
-Pull Request 会运行完整验证门禁，并检查总计热力图与知识索引是否为最新版本。
+浏览双语[知识索引](knowledge/INDEX_zh-CN.md)。仓库结构和元数据契约见
+[Schema](docs/SCHEMA_zh-CN.md)。

@@ -109,7 +109,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     knowledge_render.add_argument("--check", action="store_true")
 
-    render = subparsers.add_parser("render", help="Generate the total activity heatmap.")
+    render = subparsers.add_parser("render", help="Generate homepage activity artifacts.")
     render.add_argument(
         "--year",
         type=int,
@@ -242,16 +242,20 @@ def _run_knowledge(args: argparse.Namespace) -> int:
 
 
 def _run_render(args: argparse.Namespace) -> int:
-    from .heatmap import render_all
+    from .heatmap import generate_heatmaps
+    from .homepage import generate_homepages
 
-    changed = render_all(args.root, args.year, check=args.check)
+    changed = (
+        *generate_heatmaps(args.root, args.year, check=args.check),
+        *generate_homepages(args.root, check=args.check),
+    )
     if args.check and changed:
-        print("error: generated heatmap is out of date")
+        print("error: generated homepage activity is out of date")
         return 1
     if args.check:
-        print("Heatmap is up to date.")
+        print("Homepage activity is up to date.")
     else:
-        print(f"Rendered the total heatmap for {args.year}.")
+        print(f"Rendered homepage activity for {args.year}.")
     return 0
 
 
