@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:787"
+platform = "acwing"
+problem_id = "787"
+title = "归并排序"
+url = "https://www.acwing.com/problem/content/789/"
+state = "accepted"
+tags = ["sorting", "divide-and-conquer", "merge-sort"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n log n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-08
+language = "cpp"
+reflection = "Using <= during merge preserves stability; the copy-back loop is bounded by the destination interval, while its redundant j <= k condition should conceptually be j < k."
