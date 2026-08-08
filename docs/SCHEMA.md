@@ -3,14 +3,24 @@
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
 The repository has two machine-readable sources of truth: `problem.toml` records solving evidence;
-`topic.toml` records reusable knowledge. Generated heatmaps and knowledge indexes must agree with
-them.
+`topic.toml` records reusable knowledge. Generated README activity, dashboards, the heatmap, and
+knowledge indexes must agree with them.
 
 ## Problem records
 
-Each problem lives at `problems/<platform>/<canonical-id>/`. LeetCode IDs are padded to at least four
-digits, AcWing IDs are normalized positive integers, and Codeforces IDs use an unpadded contest
-number plus uppercase index. The stable UID is `<platform>:<canonical-id>`.
+Each problem lives at `problems/<platform>/<canonical-id>/`. The platform registry in
+[`platforms.toml`](../src/axiom_gauntlet/platforms.toml) defines the display label, ID strategy,
+optional canonical padding, and default difficulty scheme. Platform directories are created lazily
+by `axiom new`; an unused registered platform needs no empty directory.
+
+Coverage reuses the display label when it is compact; platforms with longer formal names provide a
+short `coverage_label`. Difficulty schemes are limited to `level`, `rating`, and `unknown` across
+the registry, CLI, scaffolding, and validation.
+
+The registry supports positive-integer IDs, contest-number-plus-index IDs, and filesystem-safe slug
+IDs. Adding a platform that fits one of these strategies is a data-only registry change. A new ID
+strategy requires tooling and test changes. The stable UID is `<platform>:<canonical-id>` (for
+example, `deep-ml:1`).
 
 ```toml
 version = 1

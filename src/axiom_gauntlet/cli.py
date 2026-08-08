@@ -8,7 +8,10 @@ from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from .platforms import DIFFICULTY_SCHEMES, PLATFORMS, platform_spec
+
 SHANGHAI = ZoneInfo("Asia/Shanghai")
+PLATFORM_CHOICES = tuple(sorted(PLATFORMS))
 
 
 def repository_root() -> Path:
@@ -26,12 +29,16 @@ def _parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     new = subparsers.add_parser("new", help="Create a normalized problem entry.")
-    new.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    new.add_argument("platform", choices=PLATFORM_CHOICES)
     new.add_argument("problem_id")
     new.add_argument("--title", required=True)
     new.add_argument("--url", required=True)
     new.add_argument("--difficulty", default="unknown")
-    new.add_argument("--difficulty-scheme", default=None)
+    new.add_argument(
+        "--difficulty-scheme",
+        choices=tuple(sorted(DIFFICULTY_SCHEMES)),
+        default=None,
+    )
     new.add_argument(
         "--normalized-difficulty",
         choices=("easy", "medium", "hard", "unknown"),
@@ -49,7 +56,7 @@ def _parser() -> argparse.ArgumentParser:
     subparsers.add_parser("validate", help="Validate all problem entries.")
 
     accept = subparsers.add_parser("accept", help="Record a platform-confirmed AC event.")
-    accept.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    accept.add_argument("platform", choices=PLATFORM_CHOICES)
     accept.add_argument("problem_id")
     accept.add_argument(
         "--language",
@@ -67,7 +74,7 @@ def _parser() -> argparse.ArgumentParser:
     document = subparsers.add_parser(
         "document", help="Record completed bilingual notes for an accepted problem."
     )
-    document.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    document.add_argument("platform", choices=PLATFORM_CHOICES)
     document.add_argument("problem_id")
     document.add_argument("--date", type=_iso_date, default=None)
 
@@ -106,7 +113,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     knowledge_render.add_argument("--check", action="store_true")
 
-    render = subparsers.add_parser("render", help="Generate platform activity heatmaps.")
+    render = subparsers.add_parser("render", help="Generate homepage activity artifacts.")
     render.add_argument(
         "--year",
         type=int,
@@ -116,12 +123,6 @@ def _parser() -> argparse.ArgumentParser:
     render.add_argument("--check", action="store_true")
 
     return parser
-
-
-def _default_difficulty_scheme(platform: str) -> str:
-    if platform == "codeforces":
-        return "rating"
-    return "level"
 
 
 def _iso_date(value: str) -> date:
@@ -147,7 +148,9 @@ def _run_new(args: argparse.Namespace) -> int:
         problem_id=args.problem_id,
         title=args.title,
         url=args.url,
-        difficulty_scheme=args.difficulty_scheme or _default_difficulty_scheme(args.platform),
+        difficulty_scheme=(
+            args.difficulty_scheme or platform_spec(args.platform).default_difficulty_scheme
+        ),
         difficulty_value=args.difficulty,
         difficulty_normalized=args.normalized_difficulty,
         tags=args.tag,
@@ -243,16 +246,22 @@ def _run_knowledge(args: argparse.Namespace) -> int:
 
 
 def _run_render(args: argparse.Namespace) -> int:
-    from .heatmap import render_all
+    from .coverage import generate_coverage
+    from .heatmap import generate_heatmaps
+    from .homepage import generate_homepages
 
-    changed = render_all(args.root, args.year, check=args.check)
+    changed = (
+        *generate_heatmaps(args.root, args.year, check=args.check),
+        *generate_coverage(args.root, check=args.check),
+        *generate_homepages(args.root, check=args.check),
+    )
     if args.check and changed:
-        print("error: generated heatmaps are out of date")
+        print("error: generated homepage activity is out of date")
         return 1
     if args.check:
-        print("Heatmaps are up to date.")
+        print("Homepage activity is up to date.")
     else:
-        print(f"Rendered heatmaps for {args.year}.")
+        print(f"Rendered homepage activity for {args.year}.")
     return 0
 
 

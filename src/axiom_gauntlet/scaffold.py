@@ -10,12 +10,12 @@ from string import Template
 
 from .model import (
     LANGUAGE_FILES,
-    PLATFORMS,
     canonical_problem_id,
     expected_uid,
     normalize_language,
     normalize_problem_id,
 )
+from .platforms import DIFFICULTY_SCHEMES, platform_spec
 
 _SOLUTION_PLACEHOLDERS = {
     "cpp": "// TODO: paste the accepted solution.\n",
@@ -23,11 +23,6 @@ _SOLUTION_PLACEHOLDERS = {
     "go": "// TODO: paste the accepted solution.\n",
 }
 _TAG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-_PLATFORM_LABELS = {
-    "leetcode": "LeetCode",
-    "acwing": "AcWing",
-    "codeforces": "Codeforces",
-}
 
 
 def create_problem(
@@ -54,10 +49,7 @@ def create_problem(
 
     root = Path(repo_root)
     platform = platform.strip().lower()
-    if platform not in PLATFORMS:
-        raise ValueError(
-            f"unsupported platform {platform!r}; choose one of {', '.join(sorted(PLATFORMS))}"
-        )
+    spec = platform_spec(platform)
     normalized_id = normalize_problem_id(platform, str(problem_id))
     derived_canonical_id = canonical_problem_id(platform, normalized_id)
     if canonical_id is not None and canonical_id != derived_canonical_id:
@@ -110,7 +102,7 @@ def create_problem(
     )
     readme_values = dict(
         canonical_id=canonical_id,
-        platform_label=_PLATFORM_LABELS[platform],
+        platform_label=spec.label,
         title=title,
         url=url,
         uid=expected_uid(platform, normalized_id),
@@ -170,8 +162,9 @@ def _normalize_difficulty(value: str | int, normalized: str | None) -> str:
 
 
 def _normalize_difficulty_fields(scheme: str, value: str | int) -> tuple[str, str | int]:
-    if scheme not in {"level", "rating", "unknown"}:
-        raise ValueError("difficulty_scheme must be level, rating, or unknown")
+    if scheme not in DIFFICULTY_SCHEMES:
+        choices = ", ".join(sorted(DIFFICULTY_SCHEMES))
+        raise ValueError(f"difficulty_scheme must be one of: {choices}")
     if isinstance(value, bool) or not isinstance(value, (str, int)):
         raise ValueError("difficulty_value must be a string or integer")
     if scheme != "rating":

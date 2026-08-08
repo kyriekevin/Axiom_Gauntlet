@@ -12,7 +12,6 @@ from .knowledge import TopicMetadataError, discover_topics, load_topic, validate
 from .model import (
     LANGUAGE_FILES,
     NORMALIZED_DIFFICULTIES,
-    PLATFORMS,
     SCHEMA_VERSION,
     STATES,
     MetadataError,
@@ -23,6 +22,7 @@ from .model import (
     normalize_language,
     normalize_problem_id,
 )
+from .platforms import DIFFICULTY_SCHEMES, PLATFORMS
 
 REQUIRED_DOCUMENTED_SECTIONS = {
     "README.md": (
@@ -222,20 +222,9 @@ def validate_repository(repo_root: str | Path) -> list[ValidationIssue]:
                     f"only these platform directories are allowed: {', '.join(sorted(PLATFORMS))}",
                 )
             )
-
-    for platform in sorted(PLATFORMS):
-        platform_dir = problems_root / platform
-        if not platform_dir.is_dir():
-            issues.append(
-                ValidationIssue(
-                    platform_dir,
-                    "repository.platform-missing",
-                    f"platform directory {platform!r} is required",
-                )
-            )
             continue
 
-        for problem_dir in sorted(platform_dir.iterdir(), key=lambda item: item.name):
+        for problem_dir in sorted(child.iterdir(), key=lambda item: item.name):
             if problem_dir.name.startswith("."):
                 continue
             if not problem_dir.is_dir():
@@ -243,7 +232,7 @@ def validate_repository(repo_root: str | Path) -> list[ValidationIssue]:
                     ValidationIssue(
                         problem_dir,
                         "repository.unexpected-file",
-                        "platform directories may contain only problem directories and .gitkeep",
+                        "platform directories may contain only problem directories",
                     )
                 )
                 continue
@@ -435,12 +424,13 @@ def _validate_metadata(
         seen_tags.add(tag)
 
     difficulty = problem.difficulty
-    if difficulty.scheme not in {"level", "rating", "unknown"}:
+    if difficulty.scheme not in DIFFICULTY_SCHEMES:
+        choices = ", ".join(sorted(DIFFICULTY_SCHEMES))
         issues.append(
             ValidationIssue(
                 metadata_path,
                 "difficulty.scheme",
-                "difficulty.scheme must be level, rating, or unknown",
+                f"difficulty.scheme must be one of: {choices}",
             )
         )
     if difficulty.scheme == "rating" and (

@@ -2,14 +2,22 @@
 
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
-仓库有两类机器可读事实来源：`problem.toml` 记录解题证据，`topic.toml` 记录可复用知识。生成的
-热力图与知识索引必须与它们保持一致。
+仓库有两类机器可读事实来源：`problem.toml` 记录解题证据，`topic.toml` 记录可复用知识。
+README 活动区、覆盖看板、热力图与知识索引均由它们生成并保持一致。
 
 ## 题目记录
 
-每道题位于 `problems/<platform>/<canonical-id>/`。LeetCode ID 至少补齐四位，AcWing ID 使用
-规范正整数，Codeforces ID 使用不补零的比赛编号加大写题号。稳定 UID 为
-`<platform>:<canonical-id>`。
+每道题位于 `problems/<platform>/<canonical-id>/`。[`platforms.toml`](../src/axiom_gauntlet/platforms.toml)
+平台注册表定义展示名称、题号策略、可选规范宽度与默认难度体系。`axiom new` 会按需创建平台
+目录，尚未使用的已注册平台不需要保留空目录。
+
+名称简短时 Coverage 直接复用展示名称；正式名称较长的平台需要提供精简的
+`coverage_label`。注册表、CLI、脚手架与校验器统一只接受 `level`、`rating`、`unknown`
+三种难度体系。
+
+注册表支持正整数题号、比赛编号加题号，以及文件系统安全的 slug 三种策略。符合已有策略的
+新平台只需增加一段注册表数据；只有全新题号规则才需要修改工具和测试。稳定 UID 为
+`<platform>:<canonical-id>`（例如 `deep-ml:1`）。
 
 ```toml
 version = 1

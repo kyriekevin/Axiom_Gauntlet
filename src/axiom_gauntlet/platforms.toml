@@ -1,0 +1,29 @@
+version = 1
+
+[platforms.leetcode]
+label = "LeetCode"
+id_strategy = "positive-integer"
+canonical_width = 4
+default_difficulty_scheme = "level"
+
+[platforms.acwing]
+label = "AcWing"
+id_strategy = "positive-integer"
+default_difficulty_scheme = "level"
+
+[platforms.codeforces]
+label = "Codeforces"
+id_strategy = "contest-index"
+default_difficulty_scheme = "rating"
+
+[platforms.deep-ml]
+label = "Deep-ML"
+id_strategy = "positive-integer"
+default_difficulty_scheme = "level"
+coverage_categories = [
+  "linear-algebra",
+  "machine-learning",
+  "deep-learning",
+  "nlp",
+  "computer-vision",
+]

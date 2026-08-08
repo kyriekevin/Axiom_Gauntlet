@@ -21,8 +21,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in ("leetcode", "acwing", "codeforces"):
-        (root / "problems" / platform).mkdir(parents=True)
+    (root / "problems").mkdir()
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "knowledge",
         root / "templates" / "knowledge",
