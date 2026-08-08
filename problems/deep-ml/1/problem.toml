@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:1"
+platform = "deep-ml"
+problem_id = "1"
+title = "Matrix times Vector"
+url = "https://www.deep-ml.com/problems/1"
+state = "accepted"
+tags = ["linear-algebra"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(nm)"
+space_complexity = "O(nm)"
+[[activity]]
+type = "ac"
+date = 2026-08-08
+language = "python"
+reflection = "The row-wise dot products are correct; dtype coercion may copy both inputs, so worst-case auxiliary space is O(nm)."
