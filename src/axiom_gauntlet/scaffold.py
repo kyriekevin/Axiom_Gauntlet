@@ -148,12 +148,17 @@ def _normalize_tags(tags: Iterable[str]) -> tuple[str, ...]:
 
 def _normalize_difficulty(value: str | int, normalized: str | None) -> str:
     if normalized is None:
-        if isinstance(value, str) and value.strip().lower() in {
-            "easy",
-            "medium",
-            "hard",
-        }:
-            return value.strip().lower()
+        if isinstance(value, str):
+            aliases = {
+                "easy": "easy",
+                "medium": "medium",
+                "hard": "hard",
+                "简单": "easy",
+                "中等": "medium",
+                "困难": "hard",
+            }
+            if result := aliases.get(value.strip().lower()):
+                return result
         return "unknown"
     result = normalized.strip().lower()
     if result not in {"easy", "medium", "hard", "unknown"}:

@@ -10,7 +10,7 @@ tags = ["sorting", "divide-and-conquer", "merge-sort"]
 [difficulty]
 scheme = "level"
 value = "简单"
-normalized = "unknown"
+normalized = "easy"
 
 [[solutions]]
 file = "solution.cpp"
