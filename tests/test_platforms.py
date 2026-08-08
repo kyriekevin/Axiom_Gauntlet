@@ -15,6 +15,13 @@ def test_bundled_registry_drives_existing_platform_behavior() -> None:
     assert PLATFORM_SPECS["leetcode"].canonical_width == 4
     assert PLATFORM_SPECS["codeforces"].default_difficulty_scheme == "rating"
     assert PLATFORM_SPECS["deep-ml"].label == "Deep-ML"
+    assert PLATFORM_SPECS["deep-ml"].coverage_categories == (
+        "linear-algebra",
+        "machine-learning",
+        "deep-learning",
+        "nlp",
+        "computer-vision",
+    )
 
 
 def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:

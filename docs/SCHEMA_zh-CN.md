@@ -3,7 +3,7 @@
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
 仓库有两类机器可读事实来源：`problem.toml` 记录解题证据，`topic.toml` 记录可复用知识。
-README 活动区、热力图与知识索引均由它们生成并保持一致。
+README 活动区、覆盖看板、热力图与知识索引均由它们生成并保持一致。
 
 ## 题目记录
 

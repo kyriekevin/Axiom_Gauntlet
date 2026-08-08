@@ -22,6 +22,10 @@ shared by multiple problems into a reusable bilingual wiki.
 
 <!-- recent-problems:end -->
 
+## Coverage
+
+![Practice coverage by platform, native difficulty, and language](assets/dashboards/practice-coverage.svg)
+
 ## Activity
 
 The total activity map combines recorded problem events from every supported platform rather than

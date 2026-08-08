@@ -3,8 +3,8 @@
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
 The repository has two machine-readable sources of truth: `problem.toml` records solving evidence;
-`topic.toml` records reusable knowledge. Generated README activity, the heatmap, and knowledge
-indexes must agree with them.
+`topic.toml` records reusable knowledge. Generated README activity, dashboards, the heatmap, and
+knowledge indexes must agree with them.
 
 ## Problem records
 

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="518" viewBox="0 0 900 518" role="img" aria-labelledby="coverage-title coverage-desc">
+  <title id="coverage-title">Practice coverage</title>
+  <desc id="coverage-desc">8 accepted problems across 2 active platforms, with native difficulty profiles and accepted solution languages.</desc>
+  <rect width="900" height="518" rx="16" fill="#0d111b"/>
+  <text x="24" y="37" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="22" font-weight="700">Practice Coverage</text>
+  <text x="876" y="36" text-anchor="end" fill="#8d99b2" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">8 ACCEPTED · 2 ACTIVE</text>
+  <rect x="24" y="76" width="419" height="146" rx="14" fill="#151b29" stroke="#293246"/>
+  <circle cx="42" cy="101" r="5" fill="#fbbf24"/>
+  <text x="55" y="107" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="18" font-weight="700">LeetCode</text>
+  <text x="425" y="106" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">6 ACCEPTED</text>
+  <text x="42" y="133" fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">DIFFICULTY PROFILE</text>
+  <rect x="42" y="144" width="383" height="18" rx="6" fill="#252d3d"/>
+  <rect x="42.00" y="144" width="127.67" height="18" fill="#34d399" data-profile="leetcode" data-segment="Easy" data-count="2">
+    <title>Easy: 2</title>
+  </rect>
+  <rect x="169.67" y="144" width="191.50" height="18" fill="#fbbf24" data-profile="leetcode" data-segment="Medium" data-count="3">
+    <title>Medium: 3</title>
+  </rect>
+  <rect x="361.17" y="144" width="63.83" height="18" fill="#fb7185" data-profile="leetcode" data-segment="Hard" data-count="1">
+    <title>Hard: 1</title>
+  </rect>
+  <text x="42" y="184" fill="#b8c1d8" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Easy 2 · Medium 3 · Hard 1</text>
+  <rect x="457" y="76" width="419" height="146" rx="14" fill="#151b29" stroke="#293246"/>
+  <circle cx="475" cy="101" r="5" fill="#22d3ee"/>
+  <text x="488" y="107" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="18" font-weight="700">AcWing</text>
+  <text x="858" y="106" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">2 ACCEPTED</text>
+  <text x="475" y="133" fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">DIFFICULTY PROFILE</text>
+  <rect x="475" y="144" width="383" height="18" rx="6" fill="#252d3d"/>
+  <rect x="475.00" y="144" width="383.00" height="18" fill="#34d399" data-profile="acwing" data-segment="Easy" data-count="2">
+    <title>Easy: 2</title>
+  </rect>
+  <text x="475" y="184" fill="#b8c1d8" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Easy 2</text>
+  <rect x="24" y="236" width="419" height="146" rx="14" fill="#151b29" stroke="#293246"/>
+  <circle cx="42" cy="261" r="5" fill="#a78bfa"/>
+  <text x="55" y="267" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="18" font-weight="700">Codeforces</text>
+  <text x="425" y="266" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">0 ACCEPTED</text>
+  <text x="42" y="293" fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">RATING PROFILE</text>
+  <text x="42" y="330" fill="#64748b" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14">No accepted problems yet</text>
+  <rect x="457" y="236" width="419" height="146" rx="14" fill="#151b29" stroke="#293246"/>
+  <circle cx="475" cy="261" r="5" fill="#34d399"/>
+  <text x="488" y="267" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="18" font-weight="700">Deep-ML</text>
+  <text x="858" y="266" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">0 ACCEPTED</text>
+  <text x="475" y="293" fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">CATEGORY × LEVEL</text>
+  <text x="475" y="330" fill="#64748b" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14">No accepted problems yet</text>
+  <text x="24" y="425" fill="#f0f3f8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="700">Accepted solution languages</text>
+  <text x="876" y="425" text-anchor="end" fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">9 SOLUTIONS</text>
+  <rect x="24" y="439" width="852" height="20" rx="6" fill="#252d3d"/>
+  <rect x="24.00" y="439" width="568.00" height="20" fill="#22d3ee" data-profile="language" data-segment="Python" data-count="6">
+    <title>Python: 6</title>
+  </rect>
+  <rect x="592.00" y="439" width="284.00" height="20" fill="#a78bfa" data-profile="language" data-segment="C++" data-count="3">
+    <title>C++: 3</title>
+  </rect>
+  <text x="24" y="482" fill="#b8c1d8" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Python 6 · C++ 3</text>
+</svg>

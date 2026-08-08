@@ -21,6 +21,10 @@
 
 <!-- recent-problems:end -->
 
+## 覆盖情况
+
+![按平台、原生难度和语言统计的练习覆盖](assets/dashboards/practice-coverage.svg)
+
 ## 活动
 
 总计活动热力图汇总所有已支持平台记录的题目事件，而不是统计 Git commit。

@@ -20,3 +20,10 @@ default_difficulty_scheme = "rating"
 label = "Deep-ML"
 id_strategy = "positive-integer"
 default_difficulty_scheme = "level"
+coverage_categories = [
+  "linear-algebra",
+  "machine-learning",
+  "deep-learning",
+  "nlp",
+  "computer-vision",
+]

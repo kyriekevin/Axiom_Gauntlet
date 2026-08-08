@@ -242,11 +242,13 @@ def _run_knowledge(args: argparse.Namespace) -> int:
 
 
 def _run_render(args: argparse.Namespace) -> int:
+    from .coverage import generate_coverage
     from .heatmap import generate_heatmaps
     from .homepage import generate_homepages
 
     changed = (
         *generate_heatmaps(args.root, args.year, check=args.check),
+        *generate_coverage(args.root, check=args.check),
         *generate_homepages(args.root, check=args.check),
     )
     if args.check and changed:

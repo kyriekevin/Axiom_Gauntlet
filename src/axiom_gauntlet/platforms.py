@@ -26,6 +26,7 @@ class PlatformSpec:
     id_strategy: str
     default_difficulty_scheme: str
     canonical_width: int = 0
+    coverage_categories: tuple[str, ...] = ()
 
 
 def _require_string(raw: Mapping[str, Any], key: str, slug: str) -> str:
@@ -57,7 +58,14 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
         if not isinstance(raw_spec, Mapping):
             raise PlatformRegistryError(f"platform {slug!r} must be a table")
         unknown = sorted(
-            set(raw_spec) - {"label", "id_strategy", "canonical_width", "default_difficulty_scheme"}
+            set(raw_spec)
+            - {
+                "label",
+                "id_strategy",
+                "canonical_width",
+                "default_difficulty_scheme",
+                "coverage_categories",
+            }
         )
         if unknown:
             raise PlatformRegistryError(
@@ -84,12 +92,30 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
                 f"platform {slug!r} default_difficulty_scheme must be lowercase kebab-case"
             )
 
+        raw_categories = raw_spec.get("coverage_categories", [])
+        if not isinstance(raw_categories, list):
+            raise PlatformRegistryError(
+                f"platform {slug!r} coverage_categories must be an array of kebab-case strings"
+            )
+        categories: list[str] = []
+        for category in raw_categories:
+            if not isinstance(category, str) or _PLATFORM_SLUG_RE.fullmatch(category) is None:
+                raise PlatformRegistryError(
+                    f"platform {slug!r} coverage_categories must contain kebab-case strings"
+                )
+            if category in categories:
+                raise PlatformRegistryError(
+                    f"platform {slug!r} contains duplicate coverage category {category!r}"
+                )
+            categories.append(category)
+
         specs[slug] = PlatformSpec(
             slug=slug,
             label=_require_string(raw_spec, "label", slug),
             id_strategy=strategy,
             default_difficulty_scheme=difficulty_scheme,
             canonical_width=width,
+            coverage_categories=tuple(categories),
         )
     return MappingProxyType(specs)
 
