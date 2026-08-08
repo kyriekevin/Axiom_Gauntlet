@@ -136,7 +136,7 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
     assert 'class="heatmap-cell heatmap-level-1"' in first
     for color in ("#eff1f5", "#ccd0da", "#179299", "#1e1e2e", "#313244", "#94e2d5"):
         assert color in first
-    for opacity in ("0.25", "0.50", "0.75"):
+    for opacity in ("0.35", "0.60", "0.80"):
         assert f"fill-opacity: {opacity}" in first
     ET.fromstring(first)
 

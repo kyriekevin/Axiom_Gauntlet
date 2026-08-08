@@ -7,9 +7,9 @@
     .heatmap-secondary { fill: #5c5f77; }
     .heatmap-muted { fill: #6c6f85; }
     .heatmap-level-0 { fill: #ccd0da; }
-    .heatmap-level-1 { fill: #179299; fill-opacity: 0.25; }
-    .heatmap-level-2 { fill: #179299; fill-opacity: 0.50; }
-    .heatmap-level-3 { fill: #179299; fill-opacity: 0.75; }
+    .heatmap-level-1 { fill: #179299; fill-opacity: 0.35; }
+    .heatmap-level-2 { fill: #179299; fill-opacity: 0.60; }
+    .heatmap-level-3 { fill: #179299; fill-opacity: 0.80; }
     .heatmap-level-4 { fill: #179299; }
     @media (prefers-color-scheme: dark) {
       .heatmap-background { fill: #1e1e2e; }
@@ -17,9 +17,9 @@
       .heatmap-secondary { fill: #bac2de; }
       .heatmap-muted { fill: #a6adc8; }
       .heatmap-level-0 { fill: #313244; }
-      .heatmap-level-1 { fill: #94e2d5; fill-opacity: 0.25; }
-      .heatmap-level-2 { fill: #94e2d5; fill-opacity: 0.50; }
-      .heatmap-level-3 { fill: #94e2d5; fill-opacity: 0.75; }
+      .heatmap-level-1 { fill: #94e2d5; fill-opacity: 0.35; }
+      .heatmap-level-2 { fill: #94e2d5; fill-opacity: 0.60; }
+      .heatmap-level-3 { fill: #94e2d5; fill-opacity: 0.80; }
       .heatmap-level-4 { fill: #94e2d5; }
     }
   </style>
