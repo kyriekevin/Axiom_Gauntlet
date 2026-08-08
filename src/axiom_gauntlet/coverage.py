@@ -136,8 +136,14 @@ def aggregate_coverage(root: str | Path) -> CoverageSnapshot:
 
 
 def _category_label(category: str) -> str:
-    if category == "nlp":
-        return "NLP"
+    abbreviations = {
+        "computer-vision": "CV",
+        "deep-learning": "DL",
+        "machine-learning": "ML",
+        "nlp": "NLP",
+    }
+    if category in abbreviations:
+        return abbreviations[category]
     return category.replace("-", " ").title()
 
 
@@ -201,8 +207,15 @@ def _profile_values(coverage: PlatformCoverage) -> tuple[tuple[str, int, str], .
     )
 
 
-def _profile_summary(values: tuple[tuple[str, int, str], ...]) -> str:
+def _profile_summary(coverage: PlatformCoverage, values: tuple[tuple[str, int, str], ...]) -> str:
     populated = [f"{label} {count}" for label, count, _ in values if count > 0]
+    if coverage.spec.default_difficulty_scheme == "rating" and len(populated) > 1:
+        populated_values = [(label, count) for label, count, _ in values if count > 0]
+        first_label = populated_values[0][0]
+        last_label = populated_values[-1][0]
+        total = sum(count for _, count in populated_values)
+        noun = "problem" if total == 1 else "problems"
+        return f"{first_label} → {last_label} · {total} {noun}"
     return " · ".join(populated)
 
 
@@ -290,7 +303,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             values=values,
             data_prefix=coverage.spec.slug,
         )
-        summary = _profile_summary(values) or "Difficulty not recorded"
+        summary = _profile_summary(coverage, values) or "Difficulty not recorded"
         lines.append(
             f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '

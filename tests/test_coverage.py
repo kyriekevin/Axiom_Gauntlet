@@ -95,6 +95,58 @@ def _sample_repository(root: Path) -> None:
     )
 
 
+def _populated_repository(root: Path) -> None:
+    _sample_repository(root)
+    for problem_id, level, normalized, language in (
+        ("1", "Easy", "easy", "python"),
+        ("2", "Medium", "medium", "cpp"),
+    ):
+        _write_problem(
+            root,
+            platform="acwing",
+            directory_id=problem_id,
+            problem_id=problem_id,
+            difficulty_scheme="level",
+            difficulty_value=level,
+            normalized=normalized,
+            languages=(language,),
+        )
+
+    for index, rating in enumerate((800, 1000, 1400, 1600), start=1):
+        problem_id = f"{100 + index}A"
+        _write_problem(
+            root,
+            platform="codeforces",
+            directory_id=problem_id,
+            problem_id=problem_id,
+            difficulty_scheme="rating",
+            difficulty_value=rating,
+            normalized="medium",
+            languages=(("cpp", "go") if rating == 1600 else ("cpp",)),
+        )
+
+    deep_ml_examples = (
+        (2, "Easy", "easy", "linear-algebra"),
+        (3, "Medium", "medium", "machine-learning"),
+        (4, "Hard", "hard", "machine-learning"),
+        (5, "Hard", "hard", "deep-learning"),
+        (6, "Easy", "easy", "nlp"),
+        (7, "Medium", "medium", "computer-vision"),
+    )
+    for problem_id, level, normalized, category in deep_ml_examples:
+        _write_problem(
+            root,
+            platform="deep-ml",
+            directory_id=str(problem_id),
+            problem_id=str(problem_id),
+            difficulty_scheme="level",
+            difficulty_value=level,
+            normalized=normalized,
+            tags=(category,),
+            languages=(("python", "go") if problem_id == 7 else ("python",)),
+        )
+
+
 def test_aggregate_uses_native_profiles_and_unique_problem_languages(tmp_path: Path) -> None:
     _sample_repository(tmp_path)
 
@@ -130,6 +182,36 @@ def test_render_is_static_accessible_and_keeps_empty_platforms_compact(tmp_path:
     assert "No accepted problems yet" in svg
     assert "<script" not in svg.lower()
     assert "animate" not in svg.lower()
+    ET.fromstring(svg)
+
+
+def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
+    _populated_repository(tmp_path)
+
+    snapshot = aggregate_coverage(tmp_path)
+    svg = render_coverage_svg(snapshot)
+
+    platforms = {coverage.spec.slug: coverage for coverage in snapshot.platforms}
+    assert platforms["codeforces"].ratings == {
+        "≤999": 1,
+        "1000–1199": 1,
+        "1200–1399": 1,
+        "1400–1599": 1,
+        "1600+": 1,
+    }
+    assert platforms["deep-ml"].difficulty == {"easy": 2, "medium": 3, "hard": 2}
+    assert platforms["deep-ml"].categories == {
+        "linear-algebra": 2,
+        "machine-learning": 2,
+        "deep-learning": 1,
+        "nlp": 1,
+        "computer-vision": 1,
+    }
+    assert snapshot.active_platforms == 4
+    assert snapshot.languages == {"Python": 10, "C++": 7, "Go": 2}
+    assert 'data-segment="1600+" data-count="1"' in svg
+    assert "≤999 → 1600+ · 5 problems" in svg
+    assert "Linear Algebra 2 · ML 2 · CV 1" in svg
     ET.fromstring(svg)
 
 
