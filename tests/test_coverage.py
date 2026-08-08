@@ -121,6 +121,10 @@ def test_render_is_static_accessible_and_keeps_empty_platforms_compact(tmp_path:
     assert 'data-ring="language"' in svg
     assert "OUTER PLATFORM · INNER LANGUAGE" in svg
     assert "Native profiles" in svg
+    assert "@media (prefers-color-scheme: dark)" in svg
+    assert 'class="coverage-background"' in svg
+    for color in ("#f6f8fa", "#e8ecf1", "#1d1e2c", "#34384a"):
+        assert color in svg
     assert "1200–1399 1" in svg
     assert "Linear Algebra 1" in svg
     assert "No accepted problems yet" in svg

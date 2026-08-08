@@ -162,7 +162,7 @@ def _render_segments(
     total = sum(value for _, value, _ in values)
     clip_id = f"{data_prefix}-profile-clip"
     lines.append(
-        f'  <rect x="{x}" y="{y}" width="{width}" height="{height}" rx="6" fill="#34384a"/>'
+        f'  <rect class="coverage-track" x="{x}" y="{y}" width="{width}" height="{height}" rx="6"/>'
     )
     if total <= 0:
         return
@@ -218,8 +218,8 @@ def _render_ring(
 ) -> None:
     circumference = 2 * math.pi * radius
     lines.append(
-        f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#34384a" '
-        f'stroke-width="{stroke_width}"/>'
+        f'  <circle class="coverage-track-stroke" cx="{cx}" cy="{cy}" r="{radius}" '
+        f'fill="none" stroke-width="{stroke_width}"/>'
     )
     total = sum(value for _, value, _ in values)
     if total <= 0:
@@ -252,13 +252,13 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
     lines.extend(
         (
             f'  <circle cx="31" cy="{y + 20}" r="5" fill="{accent}"/>',
-            f'  <text x="44" y="{y + 26}" fill="#f0f3f8" '
+            f'  <text class="coverage-primary" x="44" y="{y + 26}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             f'font-size="16" font-weight="650">{escape(coverage.spec.label)}</text>',
-            f'  <text x="190" y="{y + 25}" text-anchor="end" fill="#a8b3cf" '
+            f'  <text class="coverage-secondary" x="190" y="{y + 25}" text-anchor="end" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             f'font-size="11">{coverage.accepted} AC</text>',
-            f'  <text x="44" y="{y + 45}" fill="#64748b" '
+            f'  <text class="coverage-muted" x="44" y="{y + 45}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             f'font-size="9">{_profile_label(coverage)}</text>',
         )
@@ -275,7 +275,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             data_prefix=coverage.spec.slug,
         )
         lines.append(
-            f'  <text x="640" y="{y + 26}" fill="#64748b" '
+            f'  <text class="coverage-muted" x="640" y="{y + 26}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             'font-size="14">No accepted problems yet</text>'
         )
@@ -292,7 +292,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
         )
         summary = _profile_summary(values) or "Difficulty not recorded"
         lines.append(
-            f'  <text x="640" y="{y + 25}" fill="#b8c1d8" '
+            f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             f'font-size="11">{escape(summary)}</text>'
         )
@@ -306,14 +306,15 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
                 f"{_category_label(category)} {count}" for category, count in categories
             )
             lines.append(
-                f'  <text x="640" y="{y + 44}" fill="#64748b" '
+                f'  <text class="coverage-muted" x="640" y="{y + 44}" '
                 'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
                 f'font-size="10">{escape(category_summary)}</text>'
             )
 
     lines.append(
-        f'  <line x1="24" y1="{y + _PROFILE_ROW_HEIGHT - 1}" x2="876" '
-        f'y2="{y + _PROFILE_ROW_HEIGHT - 1}" stroke="#34384a"/>'
+        f'  <line class="coverage-divider" x1="24" '
+        f'y1="{y + _PROFILE_ROW_HEIGHT - 1}" x2="876" '
+        f'y2="{y + _PROFILE_ROW_HEIGHT - 1}"/>'
     )
 
 
@@ -342,11 +343,29 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         ),
         f'  <title id="coverage-title">{title}</title>',
         f'  <desc id="coverage-desc">{escape(description)}</desc>',
-        f'  <rect width="{_WIDTH}" height="{height}" rx="16" fill="#1d1e2c"/>',
-        '  <text x="24" y="37" fill="#f0f3f8" '
+        "  <style>",
+        "    .coverage-background { fill: #f6f8fa; }",
+        "    .coverage-primary { fill: #1f2328; }",
+        "    .coverage-secondary { fill: #57606a; }",
+        "    .coverage-muted { fill: #6e7781; }",
+        "    .coverage-track { fill: #e8ecf1; }",
+        "    .coverage-track-stroke { stroke: #e8ecf1; }",
+        "    .coverage-divider { stroke: #d8dee4; }",
+        "    @media (prefers-color-scheme: dark) {",
+        "      .coverage-background { fill: #1d1e2c; }",
+        "      .coverage-primary { fill: #e6e9f2; }",
+        "      .coverage-secondary { fill: #b8c1d8; }",
+        "      .coverage-muted { fill: #8d99b2; }",
+        "      .coverage-track { fill: #34384a; }",
+        "      .coverage-track-stroke { stroke: #34384a; }",
+        "      .coverage-divider { stroke: #34384a; }",
+        "    }",
+        "  </style>",
+        f'  <rect class="coverage-background" width="{_WIDTH}" height="{height}" rx="16"/>',
+        '  <text class="coverage-primary" x="24" y="37" '
         'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
         'font-size="22" font-weight="700">Practice Coverage</text>',
-        f'  <text x="24" y="59" fill="#8d99b2" '
+        f'  <text class="coverage-muted" x="24" y="59" '
         'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12">'
         f"{snapshot.accepted_problems} accepted problems across "
         f"{snapshot.active_platforms} active {active_text}</text>",
@@ -390,19 +409,21 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
     )
     lines.extend(
         (
-            f'  <text x="{ring_cx}" y="{ring_cy + 3}" text-anchor="middle" fill="#f0f3f8" '
+            f'  <text class="coverage-primary" x="{ring_cx}" y="{ring_cy + 3}" '
+            'text-anchor="middle" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             f'font-size="26" font-weight="700">{snapshot.accepted_problems}</text>',
-            f'  <text x="{ring_cx}" y="{ring_cy + 22}" text-anchor="middle" fill="#8d99b2" '
+            f'  <text class="coverage-secondary" x="{ring_cx}" y="{ring_cy + 22}" '
+            'text-anchor="middle" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             'font-size="9">PROBLEMS</text>',
-            f'  <text x="{ring_cx}" y="{overview_top + 184}" text-anchor="middle" '
-            'fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            f'  <text class="coverage-muted" x="{ring_cx}" y="{overview_top + 184}" '
+            'text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             'font-size="9">OUTER PLATFORM · INNER LANGUAGE</text>',
-            f'  <text x="260" y="{overview_top + 18}" fill="#8d99b2" '
+            f'  <text class="coverage-muted" x="260" y="{overview_top + 18}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             'font-size="10">ACCEPTED BY PLATFORM</text>',
-            f'  <text x="690" y="{overview_top + 18}" fill="#8d99b2" '
+            f'  <text class="coverage-muted" x="690" y="{overview_top + 18}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
             'font-size="10">SOLUTION LANGUAGES</text>',
         )
@@ -423,10 +444,10 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         lines.extend(
             (
                 f'  <circle cx="{x + 5}" cy="{y - 4}" r="5" fill="{color}"/>',
-                f'  <text x="{x + 18}" y="{y}" fill="#dce2f0" '
+                f'  <text class="coverage-primary" x="{x + 18}" y="{y}" '
                 'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
                 f'font-size="14" font-weight="600">{escape(coverage.spec.label)}</text>',
-                f'  <text x="{x + 18}" y="{y + 17}" fill="#64748b" '
+                f'  <text class="coverage-muted" x="{x + 18}" y="{y + 17}" '
                 'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
                 f'font-size="10">{coverage.accepted} · {share:.0f}%</text>',
             )
@@ -440,26 +461,28 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
             lines.extend(
                 (
                     f'  <rect x="690" y="{y - 12}" width="10" height="10" rx="3" fill="{color}"/>',
-                    f'  <text x="710" y="{y - 3}" fill="#dce2f0" '
+                    f'  <text class="coverage-primary" x="710" y="{y - 3}" '
                     'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
                     f'font-size="13">{escape(language)}</text>',
-                    f'  <text x="860" y="{y - 3}" text-anchor="end" fill="#a8b3cf" '
+                    f'  <text class="coverage-secondary" x="860" y="{y - 3}" '
+                    'text-anchor="end" '
                     'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
                     f'font-size="11">{count} · {share:.0f}%</text>',
                 )
             )
     else:
         lines.append(
-            f'  <text x="690" y="{overview_top + 49}" fill="#64748b" '
+            f'  <text class="coverage-muted" x="690" y="{overview_top + 49}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             'font-size="13">No accepted solutions yet</text>'
         )
 
     lines.extend(
         (
-            f'  <line x1="24" y1="{overview_top + overview_height}" x2="876" '
-            f'y2="{overview_top + overview_height}" stroke="#34384a"/>',
-            f'  <text x="24" y="{profile_heading_y}" fill="#f0f3f8" '
+            f'  <line class="coverage-divider" x1="24" '
+            f'y1="{overview_top + overview_height}" x2="876" '
+            f'y2="{overview_top + overview_height}"/>',
+            f'  <text class="coverage-primary" x="24" y="{profile_heading_y}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             'font-size="16" font-weight="700">Native profiles</text>',
         )
