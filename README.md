@@ -58,16 +58,12 @@ See the [problem and knowledge schema](docs/SCHEMA.md),
 
 ## Activity
 
-Problem activity maps are generated from recorded problem events rather than Git commit counts.
-Knowledge maintenance has its own generated [`LOG.md`](knowledge/LOG.md).
+The total problem-activity map combines recorded events from every supported platform rather than
+counting Git commits. Knowledge maintenance has its own generated [`LOG.md`](knowledge/LOG.md).
 
-![LeetCode activity heatmap](assets/heatmaps/leetcode.svg)
-
-![AcWing activity heatmap](assets/heatmaps/acwing.svg)
-
-![Codeforces activity heatmap](assets/heatmaps/codeforces.svg)
+![Total problem activity heatmap](assets/heatmaps/total.svg)
 
 ## Continuous Integration
 
-Pull requests run the complete verification gate. Generated heatmaps and knowledge indexes are
+Pull requests run the complete verification gate. The generated heatmap and knowledge indexes are
 checked for freshness.

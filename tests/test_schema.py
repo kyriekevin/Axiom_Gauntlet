@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from axiom_gauntlet.model import canonical_problem_id, expected_uid, load_problem
+from axiom_gauntlet.model import PLATFORMS, canonical_problem_id, expected_uid, load_problem
 from axiom_gauntlet.scaffold import create_problem
 from axiom_gauntlet.validate import validate_problem_dir, validate_repository
 
@@ -15,7 +15,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in ("leetcode", "acwing", "codeforces"):
+    for platform in PLATFORMS:
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "problem",
@@ -114,7 +114,9 @@ def test_platform_canonical_ids() -> None:
     assert canonical_problem_id("leetcode", "3536") == "3536"
     assert canonical_problem_id("acwing", "0785") == "785"
     assert canonical_problem_id("codeforces", "004a") == "4A"
+    assert canonical_problem_id("deep-ml", "001") == "1"
     assert expected_uid("leetcode", "1") == "leetcode:0001"
+    assert expected_uid("deep-ml", "1") == "deep-ml:1"
 
 
 def test_scaffold_creates_draft_with_multiple_languages(tmp_path: Path) -> None:

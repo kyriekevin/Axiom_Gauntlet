@@ -10,6 +10,7 @@ from string import Template
 
 from .model import (
     LANGUAGE_FILES,
+    PLATFORM_LABELS,
     PLATFORMS,
     canonical_problem_id,
     expected_uid,
@@ -23,11 +24,6 @@ _SOLUTION_PLACEHOLDERS = {
     "go": "// TODO: paste the accepted solution.\n",
 }
 _TAG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-_PLATFORM_LABELS = {
-    "leetcode": "LeetCode",
-    "acwing": "AcWing",
-    "codeforces": "Codeforces",
-}
 
 
 def create_problem(
@@ -110,7 +106,7 @@ def create_problem(
     )
     readme_values = dict(
         canonical_id=canonical_id,
-        platform_label=_PLATFORM_LABELS[platform],
+        platform_label=PLATFORM_LABELS[platform],
         title=title,
         url=url,
         uid=expected_uid(platform, normalized_id),

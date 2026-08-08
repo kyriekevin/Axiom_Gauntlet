@@ -137,7 +137,7 @@ This boundary keeps infrastructure PR review focused on contracts and determinis
 - Problem READMEs remain lightweight source cards.
 - Accepted-solution complexity lives in `problem.toml`.
 - `axiom-practice` and `axiom-review` have separate daily-practice and delayed-review roles.
-- Knowledge activity has its own generated log and does not inflate problem AC heatmaps.
+- Knowledge activity has its own generated log and does not inflate the problem activity heatmap.
 
 ## Reference patterns
 

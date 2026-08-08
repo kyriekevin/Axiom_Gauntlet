@@ -33,7 +33,7 @@ def test_discover_uses_exact_problem_layout_and_stable_order(tmp_path: Path) -> 
     assert discover(tmp_path) == (first, second)
 
 
-def test_aggregate_counts_supported_activity_and_filters_platform_and_year(tmp_path: Path) -> None:
+def test_aggregate_counts_activity_across_platforms_and_filters_year(tmp_path: Path) -> None:
     _write_problem(
         tmp_path,
         "leetcode",
@@ -64,7 +64,7 @@ date = 2025-12-31
     )
     _write_problem(
         tmp_path,
-        "acwing",
+        "deep-ml",
         "0001",
         """
 [[activity]]
@@ -73,11 +73,17 @@ date = 2026-08-01
 """.lstrip(),
     )
 
-    assert aggregate_activity(tmp_path, "leetcode", 2026) == {
-        date(2026, 8, 1): 2,
+    _write_problem(
+        tmp_path,
+        "unsupported",
+        "0001",
+        '[[activity]]\ntype = "ac"\ndate = 2026-08-01\n',
+    )
+
+    assert aggregate_activity(tmp_path, 2026) == {
+        date(2026, 8, 1): 3,
         date(2026, 8, 2): 1,
     }
-    assert aggregate_activity(tmp_path, "acwing", 2026) == {date(2026, 8, 1): 1}
 
 
 def test_aggregate_ignores_malformed_events_but_reports_invalid_toml(tmp_path: Path) -> None:
@@ -95,11 +101,11 @@ type = "ac"
 date = "not-a-date"
 """.lstrip(),
     )
-    assert aggregate_activity(tmp_path, "leetcode", 2026) == {}
+    assert aggregate_activity(tmp_path, 2026) == {}
 
     _write_problem(tmp_path, "leetcode", "broken", "this = [is not valid")
     with pytest.raises(HeatmapDataError, match="cannot read"):
-        aggregate_activity(tmp_path, "leetcode", 2026)
+        aggregate_activity(tmp_path, 2026)
 
 
 def test_render_is_deterministic_static_and_records_intensity() -> None:
@@ -110,8 +116,8 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
         date(2025, 12, 31): 99,
     }
 
-    first = render_heatmap("leetcode", 2026, counts)
-    second = render_heatmap("leetcode", 2026, dict(reversed(tuple(counts.items()))))
+    first = render_heatmap(2026, counts)
+    second = render_heatmap(2026, dict(reversed(tuple(counts.items()))))
 
     assert first == second
     assert "<script" not in first.lower()
@@ -129,7 +135,7 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
     ((2025, 365), (2024, 366)),
 )
 def test_empty_heatmap_contains_every_day(year: int, expected_days: int) -> None:
-    svg = render_heatmap("codeforces", year, {})
+    svg = render_heatmap(year, {})
     document = ET.fromstring(svg)
     namespace = {"svg": "http://www.w3.org/2000/svg"}
     day_cells = [
@@ -154,26 +160,20 @@ date = 2026-08-01
     )
 
     changed = generate_heatmaps(tmp_path, 2026)
-    assert tuple(path.name for path in changed) == (
-        "leetcode.svg",
-        "acwing.svg",
-        "codeforces.svg",
-    )
+    assert tuple(path.name for path in changed) == ("total.svg",)
     assert check_heatmaps(tmp_path, 2026)
     assert generate_heatmaps(tmp_path, 2026, check=True) == ()
 
-    leetcode = tmp_path / "assets" / "heatmaps" / "leetcode.svg"
-    leetcode.write_text("stale\n", encoding="utf-8")
+    total = tmp_path / "assets" / "heatmaps" / "total.svg"
+    total.write_text("stale\n", encoding="utf-8")
     stale = generate_heatmaps(tmp_path, 2026, check=True)
-    assert stale == (leetcode,)
-    assert leetcode.read_text(encoding="utf-8") == "stale\n"
+    assert stale == (total,)
+    assert total.read_text(encoding="utf-8") == "stale\n"
 
-    assert generate_heatmaps(tmp_path, 2026) == (leetcode,)
+    assert generate_heatmaps(tmp_path, 2026) == (total,)
     assert check_heatmaps(tmp_path, 2026)
 
 
-def test_rejects_unknown_platform_and_invalid_year(tmp_path: Path) -> None:
-    with pytest.raises(ValueError, match="unsupported platform"):
-        aggregate_activity(tmp_path, "unknown", 2026)
+def test_rejects_invalid_year(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="year"):
-        render_heatmap("leetcode", 0, {})
+        render_heatmap(0, {})

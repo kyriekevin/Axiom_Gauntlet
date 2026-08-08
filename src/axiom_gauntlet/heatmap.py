@@ -14,22 +14,10 @@ from datetime import date, datetime, timedelta
 from html import escape
 from pathlib import Path
 
-SUPPORTED_PLATFORMS = ("leetcode", "acwing", "codeforces")
+from .model import PLATFORMS
+
 COUNTED_ACTIVITY_TYPES = frozenset({"ac", "note", "review"})
-
-_PLATFORM_LABELS = {
-    "leetcode": "LeetCode",
-    "acwing": "AcWing",
-    "codeforces": "Codeforces",
-}
-
-# Empty plus four intensity levels.  Each palette is deliberately legible on
-# the shared dark card used by every platform.
-_PALETTES = {
-    "leetcode": ("#202736", "#513b11", "#8a6216", "#d99a1f", "#ffd166"),
-    "acwing": ("#202736", "#083b4c", "#086f87", "#11a9c3", "#66e3f4"),
-    "codeforces": ("#202736", "#34205f", "#5933a5", "#8b5cf6", "#d8b4fe"),
-}
+_PALETTE = ("#202736", "#0e4429", "#006d32", "#26a641", "#39d353")
 
 _CELL_SIZE = 11
 _CELL_GAP = 4
@@ -84,20 +72,19 @@ def _read_manifest(path: Path) -> Mapping[str, object]:
     return parsed
 
 
-def aggregate_activity(root: Path, platform: str, year: int) -> dict[date, int]:
-    """Count AC, note, and review events by local calendar date.
+def aggregate_activity(root: Path, year: int) -> dict[date, int]:
+    """Count AC, note, and review events across all supported platforms.
 
     Dates in ``problem.toml`` are already Asia/Shanghai calendar dates; this
     module deliberately performs no timezone conversion.
     """
 
-    _validate_platform(platform)
     _validate_year(year)
     root = Path(root)
     counts: Counter[date] = Counter()
 
     for manifest_path in discover(root):
-        if _platform_for(manifest_path, root) != platform:
+        if _platform_for(manifest_path, root) not in PLATFORMS:
             continue
 
         raw_activity = _read_manifest(manifest_path).get("activity", ())
@@ -123,12 +110,6 @@ def aggregate_activity(root: Path, platform: str, year: int) -> dict[date, int]:
     return dict(sorted(counts.items()))
 
 
-def _validate_platform(platform: str) -> None:
-    if platform not in SUPPORTED_PLATFORMS:
-        choices = ", ".join(SUPPORTED_PLATFORMS)
-        raise ValueError(f"unsupported platform {platform!r}; expected one of: {choices}")
-
-
 def _validate_year(year: int) -> None:
     if isinstance(year, bool) or not isinstance(year, int) or not 1 <= year <= 9999:
         raise ValueError("year must be an integer between 1 and 9999")
@@ -149,17 +130,16 @@ def _intensity(count: int) -> int:
     return min(count, 4)
 
 
-def render_heatmap(platform: str, year: int, counts: Mapping[date, int]) -> str:
-    """Render one platform/year as a deterministic, script-free SVG string."""
+def render_heatmap(year: int, counts: Mapping[date, int]) -> str:
+    """Render total repository activity as a deterministic, script-free SVG string."""
 
-    _validate_platform(platform)
     _validate_year(year)
     grid_start, grid_end, weeks = _calendar_bounds(year)
     width = _GRID_LEFT + weeks * _CELL_STEP + 30
     grid_bottom = _GRID_TOP + 7 * _CELL_STEP - _CELL_GAP
     height = grid_bottom + 58
-    label = _PLATFORM_LABELS[platform]
-    palette = _PALETTES[platform]
+    label = "Axiom Gauntlet"
+    palette = _PALETTE
 
     normalized_counts = {
         day: max(0, int(count))
@@ -168,8 +148,8 @@ def render_heatmap(platform: str, year: int, counts: Mapping[date, int]) -> str:
     }
     total_events = sum(normalized_counts.values())
     active_days = sum(1 for count in normalized_counts.values() if count > 0)
-    title_id = f"{platform}-{year}-title"
-    desc_id = f"{platform}-{year}-desc"
+    title_id = f"total-{year}-title"
+    desc_id = f"total-{year}-desc"
 
     lines = [
         (
@@ -199,7 +179,7 @@ def render_heatmap(platform: str, year: int, counts: Mapping[date, int]) -> str:
         (
             '  <text x="25" y="56" fill="#76839f" font-family="ui-monospace, '
             'SFMono-Regular, Menlo, Consolas, monospace" font-size="11">'
-            "AC · NOTE · REVIEW</text>"
+            "ALL PLATFORMS · AC · NOTE · REVIEW</text>"
         ),
         (
             f'  <text x="{width - 26}" y="56" text-anchor="end" fill="#76839f" '
@@ -292,11 +272,10 @@ def render_heatmap(platform: str, year: int, counts: Mapping[date, int]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def heatmap_path(root: Path, platform: str) -> Path:
-    """Return the checked-in asset path for *platform*."""
+def heatmap_path(root: Path) -> Path:
+    """Return the checked-in path for the cross-platform activity heatmap."""
 
-    _validate_platform(platform)
-    return Path(root) / "assets" / "heatmaps" / f"{platform}.svg"
+    return Path(root) / "assets" / "heatmaps" / "total.svg"
 
 
 def generate_heatmaps(
@@ -304,9 +283,8 @@ def generate_heatmaps(
     year: int,
     *,
     check: bool = False,
-    platforms: Iterable[str] = SUPPORTED_PLATFORMS,
 ) -> tuple[Path, ...]:
-    """Generate heatmaps and return paths that changed (or are stale).
+    """Generate the total heatmap and return its path when changed or stale.
 
     In check mode no files are written; the returned tuple contains missing or
     stale assets.  This makes the function directly usable by a CLI command:
@@ -315,35 +293,27 @@ def generate_heatmaps(
 
     _validate_year(year)
     root = Path(root)
-    changed: list[Path] = []
-
-    for platform in platforms:
-        _validate_platform(platform)
-        output = heatmap_path(root, platform)
-        expected = render_heatmap(platform, year, aggregate_activity(root, platform, year))
-        try:
-            actual = output.read_text(encoding="utf-8")
-        except FileNotFoundError:
-            actual = None
-        if actual == expected:
-            continue
-        changed.append(output)
-        if not check:
-            output.parent.mkdir(parents=True, exist_ok=True)
-            output.write_text(expected, encoding="utf-8", newline="\n")
-
-    return tuple(changed)
+    output = heatmap_path(root)
+    expected = render_heatmap(year, aggregate_activity(root, year))
+    try:
+        actual = output.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        actual = None
+    if actual == expected:
+        return ()
+    if not check:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(expected, encoding="utf-8", newline="\n")
+    return (output,)
 
 
 def check_heatmaps(
     root: Path,
     year: int,
-    *,
-    platforms: Iterable[str] = SUPPORTED_PLATFORMS,
 ) -> bool:
-    """Return ``True`` when all generated heatmaps are current."""
+    """Return ``True`` when the generated total heatmap is current."""
 
-    return not generate_heatmaps(root, year, check=True, platforms=platforms)
+    return not generate_heatmaps(root, year, check=True)
 
 
 # A descriptive alias for callers that treat generation as a rendering step.

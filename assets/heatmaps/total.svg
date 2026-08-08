@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="883" height="247" viewBox="0 0 883 247" role="img" aria-labelledby="acwing-2026-title acwing-2026-desc">
-  <title id="acwing-2026-title">AcWing activity in 2026</title>
-  <desc id="acwing-2026-desc">2 counted activities across 2 active days. AC, note, and review events are included.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="883" height="247" viewBox="0 0 883 247" role="img" aria-labelledby="total-2026-title total-2026-desc">
+  <title id="total-2026-title">Axiom Gauntlet activity in 2026</title>
+  <desc id="total-2026-desc">9 counted activities across 6 active days. AC, note, and review events are included.</desc>
   <rect width="883" height="247" rx="16" fill="#0d111b"/>
   <circle cx="25" cy="25" r="4" fill="#ff5f57"/>
   <circle cx="39" cy="25" r="4" fill="#febc2e"/>
   <circle cx="53" cy="25" r="4" fill="#28c840"/>
-  <text x="70" y="31" fill="#f0f3f8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700">AcWing Activity</text>
+  <text x="70" y="31" fill="#f0f3f8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700">Axiom Gauntlet Activity</text>
   <text x="857" y="31" text-anchor="end" fill="#a8b3cf" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">2026</text>
-  <text x="25" y="56" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">AC · NOTE · REVIEW</text>
-  <text x="857" y="56" text-anchor="end" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">2 EVENTS · 2 ACTIVE DAYS</text>
+  <text x="25" y="56" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">ALL PLATFORMS · AC · NOTE · REVIEW</text>
+  <text x="857" y="56" text-anchor="end" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">9 EVENTS · 6 ACTIVE DAYS</text>
   <text x="58" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Jan</text>
   <text x="118" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Feb</text>
   <text x="178" y="78" fill="#76839f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">Mar</text>
@@ -660,26 +660,26 @@
   <rect x="508" y="148" width="11" height="11" rx="2" fill="#202736" data-date="2026-07-31" data-count="0" data-level="0">
     <title>2026-07-31: 0 events</title>
   </rect>
-  <rect x="508" y="163" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-01" data-count="0" data-level="0">
-    <title>2026-08-01: 0 events</title>
+  <rect x="508" y="163" width="11" height="11" rx="2" fill="#006d32" data-date="2026-08-01" data-count="2" data-level="2">
+    <title>2026-08-01: 2 events</title>
   </rect>
-  <rect x="508" y="178" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-02" data-count="0" data-level="0">
-    <title>2026-08-02: 0 events</title>
+  <rect x="508" y="178" width="11" height="11" rx="2" fill="#0e4429" data-date="2026-08-02" data-count="1" data-level="1">
+    <title>2026-08-02: 1 event</title>
   </rect>
-  <rect x="523" y="88" width="11" height="11" rx="2" fill="#083b4c" data-date="2026-08-03" data-count="1" data-level="1">
-    <title>2026-08-03: 1 event</title>
+  <rect x="523" y="88" width="11" height="11" rx="2" fill="#006d32" data-date="2026-08-03" data-count="2" data-level="2">
+    <title>2026-08-03: 2 events</title>
   </rect>
-  <rect x="523" y="103" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-04" data-count="0" data-level="0">
-    <title>2026-08-04: 0 events</title>
+  <rect x="523" y="103" width="11" height="11" rx="2" fill="#0e4429" data-date="2026-08-04" data-count="1" data-level="1">
+    <title>2026-08-04: 1 event</title>
   </rect>
-  <rect x="523" y="118" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-05" data-count="0" data-level="0">
-    <title>2026-08-05: 0 events</title>
+  <rect x="523" y="118" width="11" height="11" rx="2" fill="#0e4429" data-date="2026-08-05" data-count="1" data-level="1">
+    <title>2026-08-05: 1 event</title>
   </rect>
   <rect x="523" y="133" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-06" data-count="0" data-level="0">
     <title>2026-08-06: 0 events</title>
   </rect>
-  <rect x="523" y="148" width="11" height="11" rx="2" fill="#083b4c" data-date="2026-08-07" data-count="1" data-level="1">
-    <title>2026-08-07: 1 event</title>
+  <rect x="523" y="148" width="11" height="11" rx="2" fill="#006d32" data-date="2026-08-07" data-count="2" data-level="2">
+    <title>2026-08-07: 2 events</title>
   </rect>
   <rect x="523" y="163" width="11" height="11" rx="2" fill="#202736" data-date="2026-08-08" data-count="0" data-level="0">
     <title>2026-08-08: 0 events</title>
@@ -1121,10 +1121,10 @@
   </rect>
   <text x="25" y="220" fill="#59657e" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">LESS</text>
   <rect x="57" y="211" width="11" height="11" rx="2" fill="#202736"/>
-  <rect x="72" y="211" width="11" height="11" rx="2" fill="#083b4c"/>
-  <rect x="87" y="211" width="11" height="11" rx="2" fill="#086f87"/>
-  <rect x="102" y="211" width="11" height="11" rx="2" fill="#11a9c3"/>
-  <rect x="117" y="211" width="11" height="11" rx="2" fill="#66e3f4"/>
+  <rect x="72" y="211" width="11" height="11" rx="2" fill="#0e4429"/>
+  <rect x="87" y="211" width="11" height="11" rx="2" fill="#006d32"/>
+  <rect x="102" y="211" width="11" height="11" rx="2" fill="#26a641"/>
+  <rect x="117" y="211" width="11" height="11" rx="2" fill="#39d353"/>
   <text x="134" y="220" fill="#59657e" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">MORE</text>
   <text x="857" y="220" text-anchor="end" fill="#59657e" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">ASIA/SHANGHAI CALENDAR DATE</text>
 </svg>

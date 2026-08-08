@@ -11,7 +11,13 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA_VERSION = 1
-PLATFORMS = frozenset({"leetcode", "acwing", "codeforces"})
+PLATFORM_LABELS = {
+    "leetcode": "LeetCode",
+    "acwing": "AcWing",
+    "codeforces": "Codeforces",
+    "deep-ml": "Deep-ML",
+}
+PLATFORMS = frozenset(PLATFORM_LABELS)
 STATES = frozenset({"draft", "accepted", "documented"})
 NORMALIZED_DIFFICULTIES = frozenset({"easy", "medium", "hard", "unknown"})
 LANGUAGE_FILES = {
@@ -214,7 +220,7 @@ def normalize_problem_id(platform: str, problem_id: str) -> str:
         raise ValueError(f"unsupported platform: {platform!r}")
     raw = str(problem_id).strip()
 
-    if platform in {"leetcode", "acwing"}:
+    if platform in {"leetcode", "acwing", "deep-ml"}:
         if not re.fullmatch(r"\d+", raw):
             raise ValueError(f"{platform} problem_id must contain only digits")
         number = int(raw)

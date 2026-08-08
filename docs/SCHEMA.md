@@ -3,14 +3,15 @@
 [English](SCHEMA.md) | [简体中文](SCHEMA_zh-CN.md)
 
 The repository has two machine-readable sources of truth: `problem.toml` records solving evidence;
-`topic.toml` records reusable knowledge. Generated heatmaps and knowledge indexes must agree with
+`topic.toml` records reusable knowledge. The generated heatmap and knowledge indexes must agree with
 them.
 
 ## Problem records
 
-Each problem lives at `problems/<platform>/<canonical-id>/`. LeetCode IDs are padded to at least four
-digits, AcWing IDs are normalized positive integers, and Codeforces IDs use an unpadded contest
-number plus uppercase index. The stable UID is `<platform>:<canonical-id>`.
+Each problem lives at `problems/<platform>/<canonical-id>/`. Supported platforms are LeetCode,
+AcWing, Codeforces, and Deep-ML. LeetCode IDs are padded to at least four digits; AcWing and Deep-ML
+IDs are normalized positive integers; Codeforces IDs use an unpadded contest number plus uppercase
+index. The stable UID is `<platform>:<canonical-id>` (for example, `deep-ml:1`).
 
 ```toml
 version = 1

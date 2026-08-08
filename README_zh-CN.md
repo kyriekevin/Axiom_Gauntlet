@@ -55,15 +55,11 @@ uv run axiom knowledge render
 
 ## 活动
 
-题目活动热力图根据 `problem.toml` 事件生成，而不是统计 Git commit；知识维护使用独立生成的
-[`LOG.md`](knowledge/LOG.md)。
+总计题目活动热力图汇总所有已支持平台的 `problem.toml` 事件，而不是统计 Git commit；知识
+维护使用独立生成的 [`LOG.md`](knowledge/LOG.md)。
 
-![LeetCode 活动热力图](assets/heatmaps/leetcode.svg)
-
-![AcWing 活动热力图](assets/heatmaps/acwing.svg)
-
-![Codeforces 活动热力图](assets/heatmaps/codeforces.svg)
+![总计题目活动热力图](assets/heatmaps/total.svg)
 
 ## 持续集成
 
-Pull Request 会运行完整验证门禁，并检查热力图与知识索引是否为最新版本。
+Pull Request 会运行完整验证门禁，并检查总计热力图与知识索引是否为最新版本。

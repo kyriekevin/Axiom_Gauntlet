@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from axiom_gauntlet.lifecycle import record_acceptance, record_documentation
-from axiom_gauntlet.model import load_problem
+from axiom_gauntlet.model import PLATFORMS, load_problem
 from axiom_gauntlet.scaffold import create_problem
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +16,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in ("leetcode", "acwing", "codeforces"):
+    for platform in PLATFORMS:
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "problem",

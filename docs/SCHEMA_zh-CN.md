@@ -7,9 +7,10 @@
 
 ## 题目记录
 
-每道题位于 `problems/<platform>/<canonical-id>/`。LeetCode ID 至少补齐四位，AcWing ID 使用
-规范正整数，Codeforces ID 使用不补零的比赛编号加大写题号。稳定 UID 为
-`<platform>:<canonical-id>`。
+每道题位于 `problems/<platform>/<canonical-id>/`。当前支持 LeetCode、AcWing、Codeforces 和
+Deep-ML。LeetCode ID 至少补齐四位；AcWing 与 Deep-ML ID 使用规范正整数；Codeforces ID
+使用不补零的比赛编号加大写题号。稳定 UID 为 `<platform>:<canonical-id>`（例如
+`deep-ml:1`）。
 
 ```toml
 version = 1

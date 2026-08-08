@@ -13,6 +13,7 @@ from axiom_gauntlet.knowledge import (
     render_indexes,
     review_topic,
 )
+from axiom_gauntlet.model import PLATFORMS
 from axiom_gauntlet.validate import validate_repository
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +22,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in ("leetcode", "acwing", "codeforces"):
+    for platform in PLATFORMS:
         (root / "problems" / platform).mkdir(parents=True)
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "knowledge",

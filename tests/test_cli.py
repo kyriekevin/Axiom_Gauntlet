@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from axiom_gauntlet.cli import main
-from axiom_gauntlet.model import load_problem
+from axiom_gauntlet.model import PLATFORMS, load_problem
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,7 +14,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in ("leetcode", "acwing", "codeforces"):
+    for platform in PLATFORMS:
         (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "problem",
@@ -54,6 +54,37 @@ def test_new_command_creates_a_normalized_codeforces_draft(
     assert problem.difficulty.scheme == "rating"
     assert problem.difficulty.value == 800
     assert problem.state == "draft"
+
+
+def test_new_command_creates_a_deep_ml_draft(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+
+    result = main(
+        [
+            "--root",
+            str(root),
+            "new",
+            "deep-ml",
+            "001",
+            "--title",
+            "Matrix Times Vector",
+            "--url",
+            "https://www.deep-ml.com/problems/1",
+            "--difficulty",
+            "Easy",
+            "--language",
+            "python",
+        ]
+    )
+
+    assert result == 0
+    assert capsys.readouterr().out.strip() == "problems/deep-ml/1"
+    problem = load_problem(root / "problems" / "deep-ml" / "1" / "problem.toml")
+    assert problem.uid == "deep-ml:1"
+    assert problem.problem_id == "1"
+    assert problem.difficulty.scheme == "level"
 
 
 def test_new_command_reports_user_errors_without_a_traceback(

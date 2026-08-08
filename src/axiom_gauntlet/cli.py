@@ -8,7 +8,10 @@ from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from .model import PLATFORMS
+
 SHANGHAI = ZoneInfo("Asia/Shanghai")
+PLATFORM_CHOICES = tuple(sorted(PLATFORMS))
 
 
 def repository_root() -> Path:
@@ -26,7 +29,7 @@ def _parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     new = subparsers.add_parser("new", help="Create a normalized problem entry.")
-    new.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    new.add_argument("platform", choices=PLATFORM_CHOICES)
     new.add_argument("problem_id")
     new.add_argument("--title", required=True)
     new.add_argument("--url", required=True)
@@ -49,7 +52,7 @@ def _parser() -> argparse.ArgumentParser:
     subparsers.add_parser("validate", help="Validate all problem entries.")
 
     accept = subparsers.add_parser("accept", help="Record a platform-confirmed AC event.")
-    accept.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    accept.add_argument("platform", choices=PLATFORM_CHOICES)
     accept.add_argument("problem_id")
     accept.add_argument(
         "--language",
@@ -67,7 +70,7 @@ def _parser() -> argparse.ArgumentParser:
     document = subparsers.add_parser(
         "document", help="Record completed bilingual notes for an accepted problem."
     )
-    document.add_argument("platform", choices=("leetcode", "acwing", "codeforces"))
+    document.add_argument("platform", choices=PLATFORM_CHOICES)
     document.add_argument("problem_id")
     document.add_argument("--date", type=_iso_date, default=None)
 
@@ -106,7 +109,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     knowledge_render.add_argument("--check", action="store_true")
 
-    render = subparsers.add_parser("render", help="Generate platform activity heatmaps.")
+    render = subparsers.add_parser("render", help="Generate the total activity heatmap.")
     render.add_argument(
         "--year",
         type=int,
@@ -247,12 +250,12 @@ def _run_render(args: argparse.Namespace) -> int:
 
     changed = render_all(args.root, args.year, check=args.check)
     if args.check and changed:
-        print("error: generated heatmaps are out of date")
+        print("error: generated heatmap is out of date")
         return 1
     if args.check:
-        print("Heatmaps are up to date.")
+        print("Heatmap is up to date.")
     else:
-        print(f"Rendered heatmaps for {args.year}.")
+        print(f"Rendered the total heatmap for {args.year}.")
     return 0
 
 
