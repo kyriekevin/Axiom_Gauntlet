@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="312" viewBox="0 0 1180 312" role="img" aria-labelledby="total-2026-08-07-title total-2026-08-07-desc">
-  <title id="total-2026-08-07-title">Axiom Gauntlet activity for 53 weeks through 2026-08-07</title>
-  <desc id="total-2026-08-07-desc">9 counted activities across 6 active days in the trailing 53 weeks. AC, note, and review events are included.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="312" viewBox="0 0 1180 312" role="img" aria-labelledby="total-2026-08-08-title total-2026-08-08-desc">
+  <title id="total-2026-08-08-title">Axiom Gauntlet activity for 53 weeks through 2026-08-08</title>
+  <desc id="total-2026-08-08-desc">12 counted activities across 7 active days in the trailing 53 weeks. AC, note, and review events are included.</desc>
   <style>
     .heatmap-background { fill: #eff1f5; }
     .heatmap-primary { fill: #4c4f69; }
@@ -28,9 +28,9 @@
   <circle cx="41" cy="27" r="5" fill="#febc2e"/>
   <circle cx="57" cy="27" r="5" fill="#28c840"/>
   <text class="heatmap-primary" x="76" y="35" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700">Axiom Gauntlet Activity</text>
-  <text class="heatmap-secondary" x="1154" y="34" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">53 WEEKS · THROUGH 2026-08-07</text>
+  <text class="heatmap-secondary" x="1154" y="34" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">53 WEEKS · THROUGH 2026-08-08</text>
   <text class="heatmap-secondary" x="25" y="66" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">ALL PLATFORMS · AC · NOTE · REVIEW</text>
-  <text class="heatmap-secondary" x="1154" y="66" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">9 EVENTS · 6 ACTIVE DAYS</text>
+  <text class="heatmap-secondary" x="1154" y="66" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">12 EVENTS · 7 ACTIVE DAYS</text>
   <text class="heatmap-secondary" x="58" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Aug</text>
   <text class="heatmap-secondary" x="138" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Sep</text>
   <text class="heatmap-secondary" x="218" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Oct</text>
@@ -1133,13 +1133,13 @@
   <rect class="heatmap-cell heatmap-level-0" x="1078" y="188" width="16" height="16" rx="4" data-date="2026-07-31" data-count="0" data-level="0">
     <title>2026-07-31: 0 events</title>
   </rect>
-  <rect class="heatmap-cell heatmap-level-3" x="1078" y="208" width="16" height="16" rx="4" data-date="2026-08-01" data-count="2" data-level="3">
+  <rect class="heatmap-cell heatmap-level-2" x="1078" y="208" width="16" height="16" rx="4" data-date="2026-08-01" data-count="2" data-level="2">
     <title>2026-08-01: 2 events</title>
   </rect>
   <rect class="heatmap-cell heatmap-level-1" x="1078" y="228" width="16" height="16" rx="4" data-date="2026-08-02" data-count="1" data-level="1">
     <title>2026-08-02: 1 event</title>
   </rect>
-  <rect class="heatmap-cell heatmap-level-3" x="1098" y="108" width="16" height="16" rx="4" data-date="2026-08-03" data-count="2" data-level="3">
+  <rect class="heatmap-cell heatmap-level-2" x="1098" y="108" width="16" height="16" rx="4" data-date="2026-08-03" data-count="2" data-level="2">
     <title>2026-08-03: 2 events</title>
   </rect>
   <rect class="heatmap-cell heatmap-level-1" x="1098" y="128" width="16" height="16" rx="4" data-date="2026-08-04" data-count="1" data-level="1">
@@ -1151,8 +1151,11 @@
   <rect class="heatmap-cell heatmap-level-0" x="1098" y="168" width="16" height="16" rx="4" data-date="2026-08-06" data-count="0" data-level="0">
     <title>2026-08-06: 0 events</title>
   </rect>
-  <rect class="heatmap-cell heatmap-level-3" x="1098" y="188" width="16" height="16" rx="4" data-date="2026-08-07" data-count="2" data-level="3">
+  <rect class="heatmap-cell heatmap-level-2" x="1098" y="188" width="16" height="16" rx="4" data-date="2026-08-07" data-count="2" data-level="2">
     <title>2026-08-07: 2 events</title>
+  </rect>
+  <rect class="heatmap-cell heatmap-level-4" x="1098" y="208" width="16" height="16" rx="4" data-date="2026-08-08" data-count="3" data-level="4">
+    <title>2026-08-08: 3 events</title>
   </rect>
   <text class="heatmap-muted" x="58" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">Less</text>
   <rect class="heatmap-level-0" x="92" y="268" width="16" height="16" rx="4"/>
