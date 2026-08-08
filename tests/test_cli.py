@@ -256,10 +256,10 @@ def test_render_command_updates_homepage_activity(
             encoding="utf-8",
         )
 
-    assert main(["--root", str(root), "render", "--year", "2026"]) == 0
-    assert "Rendered homepage activity for 2026." in capsys.readouterr().out
+    assert main(["--root", str(root), "render", "--as-of", "2026-08-01"]) == 0
+    assert "Rendered rolling homepage activity." in capsys.readouterr().out
     assert (root / "assets" / "heatmaps" / "total.svg").is_file()
     assert (root / "assets" / "dashboards" / "practice-coverage.svg").is_file()
     assert "No accepted problems yet." in (root / "README.md").read_text(encoding="utf-8")
-    assert main(["--root", str(root), "render", "--year", "2026", "--check"]) == 0
+    assert main(["--root", str(root), "render", "--as-of", "2026-08-01", "--check"]) == 0
     assert "Homepage activity is up to date." in capsys.readouterr().out

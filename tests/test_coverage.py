@@ -181,10 +181,13 @@ def test_render_is_static_accessible_and_keeps_empty_platforms_compact(tmp_path:
     assert 'class="coverage-background"' in svg
     for color in ("#eff1f5", "#ccd0da", "#1e1e2e", "#313244"):
         assert color in svg
-    for color in ("#df8e1d", "#1e66f5", "#8839ef", "#f9e2af", "#89b4fa", "#cba6f7"):
+    for color in ("#fe640b", "#209fb5", "#8839ef", "#fab387", "#74c7ec", "#cba6f7"):
         assert color in svg
     assert 'data-share="50.0" data-count="2"' in svg
     assert "2 · 50%" not in svg
+    assert 'class="coverage-accent coverage-sapphire coverage-empty"' in svg
+    assert ".coverage-accent { opacity: 0.72; }" in svg
+    assert "      .coverage-accent { opacity: 1; }" in svg
     assert "1200–1399 1" in svg
     assert "Linear Algebra 1" in svg
     assert "No accepted problems yet" in svg

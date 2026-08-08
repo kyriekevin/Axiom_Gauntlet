@@ -114,11 +114,18 @@ def _parser() -> argparse.ArgumentParser:
     knowledge_render.add_argument("--check", action="store_true")
 
     render = subparsers.add_parser("render", help="Generate homepage activity artifacts.")
-    render.add_argument(
+    render_range = render.add_mutually_exclusive_group()
+    render_range.add_argument(
+        "--as-of",
+        type=_iso_date,
+        default=None,
+        help="End the rolling 53-week activity window on YYYY-MM-DD.",
+    )
+    render_range.add_argument(
         "--year",
-        type=int,
-        default=datetime.now(SHANGHAI).year,
-        help="Calendar year to render (defaults to the current year in Asia/Shanghai).",
+        type=_calendar_year,
+        default=None,
+        help=argparse.SUPPRESS,
     )
     render.add_argument("--check", action="store_true")
 
@@ -133,6 +140,15 @@ def _iso_date(value: str) -> date:
     if parsed.isoformat() != value:
         raise argparse.ArgumentTypeError("date must use YYYY-MM-DD")
     return parsed
+
+
+def _calendar_year(value: str) -> int:
+    try:
+        year = int(value)
+        date(year, 1, 1)
+    except (TypeError, ValueError) as error:
+        raise argparse.ArgumentTypeError("year must be an integer between 1 and 9999") from error
+    return year
 
 
 def _event_date(value: date | None) -> date:
@@ -250,8 +266,9 @@ def _run_render(args: argparse.Namespace) -> int:
     from .heatmap import generate_heatmaps
     from .homepage import generate_homepages
 
+    as_of = args.as_of or (date(args.year, 12, 31) if args.year is not None else None)
     changed = (
-        *generate_heatmaps(args.root, args.year, check=args.check),
+        *generate_heatmaps(args.root, as_of, check=args.check),
         *generate_coverage(args.root, check=args.check),
         *generate_homepages(args.root, check=args.check),
     )
@@ -261,7 +278,7 @@ def _run_render(args: argparse.Namespace) -> int:
     if args.check:
         print("Homepage activity is up to date.")
     else:
-        print(f"Rendered homepage activity for {args.year}.")
+        print("Rendered rolling homepage activity.")
     return 0
 
 
