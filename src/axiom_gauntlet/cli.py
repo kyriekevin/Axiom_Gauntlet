@@ -8,7 +8,7 @@ from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from .model import PLATFORMS
+from .platforms import PLATFORMS, platform_spec
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
 PLATFORM_CHOICES = tuple(sorted(PLATFORMS))
@@ -121,12 +121,6 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _default_difficulty_scheme(platform: str) -> str:
-    if platform == "codeforces":
-        return "rating"
-    return "level"
-
-
 def _iso_date(value: str) -> date:
     try:
         parsed = date.fromisoformat(value)
@@ -150,7 +144,9 @@ def _run_new(args: argparse.Namespace) -> int:
         problem_id=args.problem_id,
         title=args.title,
         url=args.url,
-        difficulty_scheme=args.difficulty_scheme or _default_difficulty_scheme(args.platform),
+        difficulty_scheme=(
+            args.difficulty_scheme or platform_spec(args.platform).default_difficulty_scheme
+        ),
         difficulty_value=args.difficulty,
         difficulty_normalized=args.normalized_difficulty,
         tags=args.tag,

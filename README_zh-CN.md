@@ -48,6 +48,7 @@ uv run axiom knowledge render
 
 `axiom-practice` 负责日常解题、AC 记录、复杂度和代码 Review；`axiom-review` 负责周度
 归纳、知识页维护和确实有帮助的图解。
+OJ 平台支持由 [`platforms.toml`](src/axiom_gauntlet/platforms.toml) 注册表数据驱动。
 
 当前契约见[题目与知识 Schema](docs/SCHEMA_zh-CN.md)、
 [知识笔记架构](docs/KNOWLEDGE_ARCHITECTURE_zh-CN.md)和

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from axiom_gauntlet.model import PLATFORMS, canonical_problem_id, expected_uid, load_problem
+from axiom_gauntlet.model import canonical_problem_id, expected_uid, load_problem
 from axiom_gauntlet.scaffold import create_problem
 from axiom_gauntlet.validate import validate_problem_dir, validate_repository
 
@@ -15,8 +15,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 def _empty_repo(tmp_path: Path) -> Path:
     root = tmp_path / "repo"
     (root / "knowledge").mkdir(parents=True)
-    for platform in PLATFORMS:
-        (root / "problems" / platform).mkdir(parents=True, exist_ok=True)
+    (root / "problems").mkdir()
     shutil.copytree(
         REPOSITORY_ROOT / "templates" / "problem",
         root / "templates" / "problem",
@@ -314,6 +313,18 @@ def test_validator_rejects_path_and_uid_mismatch(tmp_path: Path) -> None:
     assert any(issue.code == "uid.mismatch" for issue in issues)
 
 
-def test_repository_validation_accepts_empty_platforms(tmp_path: Path) -> None:
+def test_repository_validation_accepts_no_platform_directories(tmp_path: Path) -> None:
     root = _empty_repo(tmp_path)
     assert validate_repository(root) == []
+
+
+def test_repository_validation_rejects_unregistered_platform_directory(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    unknown = root / "problems" / "leetocde"
+    unknown.mkdir()
+
+    issues = validate_repository(root)
+
+    assert any(
+        issue.path == unknown and issue.code == "repository.unknown-platform" for issue in issues
+    )

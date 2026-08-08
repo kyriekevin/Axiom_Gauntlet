@@ -7,10 +7,13 @@
 
 ## 题目记录
 
-每道题位于 `problems/<platform>/<canonical-id>/`。当前支持 LeetCode、AcWing、Codeforces 和
-Deep-ML。LeetCode ID 至少补齐四位；AcWing 与 Deep-ML ID 使用规范正整数；Codeforces ID
-使用不补零的比赛编号加大写题号。稳定 UID 为 `<platform>:<canonical-id>`（例如
-`deep-ml:1`）。
+每道题位于 `problems/<platform>/<canonical-id>/`。[`platforms.toml`](../src/axiom_gauntlet/platforms.toml)
+平台注册表定义展示名称、题号策略、可选规范宽度与默认难度体系。`axiom new` 会按需创建平台
+目录，尚未使用的已注册平台不需要保留空目录。
+
+注册表支持正整数题号、比赛编号加题号，以及文件系统安全的 slug 三种策略。符合已有策略的
+新平台只需增加一段注册表数据；只有全新题号规则才需要修改工具和测试。稳定 UID 为
+`<platform>:<canonical-id>`（例如 `deep-ml:1`）。
 
 ```toml
 version = 1

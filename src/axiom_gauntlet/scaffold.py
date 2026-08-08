@@ -10,13 +10,12 @@ from string import Template
 
 from .model import (
     LANGUAGE_FILES,
-    PLATFORM_LABELS,
-    PLATFORMS,
     canonical_problem_id,
     expected_uid,
     normalize_language,
     normalize_problem_id,
 )
+from .platforms import platform_spec
 
 _SOLUTION_PLACEHOLDERS = {
     "cpp": "// TODO: paste the accepted solution.\n",
@@ -50,10 +49,7 @@ def create_problem(
 
     root = Path(repo_root)
     platform = platform.strip().lower()
-    if platform not in PLATFORMS:
-        raise ValueError(
-            f"unsupported platform {platform!r}; choose one of {', '.join(sorted(PLATFORMS))}"
-        )
+    spec = platform_spec(platform)
     normalized_id = normalize_problem_id(platform, str(problem_id))
     derived_canonical_id = canonical_problem_id(platform, normalized_id)
     if canonical_id is not None and canonical_id != derived_canonical_id:
@@ -106,7 +102,7 @@ def create_problem(
     )
     readme_values = dict(
         canonical_id=canonical_id,
-        platform_label=PLATFORM_LABELS[platform],
+        platform_label=spec.label,
         title=title,
         url=url,
         uid=expected_uid(platform, normalized_id),

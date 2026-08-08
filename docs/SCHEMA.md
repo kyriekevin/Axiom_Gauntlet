@@ -8,10 +8,15 @@ them.
 
 ## Problem records
 
-Each problem lives at `problems/<platform>/<canonical-id>/`. Supported platforms are LeetCode,
-AcWing, Codeforces, and Deep-ML. LeetCode IDs are padded to at least four digits; AcWing and Deep-ML
-IDs are normalized positive integers; Codeforces IDs use an unpadded contest number plus uppercase
-index. The stable UID is `<platform>:<canonical-id>` (for example, `deep-ml:1`).
+Each problem lives at `problems/<platform>/<canonical-id>/`. The platform registry in
+[`platforms.toml`](../src/axiom_gauntlet/platforms.toml) defines the display label, ID strategy,
+optional canonical padding, and default difficulty scheme. Platform directories are created lazily
+by `axiom new`; an unused registered platform needs no empty directory.
+
+The registry supports positive-integer IDs, contest-number-plus-index IDs, and filesystem-safe slug
+IDs. Adding a platform that fits one of these strategies is a data-only registry change. A new ID
+strategy requires tooling and test changes. The stable UID is `<platform>:<canonical-id>` (for
+example, `deep-ml:1`).
 
 ```toml
 version = 1

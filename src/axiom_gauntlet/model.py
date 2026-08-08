@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 import tomllib
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -10,14 +9,13 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
+from .platforms import (
+    canonical_platform_problem_id,
+    normalize_platform_problem_id,
+    platform_spec,
+)
+
 SCHEMA_VERSION = 1
-PLATFORM_LABELS = {
-    "leetcode": "LeetCode",
-    "acwing": "AcWing",
-    "codeforces": "Codeforces",
-    "deep-ml": "Deep-ML",
-}
-PLATFORMS = frozenset(PLATFORM_LABELS)
 STATES = frozenset({"draft", "accepted", "documented"})
 NORMALIZED_DIFFICULTIES = frozenset({"easy", "medium", "hard", "unknown"})
 LANGUAGE_FILES = {
@@ -216,34 +214,13 @@ def load_problem(path: str | Path) -> Problem:
 def normalize_problem_id(platform: str, problem_id: str) -> str:
     """Return the normalized source ID stored in ``problem.toml``."""
 
-    if platform not in PLATFORMS:
-        raise ValueError(f"unsupported platform: {platform!r}")
-    raw = str(problem_id).strip()
-
-    if platform in {"leetcode", "acwing", "deep-ml"}:
-        if not re.fullmatch(r"\d+", raw):
-            raise ValueError(f"{platform} problem_id must contain only digits")
-        number = int(raw)
-        if number <= 0:
-            raise ValueError(f"{platform} problem_id must be greater than zero")
-        return str(number)
-
-    match = re.fullmatch(r"0*(\d+)([A-Za-z][A-Za-z0-9]*)", raw)
-    if match is None:
-        raise ValueError("codeforces problem_id must be a contest number followed by an index")
-    contest = int(match.group(1))
-    if contest <= 0:
-        raise ValueError("codeforces contest number must be greater than zero")
-    return f"{contest}{match.group(2).upper()}"
+    return normalize_platform_problem_id(platform_spec(platform), problem_id)
 
 
 def canonical_problem_id(platform: str, problem_id: str) -> str:
     """Return the stable directory ID for a platform problem."""
 
-    normalized = normalize_problem_id(platform, problem_id)
-    if platform == "leetcode":
-        return normalized.zfill(4)
-    return normalized
+    return canonical_platform_problem_id(platform_spec(platform), problem_id)
 
 
 def expected_uid(platform: str, problem_id: str) -> str:

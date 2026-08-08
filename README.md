@@ -51,6 +51,8 @@ uv run axiom knowledge render
 
 `axiom-practice` guides daily solving, AC recording, complexity, and code review.
 `axiom-review` guides weekly synthesis, knowledge-page maintenance, and purposeful visuals.
+Online-judge support is data-driven through the
+[`platforms.toml`](src/axiom_gauntlet/platforms.toml) registry.
 
 See the [problem and knowledge schema](docs/SCHEMA.md),
 [knowledge architecture](docs/KNOWLEDGE_ARCHITECTURE.md), and

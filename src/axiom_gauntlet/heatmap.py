@@ -14,7 +14,7 @@ from datetime import date, datetime, timedelta
 from html import escape
 from pathlib import Path
 
-from .model import PLATFORMS
+from .platforms import PLATFORMS
 
 COUNTED_ACTIVITY_TYPES = frozenset({"ac", "note", "review"})
 _PALETTE = ("#202736", "#0e4429", "#006d32", "#26a641", "#39d353")
