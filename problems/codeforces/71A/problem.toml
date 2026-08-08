@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:71A"
+platform = "codeforces"
+problem_id = "71A"
+title = "Way Too Long Words"
+url = "https://codeforces.com/problemset/problem/71/A"
+state = "accepted"
+tags = ["strings"]
+
+[difficulty]
+scheme = "rating"
+value = 800
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(S)"
+space_complexity = "O(L)"
+[[activity]]
+type = "ac"
+date = 2026-08-08
+language = "cpp"
+reflection = "The abbreviation threshold is strictly greater than ten; processing one word at a time keeps auxiliary space bounded by the longest word."
