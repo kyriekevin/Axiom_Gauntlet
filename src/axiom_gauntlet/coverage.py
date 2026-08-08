@@ -162,7 +162,7 @@ def _render_segments(
     total = sum(value for _, value, _ in values)
     clip_id = f"{data_prefix}-profile-clip"
     lines.append(
-        f'  <rect x="{x}" y="{y}" width="{width}" height="{height}" rx="6" fill="#252d3d"/>'
+        f'  <rect x="{x}" y="{y}" width="{width}" height="{height}" rx="6" fill="#34384a"/>'
     )
     if total <= 0:
         return
@@ -218,7 +218,7 @@ def _render_ring(
 ) -> None:
     circumference = 2 * math.pi * radius
     lines.append(
-        f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#252d3d" '
+        f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#34384a" '
         f'stroke-width="{stroke_width}"/>'
     )
     total = sum(value for _, value, _ in values)
@@ -313,7 +313,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
 
     lines.append(
         f'  <line x1="24" y1="{y + _PROFILE_ROW_HEIGHT - 1}" x2="876" '
-        f'y2="{y + _PROFILE_ROW_HEIGHT - 1}" stroke="#20283a"/>'
+        f'y2="{y + _PROFILE_ROW_HEIGHT - 1}" stroke="#34384a"/>'
     )
 
 
@@ -342,7 +342,7 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         ),
         f'  <title id="coverage-title">{title}</title>',
         f'  <desc id="coverage-desc">{escape(description)}</desc>',
-        f'  <rect width="{_WIDTH}" height="{height}" rx="16" fill="#0d111b"/>',
+        f'  <rect width="{_WIDTH}" height="{height}" rx="16" fill="#1d1e2c"/>',
         '  <text x="24" y="37" fill="#f0f3f8" '
         'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
         'font-size="22" font-weight="700">Practice Coverage</text>',
@@ -458,7 +458,7 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
     lines.extend(
         (
             f'  <line x1="24" y1="{overview_top + overview_height}" x2="876" '
-            f'y2="{overview_top + overview_height}" stroke="#293246"/>',
+            f'y2="{overview_top + overview_height}" stroke="#34384a"/>',
             f'  <text x="24" y="{profile_heading_y}" fill="#f0f3f8" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             'font-size="16" font-weight="700">Native profiles</text>',

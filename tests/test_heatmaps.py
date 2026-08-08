@@ -127,6 +127,10 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
     assert 'data-date="2026-01-01" data-count="1" data-level="1"' in first
     assert 'data-date="2026-01-02" data-count="2" data-level="2"' in first
     assert 'data-date="2026-01-03" data-count="4" data-level="4"' in first
+    assert "@media (prefers-color-scheme: dark)" in first
+    assert 'class="heatmap-cell heatmap-level-1"' in first
+    for color in ("#f6f8fa", "#e8ecf1", "#1d1e2c", "#34384a", "#a5f3fc"):
+        assert color in first
     ET.fromstring(first)
 
 
