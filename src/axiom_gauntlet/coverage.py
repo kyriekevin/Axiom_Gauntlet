@@ -267,13 +267,10 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             f'  <circle cx="31" cy="{y + 20}" r="5" fill="{accent}"/>',
             f'  <text class="coverage-primary" x="44" y="{y + 26}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            f'font-size="16" font-weight="650">{escape(coverage.spec.label)}</text>',
-            f'  <text class="coverage-secondary" x="190" y="{y + 25}" text-anchor="end" '
-            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="11">{coverage.accepted} AC</text>',
+            f'font-size="16" font-weight="650">{escape(coverage.spec.coverage_label)}</text>',
             f'  <text class="coverage-muted" x="44" y="{y + 45}" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="9">{_profile_label(coverage)}</text>',
+            f'font-size="9">{_profile_label(coverage)} · {coverage.accepted} AC</text>',
         )
     )
 
@@ -459,7 +456,8 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
                 f'  <circle cx="{x + 5}" cy="{y - 4}" r="5" fill="{color}"/>',
                 f'  <text class="coverage-primary" x="{x + 18}" y="{y}" '
                 'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-                f'font-size="14" font-weight="600">{escape(coverage.spec.label)}</text>',
+                f'font-size="14" font-weight="600">'
+                f"{escape(coverage.spec.coverage_label)}</text>",
                 f'  <text class="coverage-muted" x="{x + 18}" y="{y + 17}" '
                 'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
                 f'font-size="10">{coverage.accepted} · {share:.0f}%</text>',

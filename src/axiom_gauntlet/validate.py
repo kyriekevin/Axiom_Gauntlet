@@ -22,7 +22,7 @@ from .model import (
     normalize_language,
     normalize_problem_id,
 )
-from .platforms import PLATFORMS
+from .platforms import DIFFICULTY_SCHEMES, PLATFORMS
 
 REQUIRED_DOCUMENTED_SECTIONS = {
     "README.md": (
@@ -424,12 +424,13 @@ def _validate_metadata(
         seen_tags.add(tag)
 
     difficulty = problem.difficulty
-    if difficulty.scheme not in {"level", "rating", "unknown"}:
+    if difficulty.scheme not in DIFFICULTY_SCHEMES:
+        choices = ", ".join(sorted(DIFFICULTY_SCHEMES))
         issues.append(
             ValidationIssue(
                 metadata_path,
                 "difficulty.scheme",
-                "difficulty.scheme must be level, rating, or unknown",
+                f"difficulty.scheme must be one of: {choices}",
             )
         )
     if difficulty.scheme == "rating" and (

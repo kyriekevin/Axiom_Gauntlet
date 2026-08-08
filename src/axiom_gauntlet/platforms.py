@@ -12,6 +12,8 @@ from typing import Any
 
 REGISTRY_VERSION = 1
 ID_STRATEGIES = frozenset({"positive-integer", "contest-index", "slug"})
+DIFFICULTY_SCHEMES = frozenset({"level", "rating", "unknown"})
+MAX_COVERAGE_LABEL_LENGTH = 14
 _PLATFORM_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
@@ -23,6 +25,7 @@ class PlatformRegistryError(ValueError):
 class PlatformSpec:
     slug: str
     label: str
+    coverage_label: str
     id_strategy: str
     default_difficulty_scheme: str
     canonical_width: int = 0
@@ -61,6 +64,7 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
             set(raw_spec)
             - {
                 "label",
+                "coverage_label",
                 "id_strategy",
                 "canonical_width",
                 "default_difficulty_scheme",
@@ -86,10 +90,24 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
                 f"platform {slug!r} canonical_width requires positive-integer IDs"
             )
 
-        difficulty_scheme = _require_string(raw_spec, "default_difficulty_scheme", slug).lower()
-        if _PLATFORM_SLUG_RE.fullmatch(difficulty_scheme) is None:
+        label = _require_string(raw_spec, "label", slug)
+        raw_coverage_label = raw_spec.get("coverage_label", label)
+        if not isinstance(raw_coverage_label, str) or not raw_coverage_label.strip():
             raise PlatformRegistryError(
-                f"platform {slug!r} default_difficulty_scheme must be lowercase kebab-case"
+                f"platform {slug!r} coverage_label must be a non-empty string"
+            )
+        coverage_label = raw_coverage_label.strip()
+        if len(coverage_label) > MAX_COVERAGE_LABEL_LENGTH:
+            raise PlatformRegistryError(
+                f"platform {slug!r} coverage_label must be at most "
+                f"{MAX_COVERAGE_LABEL_LENGTH} characters"
+            )
+
+        difficulty_scheme = _require_string(raw_spec, "default_difficulty_scheme", slug).lower()
+        if difficulty_scheme not in DIFFICULTY_SCHEMES:
+            choices = ", ".join(sorted(DIFFICULTY_SCHEMES))
+            raise PlatformRegistryError(
+                f"platform {slug!r} default_difficulty_scheme must be one of: {choices}"
             )
 
         raw_categories = raw_spec.get("coverage_categories", [])
@@ -111,7 +129,8 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
 
         specs[slug] = PlatformSpec(
             slug=slug,
-            label=_require_string(raw_spec, "label", slug),
+            label=label,
+            coverage_label=coverage_label,
             id_strategy=strategy,
             default_difficulty_scheme=difficulty_scheme,
             canonical_width=width,

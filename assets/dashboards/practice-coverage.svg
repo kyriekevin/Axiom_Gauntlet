@@ -63,8 +63,7 @@
   <text class="coverage-primary" x="24" y="313" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="700">Native profiles</text>
   <circle cx="31" cy="349" r="5" fill="#fbbf24"/>
   <text class="coverage-primary" x="44" y="355" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">LeetCode</text>
-  <text class="coverage-secondary" x="190" y="354" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">6 AC</text>
-  <text class="coverage-muted" x="44" y="374" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE</text>
+  <text class="coverage-muted" x="44" y="374" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE · 6 AC</text>
   <rect class="coverage-track" x="220" y="342" width="400" height="16" rx="6"/>
   <clipPath id="leetcode-profile-clip"><rect x="220" y="342" width="400" height="16" rx="6"/></clipPath>
   <rect x="220.00" y="342" width="133.33" height="16" fill="#34d399" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Easy" data-count="2">
@@ -80,8 +79,7 @@
   <line class="coverage-divider" x1="24" y1="386" x2="876" y2="386"/>
   <circle cx="31" cy="407" r="5" fill="#22d3ee"/>
   <text class="coverage-primary" x="44" y="413" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">AcWing</text>
-  <text class="coverage-secondary" x="190" y="412" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">2 AC</text>
-  <text class="coverage-muted" x="44" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE</text>
+  <text class="coverage-muted" x="44" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE · 2 AC</text>
   <rect class="coverage-track" x="220" y="400" width="400" height="16" rx="6"/>
   <clipPath id="acwing-profile-clip"><rect x="220" y="400" width="400" height="16" rx="6"/></clipPath>
   <rect x="220.00" y="400" width="400.00" height="16" fill="#34d399" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Easy" data-count="2">
@@ -91,15 +89,13 @@
   <line class="coverage-divider" x1="24" y1="444" x2="876" y2="444"/>
   <circle cx="31" cy="465" r="5" fill="#a78bfa"/>
   <text class="coverage-primary" x="44" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Codeforces</text>
-  <text class="coverage-secondary" x="190" y="470" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">0 AC</text>
-  <text class="coverage-muted" x="44" y="490" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">RATING PROFILE</text>
+  <text class="coverage-muted" x="44" y="490" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">RATING PROFILE · 0 AC</text>
   <rect class="coverage-track" x="220" y="458" width="400" height="16" rx="6"/>
   <text class="coverage-muted" x="640" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14">No accepted problems yet</text>
   <line class="coverage-divider" x1="24" y1="502" x2="876" y2="502"/>
   <circle cx="31" cy="523" r="5" fill="#34d399"/>
   <text class="coverage-primary" x="44" y="529" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Deep-ML</text>
-  <text class="coverage-secondary" x="190" y="528" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">0 AC</text>
-  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">CATEGORY × LEVEL</text>
+  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">CATEGORY × LEVEL · 0 AC</text>
   <rect class="coverage-track" x="220" y="516" width="400" height="16" rx="6"/>
   <text class="coverage-muted" x="640" y="529" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14">No accepted problems yet</text>
   <line class="coverage-divider" x1="24" y1="560" x2="876" y2="560"/>

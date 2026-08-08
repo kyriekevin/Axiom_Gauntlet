@@ -8,7 +8,7 @@ from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from .platforms import PLATFORMS, platform_spec
+from .platforms import DIFFICULTY_SCHEMES, PLATFORMS, platform_spec
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
 PLATFORM_CHOICES = tuple(sorted(PLATFORMS))
@@ -34,7 +34,11 @@ def _parser() -> argparse.ArgumentParser:
     new.add_argument("--title", required=True)
     new.add_argument("--url", required=True)
     new.add_argument("--difficulty", default="unknown")
-    new.add_argument("--difficulty-scheme", default=None)
+    new.add_argument(
+        "--difficulty-scheme",
+        choices=tuple(sorted(DIFFICULTY_SCHEMES)),
+        default=None,
+    )
     new.add_argument(
         "--normalized-difficulty",
         choices=("easy", "medium", "hard", "unknown"),

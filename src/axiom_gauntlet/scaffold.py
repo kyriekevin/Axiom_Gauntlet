@@ -15,7 +15,7 @@ from .model import (
     normalize_language,
     normalize_problem_id,
 )
-from .platforms import platform_spec
+from .platforms import DIFFICULTY_SCHEMES, platform_spec
 
 _SOLUTION_PLACEHOLDERS = {
     "cpp": "// TODO: paste the accepted solution.\n",
@@ -162,8 +162,9 @@ def _normalize_difficulty(value: str | int, normalized: str | None) -> str:
 
 
 def _normalize_difficulty_fields(scheme: str, value: str | int) -> tuple[str, str | int]:
-    if scheme not in {"level", "rating", "unknown"}:
-        raise ValueError("difficulty_scheme must be level, rating, or unknown")
+    if scheme not in DIFFICULTY_SCHEMES:
+        choices = ", ".join(sorted(DIFFICULTY_SCHEMES))
+        raise ValueError(f"difficulty_scheme must be one of: {choices}")
     if isinstance(value, bool) or not isinstance(value, (str, int)):
         raise ValueError("difficulty_value must be a string or integer")
     if scheme != "rating":

@@ -4,10 +4,13 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from axiom_gauntlet.coverage import (
+    CoverageSnapshot,
+    PlatformCoverage,
     aggregate_coverage,
     generate_coverage,
     render_coverage_svg,
 )
+from axiom_gauntlet.platforms import parse_platform_registry
 
 
 def _write_problem(
@@ -212,6 +215,42 @@ def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
     assert 'data-segment="1600+" data-count="1"' in svg
     assert "≤999 → 1600+ · 5 problems" in svg
     assert "Linear Algebra 2 · ML 2 · CV 1" in svg
+    ET.fromstring(svg)
+
+
+def test_render_uses_compact_platform_label_without_losing_formal_name() -> None:
+    spec = parse_platform_registry(
+        {
+            "version": 1,
+            "platforms": {
+                "example-oj": {
+                    "label": "Example Online Judge With A Long Formal Name",
+                    "coverage_label": "Example OJ",
+                    "id_strategy": "slug",
+                    "default_difficulty_scheme": "level",
+                }
+            },
+        }
+    )["example-oj"]
+    coverage = PlatformCoverage(
+        spec=spec,
+        accepted=1,
+        difficulty={"easy": 1},
+        ratings={},
+        categories={},
+    )
+    snapshot = CoverageSnapshot(
+        platforms=(coverage,),
+        accepted_problems=1,
+        active_platforms=1,
+        languages={"Python": 1},
+    )
+
+    svg = render_coverage_svg(snapshot)
+
+    assert ">Example OJ</text>" in svg
+    assert "DIFFICULTY PROFILE · 1 AC" in svg
+    assert "<title>Example Online Judge With A Long Formal Name: 1</title>" in svg
     ET.fromstring(svg)
 
 

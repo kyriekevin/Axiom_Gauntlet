@@ -15,6 +15,7 @@ def test_bundled_registry_drives_existing_platform_behavior() -> None:
     assert PLATFORM_SPECS["leetcode"].canonical_width == 4
     assert PLATFORM_SPECS["codeforces"].default_difficulty_scheme == "rating"
     assert PLATFORM_SPECS["deep-ml"].label == "Deep-ML"
+    assert PLATFORM_SPECS["deep-ml"].coverage_label == "Deep-ML"
     assert PLATFORM_SPECS["deep-ml"].coverage_categories == (
         "linear-algebra",
         "machine-learning",
@@ -30,7 +31,8 @@ def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:
             "version": 1,
             "platforms": {
                 "example-oj": {
-                    "label": "Example OJ",
+                    "label": "Example Online Judge With A Long Formal Name",
+                    "coverage_label": "Example OJ",
                     "id_strategy": "slug",
                     "default_difficulty_scheme": "level",
                 }
@@ -39,6 +41,8 @@ def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:
     )
     spec = registry["example-oj"]
 
+    assert spec.label == "Example Online Judge With A Long Formal Name"
+    assert spec.coverage_label == "Example OJ"
     assert normalize_platform_problem_id(spec, "ABC-12") == "ABC-12"
     assert canonical_platform_problem_id(spec, "ABC-12") == "ABC-12"
 
@@ -52,6 +56,26 @@ def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:
             "platforms": {
                 "Bad Slug": {
                     "label": "Bad",
+                    "id_strategy": "slug",
+                    "default_difficulty_scheme": "level",
+                }
+            },
+        },
+        {
+            "version": 1,
+            "platforms": {
+                "oj": {
+                    "label": "OJ",
+                    "id_strategy": "slug",
+                    "default_difficulty_scheme": "ratings",
+                }
+            },
+        },
+        {
+            "version": 1,
+            "platforms": {
+                "oj": {
+                    "label": "Online Judge With A Long Formal Name",
                     "id_strategy": "slug",
                     "default_difficulty_scheme": "level",
                 }

@@ -13,6 +13,10 @@ Each problem lives at `problems/<platform>/<canonical-id>/`. The platform regist
 optional canonical padding, and default difficulty scheme. Platform directories are created lazily
 by `axiom new`; an unused registered platform needs no empty directory.
 
+Coverage reuses the display label when it is compact; platforms with longer formal names provide a
+short `coverage_label`. Difficulty schemes are limited to `level`, `rating`, and `unknown` across
+the registry, CLI, scaffolding, and validation.
+
 The registry supports positive-integer IDs, contest-number-plus-index IDs, and filesystem-safe slug
 IDs. Adding a platform that fits one of these strategies is a data-only registry change. A new ID
 strategy requires tooling and test changes. The stable UID is `<platform>:<canonical-id>` (for
