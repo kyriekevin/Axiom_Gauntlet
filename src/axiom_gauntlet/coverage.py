@@ -38,11 +38,7 @@ _LANGUAGE_LABELS = {"cpp": "C++", "python": "Python", "go": "Go"}
 _LANGUAGE_COLORS = {"C++": "#a78bfa", "Python": "#22d3ee", "Go": "#34d399"}
 
 _WIDTH = 900
-_CARD_GAP = 14
-_CARD_WIDTH = 419
-_CARD_HEIGHT = 146
-_CARD_LEFT = 24
-_CARD_TOP = 76
+_PROFILE_ROW_HEIGHT = 58
 
 
 @dataclass(frozen=True)
@@ -164,11 +160,16 @@ def _render_segments(
     data_prefix: str,
 ) -> None:
     total = sum(value for _, value, _ in values)
+    clip_id = f"{data_prefix}-profile-clip"
     lines.append(
         f'  <rect x="{x}" y="{y}" width="{width}" height="{height}" rx="6" fill="#252d3d"/>'
     )
     if total <= 0:
         return
+    lines.append(
+        f'  <clipPath id="{clip_id}"><rect x="{x}" y="{y}" width="{width}" '
+        f'height="{height}" rx="6"/></clipPath>'
+    )
     cursor = float(x)
     nonzero = [(label, value, color) for label, value, color in values if value > 0]
     for index, (label, value, color) in enumerate(nonzero):
@@ -178,7 +179,8 @@ def _render_segments(
         lines.extend(
             (
                 f'  <rect x="{cursor:.2f}" y="{y}" width="{segment_width:.2f}" '
-                f'height="{height}" fill="{color}" data-profile="{data_prefix}" '
+                f'height="{height}" fill="{color}" clip-path="url(#{clip_id})" '
+                f'data-profile="{data_prefix}" '
                 f'data-segment="{escape(label)}" data-count="{value}">',
                 f"    <title>{escape(label)}: {value}</title>",
                 "  </rect>",
@@ -204,74 +206,127 @@ def _profile_summary(values: tuple[tuple[str, int, str], ...]) -> str:
     return " · ".join(populated)
 
 
-def _render_platform_card(
-    lines: list[str], coverage: PlatformCoverage, index: int, x: int, y: int
+def _render_ring(
+    lines: list[str],
+    *,
+    cx: int,
+    cy: int,
+    radius: int,
+    stroke_width: int,
+    values: tuple[tuple[str, int, str], ...],
+    data_prefix: str,
 ) -> None:
+    circumference = 2 * math.pi * radius
+    lines.append(
+        f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#252d3d" '
+        f'stroke-width="{stroke_width}"/>'
+    )
+    total = sum(value for _, value, _ in values)
+    if total <= 0:
+        return
+
+    cursor = 0.0
+    for label, value, color in values:
+        if value <= 0:
+            continue
+        segment = circumference * value / total
+        gap = min(3.0, segment * 0.15)
+        visible = max(0.8, segment - gap)
+        lines.extend(
+            (
+                f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" '
+                f'stroke="{color}" stroke-width="{stroke_width}" '
+                f'stroke-dasharray="{visible:.2f} {circumference - visible:.2f}" '
+                f'stroke-dashoffset="{-cursor:.2f}" transform="rotate(-90 {cx} {cy})" '
+                f'data-ring="{data_prefix}" data-segment="{escape(label)}" '
+                f'data-count="{value}">',
+                f"    <title>{escape(label)}: {value}</title>",
+                "  </circle>",
+            )
+        )
+        cursor += segment
+
+
+def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int, y: int) -> None:
     accent = _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)]
     lines.extend(
         (
-            f'  <rect x="{x}" y="{y}" width="{_CARD_WIDTH}" height="{_CARD_HEIGHT}" '
-            'rx="14" fill="#151b29" stroke="#293246"/>',
-            f'  <circle cx="{x + 18}" cy="{y + 25}" r="5" fill="{accent}"/>',
-            f'  <text x="{x + 31}" y="{y + 31}" fill="#f0f3f8" '
+            f'  <circle cx="31" cy="{y + 20}" r="5" fill="{accent}"/>',
+            f'  <text x="44" y="{y + 26}" fill="#f0f3f8" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            f'font-size="18" font-weight="700">{escape(coverage.spec.label)}</text>',
-            f'  <text x="{x + _CARD_WIDTH - 18}" y="{y + 30}" text-anchor="end" '
-            'fill="#a8b3cf" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="12">{coverage.accepted} ACCEPTED</text>',
-            f'  <text x="{x + 18}" y="{y + 57}" fill="#64748b" '
+            f'font-size="16" font-weight="650">{escape(coverage.spec.label)}</text>',
+            f'  <text x="190" y="{y + 25}" text-anchor="end" fill="#a8b3cf" '
             'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="10">{_profile_label(coverage)}</text>',
+            f'font-size="11">{coverage.accepted} AC</text>',
+            f'  <text x="44" y="{y + 45}" fill="#64748b" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            f'font-size="9">{_profile_label(coverage)}</text>',
         )
     )
 
     if coverage.accepted <= 0:
+        _render_segments(
+            lines,
+            x=220,
+            y=y + 13,
+            width=400,
+            height=16,
+            values=(),
+            data_prefix=coverage.spec.slug,
+        )
         lines.append(
-            f'  <text x="{x + 18}" y="{y + 94}" fill="#64748b" '
+            f'  <text x="640" y="{y + 26}" fill="#64748b" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             'font-size="14">No accepted problems yet</text>'
         )
-        return
-
-    values = _profile_values(coverage)
-    _render_segments(
-        lines,
-        x=x + 18,
-        y=y + 68,
-        width=_CARD_WIDTH - 36,
-        height=18,
-        values=values,
-        data_prefix=coverage.spec.slug,
-    )
-    summary = _profile_summary(values) or "Difficulty not recorded"
-    lines.append(
-        f'  <text x="{x + 18}" y="{y + 108}" fill="#b8c1d8" '
-        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-        f'font-size="11">{escape(summary)}</text>'
-    )
-
-    categories = sorted(
-        ((category, count) for category, count in coverage.categories.items() if count > 0),
-        key=lambda item: (-item[1], item[0]),
-    )[:3]
-    if categories:
-        category_summary = " · ".join(
-            f"{_category_label(category)} {count}" for category, count in categories
+    else:
+        values = _profile_values(coverage)
+        _render_segments(
+            lines,
+            x=220,
+            y=y + 13,
+            width=400,
+            height=16,
+            values=values,
+            data_prefix=coverage.spec.slug,
         )
+        summary = _profile_summary(values) or "Difficulty not recorded"
         lines.append(
-            f'  <text x="{x + 18}" y="{y + 132}" fill="#64748b" '
-            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            f'font-size="11">{escape(category_summary)}</text>'
+            f'  <text x="640" y="{y + 25}" fill="#b8c1d8" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            f'font-size="11">{escape(summary)}</text>'
         )
+
+        categories = sorted(
+            ((category, count) for category, count in coverage.categories.items() if count > 0),
+            key=lambda item: (-item[1], item[0]),
+        )[:3]
+        if categories:
+            category_summary = " · ".join(
+                f"{_category_label(category)} {count}" for category, count in categories
+            )
+            lines.append(
+                f'  <text x="640" y="{y + 44}" fill="#64748b" '
+                'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+                f'font-size="10">{escape(category_summary)}</text>'
+            )
+
+    lines.append(
+        f'  <line x1="24" y1="{y + _PROFILE_ROW_HEIGHT - 1}" x2="876" '
+        f'y2="{y + _PROFILE_ROW_HEIGHT - 1}" stroke="#20283a"/>'
+    )
 
 
 def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
-    """Render a compact static SVG with platform-native coverage profiles."""
+    """Render a focused overview with nested composition rings and native profiles."""
 
-    columns = 2
-    rows = max(1, math.ceil(len(snapshot.platforms) / columns))
-    language_top = _CARD_TOP + rows * (_CARD_HEIGHT + _CARD_GAP) + 4
-    height = language_top + 118
+    platform_rows = max(1, math.ceil(len(snapshot.platforms) / 2))
+    language_rows = max(1, len(snapshot.languages))
+    overview_top = 82
+    overview_height = max(198, 54 + platform_rows * 40, 54 + language_rows * 30)
+    profile_heading_y = overview_top + overview_height + 33
+    profile_top = profile_heading_y + 16
+    height = profile_top + len(snapshot.platforms) * _PROFILE_ROW_HEIGHT + 22
     active_text = "platform" if snapshot.active_platforms == 1 else "platforms"
     title = "Practice coverage"
     description = (
@@ -291,27 +346,21 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         '  <text x="24" y="37" fill="#f0f3f8" '
         'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
         'font-size="22" font-weight="700">Practice Coverage</text>',
-        f'  <text x="{_WIDTH - 24}" y="36" text-anchor="end" fill="#8d99b2" '
-        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">'
-        f"{snapshot.accepted_problems} ACCEPTED · {snapshot.active_platforms} ACTIVE</text>",
+        f'  <text x="24" y="59" fill="#8d99b2" '
+        'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12">'
+        f"{snapshot.accepted_problems} accepted problems across "
+        f"{snapshot.active_platforms} active {active_text}</text>",
     ]
 
-    for index, coverage in enumerate(snapshot.platforms):
-        column = index % columns
-        row = index // columns
-        x = _CARD_LEFT + column * (_CARD_WIDTH + _CARD_GAP)
-        y = _CARD_TOP + row * (_CARD_HEIGHT + _CARD_GAP)
-        _render_platform_card(lines, coverage, index, x, y)
-
-    lines.extend(
+    ring_cx = 126
+    ring_cy = overview_top + 84
+    platform_values = tuple(
         (
-            f'  <text x="24" y="{language_top + 25}" fill="#f0f3f8" '
-            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            'font-size="16" font-weight="700">Accepted solution languages</text>',
-            f'  <text x="{_WIDTH - 24}" y="{language_top + 25}" text-anchor="end" '
-            'fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="11">{sum(snapshot.languages.values())} SOLUTIONS</text>',
+            coverage.spec.label,
+            coverage.accepted,
+            _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)],
         )
+        for index, coverage in enumerate(snapshot.platforms)
     )
     language_values = tuple(
         (
@@ -321,21 +370,103 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         )
         for index, (language, count) in enumerate(snapshot.languages.items())
     )
-    _render_segments(
+    _render_ring(
         lines,
-        x=24,
-        y=language_top + 39,
-        width=_WIDTH - 48,
-        height=20,
+        cx=ring_cx,
+        cy=ring_cy,
+        radius=67,
+        stroke_width=16,
+        values=platform_values,
+        data_prefix="platform",
+    )
+    _render_ring(
+        lines,
+        cx=ring_cx,
+        cy=ring_cy,
+        radius=46,
+        stroke_width=10,
         values=language_values,
         data_prefix="language",
     )
-    language_summary = _profile_summary(language_values) or "No accepted solution languages yet"
-    lines.append(
-        f'  <text x="24" y="{language_top + 82}" fill="#b8c1d8" '
-        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-        f'font-size="11">{escape(language_summary)}</text>'
+    lines.extend(
+        (
+            f'  <text x="{ring_cx}" y="{ring_cy + 3}" text-anchor="middle" fill="#f0f3f8" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            f'font-size="26" font-weight="700">{snapshot.accepted_problems}</text>',
+            f'  <text x="{ring_cx}" y="{ring_cy + 22}" text-anchor="middle" fill="#8d99b2" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            'font-size="9">PROBLEMS</text>',
+            f'  <text x="{ring_cx}" y="{overview_top + 184}" text-anchor="middle" '
+            'fill="#64748b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            'font-size="9">OUTER PLATFORM · INNER LANGUAGE</text>',
+            f'  <text x="260" y="{overview_top + 18}" fill="#8d99b2" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            'font-size="10">ACCEPTED BY PLATFORM</text>',
+            f'  <text x="690" y="{overview_top + 18}" fill="#8d99b2" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            'font-size="10">SOLUTION LANGUAGES</text>',
+        )
     )
+
+    legend_rows = math.ceil(len(snapshot.platforms) / 2)
+    for index, coverage in enumerate(snapshot.platforms):
+        column = index // legend_rows
+        row = index % legend_rows
+        x = 260 + column * 205
+        y = overview_top + 48 + row * 40
+        share = (
+            coverage.accepted / snapshot.accepted_problems * 100
+            if snapshot.accepted_problems
+            else 0.0
+        )
+        color = _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)]
+        lines.extend(
+            (
+                f'  <circle cx="{x + 5}" cy="{y - 4}" r="5" fill="{color}"/>',
+                f'  <text x="{x + 18}" y="{y}" fill="#dce2f0" '
+                'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+                f'font-size="14" font-weight="600">{escape(coverage.spec.label)}</text>',
+                f'  <text x="{x + 18}" y="{y + 17}" fill="#64748b" '
+                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+                f'font-size="10">{coverage.accepted} · {share:.0f}%</text>',
+            )
+        )
+
+    language_total = sum(snapshot.languages.values())
+    if language_values:
+        for index, (language, count, color) in enumerate(language_values):
+            y = overview_top + 48 + index * 30
+            share = count / language_total * 100 if language_total else 0.0
+            lines.extend(
+                (
+                    f'  <rect x="690" y="{y - 12}" width="10" height="10" rx="3" fill="{color}"/>',
+                    f'  <text x="710" y="{y - 3}" fill="#dce2f0" '
+                    'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+                    f'font-size="13">{escape(language)}</text>',
+                    f'  <text x="860" y="{y - 3}" text-anchor="end" fill="#a8b3cf" '
+                    'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+                    f'font-size="11">{count} · {share:.0f}%</text>',
+                )
+            )
+    else:
+        lines.append(
+            f'  <text x="690" y="{overview_top + 49}" fill="#64748b" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            'font-size="13">No accepted solutions yet</text>'
+        )
+
+    lines.extend(
+        (
+            f'  <line x1="24" y1="{overview_top + overview_height}" x2="876" '
+            f'y2="{overview_top + overview_height}" stroke="#293246"/>',
+            f'  <text x="24" y="{profile_heading_y}" fill="#f0f3f8" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            'font-size="16" font-weight="700">Native profiles</text>',
+        )
+    )
+    for index, coverage in enumerate(snapshot.platforms):
+        _render_profile_row(lines, coverage, index, profile_top + index * _PROFILE_ROW_HEIGHT)
+
     lines.append("</svg>")
     return "\n".join(lines) + "\n"
 

@@ -116,7 +116,11 @@ def test_render_is_static_accessible_and_keeps_empty_platforms_compact(tmp_path:
     svg = render_coverage_svg(aggregate_coverage(tmp_path))
 
     assert "Practice Coverage" in svg
-    assert "4 ACCEPTED · 3 ACTIVE" in svg
+    assert "4 accepted problems across 3 active platforms" in svg
+    assert 'data-ring="platform"' in svg
+    assert 'data-ring="language"' in svg
+    assert "OUTER PLATFORM · INNER LANGUAGE" in svg
+    assert "Native profiles" in svg
     assert "1200–1399 1" in svg
     assert "Linear Algebra 1" in svg
     assert "No accepted problems yet" in svg
