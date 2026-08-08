@@ -33,7 +33,7 @@ _RATING_BANDS = (
     ("1600+", 1600, None),
 )
 _RATING_ACCENTS = (
-    "coverage-overlay",
+    "coverage-green",
     "coverage-teal",
     "coverage-sapphire",
     "coverage-mauve",

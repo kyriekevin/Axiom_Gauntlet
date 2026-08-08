@@ -149,6 +149,32 @@ def test_scaffold_creates_draft_with_multiple_languages(tmp_path: Path) -> None:
     assert validate_problem_dir(problem_dir) == []
 
 
+@pytest.mark.parametrize(
+    ("problem_id", "difficulty", "normalized"),
+    (
+        ("785", "简单", "easy"),
+        ("786", "中等", "medium"),
+        ("787", "困难", "hard"),
+    ),
+)
+def test_scaffold_normalizes_chinese_level_difficulties(
+    tmp_path: Path, problem_id: str, difficulty: str, normalized: str
+) -> None:
+    root = _empty_repo(tmp_path)
+    problem_dir = create_problem(
+        root,
+        platform="acwing",
+        problem_id=problem_id,
+        title="Example",
+        url=f"https://www.acwing.com/problem/content/{problem_id}/",
+        difficulty_scheme="level",
+        difficulty_value=difficulty,
+    )
+
+    problem = load_problem(problem_dir / "problem.toml")
+    assert problem.difficulty.normalized == normalized
+
+
 def test_scaffold_refuses_to_overwrite_by_default(tmp_path: Path) -> None:
     root = _empty_repo(tmp_path)
     arguments = dict(

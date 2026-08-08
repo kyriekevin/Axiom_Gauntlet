@@ -140,20 +140,17 @@
   <text class="coverage-muted" x="44" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE · 3 AC</text>
   <rect class="coverage-track" x="220" y="400" width="400" height="16" rx="6"/>
   <clipPath id="acwing-profile-clip"><rect x="220" y="400" width="400" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="400" width="266.67" height="16" class="coverage-accent coverage-teal" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Easy" data-count="2">
-    <title>Easy: 2</title>
+  <rect x="220.00" y="400" width="400.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Easy" data-count="3">
+    <title>Easy: 3</title>
   </rect>
-  <rect x="486.67" y="400" width="133.33" height="16" class="coverage-accent coverage-overlay" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Unknown" data-count="1">
-    <title>Unknown: 1</title>
-  </rect>
-  <text class="coverage-secondary" x="640" y="412" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Easy 2 · Unknown 1</text>
+  <text class="coverage-secondary" x="640" y="412" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">Easy 3</text>
   <line class="coverage-divider" x1="24" y1="444" x2="876" y2="444"/>
   <circle class="coverage-accent coverage-mauve" cx="31" cy="465" r="5"/>
   <text class="coverage-primary" x="44" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Codeforces</text>
   <text class="coverage-muted" x="44" y="490" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">RATING PROFILE · 1 AC</text>
   <rect class="coverage-track" x="220" y="458" width="400" height="16" rx="6"/>
   <clipPath id="codeforces-profile-clip"><rect x="220" y="458" width="400" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="458" width="400.00" height="16" class="coverage-accent coverage-overlay" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="≤999" data-count="1">
+  <rect x="220.00" y="458" width="400.00" height="16" class="coverage-accent coverage-green" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="≤999" data-count="1">
     <title>≤999: 1</title>
   </rect>
   <text class="coverage-secondary" x="640" y="470" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">≤999 1</text>

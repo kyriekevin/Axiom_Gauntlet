@@ -221,6 +221,11 @@ def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
     assert snapshot.active_platforms == 4
     assert snapshot.languages == {"Python": 10, "C++": 7, "Go": 2}
     assert 'data-segment="1600+" data-count="1"' in svg
+    assert (
+        'class="coverage-accent coverage-green" '
+        'clip-path="url(#codeforces-profile-clip)" '
+        'data-profile="codeforces" data-segment="≤999" data-count="1"'
+    ) in svg
     assert "≤999 → 1600+ · 5 problems" in svg
     assert "Linear Algebra 2 · ML 2 · CV 1" in svg
     ET.fromstring(svg)
