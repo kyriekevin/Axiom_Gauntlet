@@ -19,11 +19,11 @@ _DIFFICULTY_LABELS = {
     "hard": "Hard",
     "unknown": "Unknown",
 }
-_DIFFICULTY_COLORS = {
-    "easy": "#34d399",
-    "medium": "#fbbf24",
-    "hard": "#fb7185",
-    "unknown": "#64748b",
+_DIFFICULTY_ACCENTS = {
+    "easy": "coverage-teal",
+    "medium": "coverage-peach",
+    "hard": "coverage-red",
+    "unknown": "coverage-overlay",
 }
 _RATING_BANDS = (
     ("≤999", 0, 999),
@@ -32,10 +32,26 @@ _RATING_BANDS = (
     ("1400–1599", 1400, 1599),
     ("1600+", 1600, None),
 )
-_RATING_COLORS = ("#94a3b8", "#34d399", "#22d3ee", "#a78bfa", "#fb7185")
-_PLATFORM_COLORS = ("#fbbf24", "#22d3ee", "#a78bfa", "#34d399", "#fb7185")
+_RATING_ACCENTS = (
+    "coverage-overlay",
+    "coverage-teal",
+    "coverage-sapphire",
+    "coverage-mauve",
+    "coverage-red",
+)
+_PLATFORM_ACCENTS = (
+    "coverage-peach",
+    "coverage-sapphire",
+    "coverage-mauve",
+    "coverage-teal",
+    "coverage-green",
+)
 _LANGUAGE_LABELS = {"cpp": "C++", "python": "Python", "go": "Go"}
-_LANGUAGE_COLORS = {"C++": "#a78bfa", "Python": "#22d3ee", "Go": "#34d399"}
+_LANGUAGE_ACCENTS = {
+    "C++": "coverage-mauve",
+    "Python": "coverage-blue",
+    "Go": "coverage-teal",
+}
 
 _WIDTH = 900
 _PROFILE_ROW_HEIGHT = 58
@@ -185,7 +201,8 @@ def _render_segments(
         lines.extend(
             (
                 f'  <rect x="{cursor:.2f}" y="{y}" width="{segment_width:.2f}" '
-                f'height="{height}" fill="{color}" clip-path="url(#{clip_id})" '
+                f'height="{height}" class="coverage-accent {color}" '
+                f'clip-path="url(#{clip_id})" '
                 f'data-profile="{data_prefix}" '
                 f'data-segment="{escape(label)}" data-count="{value}">',
                 f"    <title>{escape(label)}: {value}</title>",
@@ -199,10 +216,10 @@ def _profile_values(coverage: PlatformCoverage) -> tuple[tuple[str, int, str], .
     if coverage.spec.default_difficulty_scheme == "rating":
         return tuple(
             (label, coverage.ratings.get(label, 0), color)
-            for (label, _, _), color in zip(_RATING_BANDS, _RATING_COLORS, strict=True)
+            for (label, _, _), color in zip(_RATING_BANDS, _RATING_ACCENTS, strict=True)
         )
     return tuple(
-        (_DIFFICULTY_LABELS[level], coverage.difficulty.get(level, 0), _DIFFICULTY_COLORS[level])
+        (_DIFFICULTY_LABELS[level], coverage.difficulty.get(level, 0), _DIFFICULTY_ACCENTS[level])
         for level in _DIFFICULTY_ORDER
     )
 
@@ -247,8 +264,8 @@ def _render_ring(
         visible = max(0.8, segment - gap)
         lines.extend(
             (
-                f'  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" '
-                f'stroke="{color}" stroke-width="{stroke_width}" '
+                f'  <circle class="coverage-accent {color}" cx="{cx}" cy="{cy}" r="{radius}" '
+                f'style="fill:none" stroke-width="{stroke_width}" '
                 f'stroke-dasharray="{visible:.2f} {circumference - visible:.2f}" '
                 f'stroke-dashoffset="{-cursor:.2f}" transform="rotate(-90 {cx} {cy})" '
                 f'data-ring="{data_prefix}" data-segment="{escape(label)}" '
@@ -261,10 +278,15 @@ def _render_ring(
 
 
 def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int, y: int) -> None:
-    accent = _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)]
+    accent = _PLATFORM_ACCENTS[index % len(_PLATFORM_ACCENTS)]
+    marker_class = (
+        f"coverage-accent {accent} coverage-empty"
+        if coverage.accepted <= 0
+        else f"coverage-accent {accent}"
+    )
     lines.extend(
         (
-            f'  <circle cx="31" cy="{y + 20}" r="5" fill="{accent}"/>',
+            f'  <circle class="{marker_class}" cx="31" cy="{y + 20}" r="5"/>',
             f'  <text class="coverage-primary" x="44" y="{y + 26}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
             f'font-size="16" font-weight="650">{escape(coverage.spec.coverage_label)}</text>',
@@ -328,6 +350,64 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
     )
 
 
+def _render_share_item(
+    lines: list[str],
+    *,
+    x: int,
+    y: int,
+    width: int,
+    label: str,
+    count: int,
+    share: float,
+    accent: str,
+    marker: str,
+) -> None:
+    """Render one compact composition item with a precise count and visual share."""
+
+    marker_class = (
+        f"coverage-accent {accent} coverage-empty" if count <= 0 else f"coverage-accent {accent}"
+    )
+    marker_svg = (
+        f'  <circle class="{marker_class}" cx="{x + 5}" cy="{y - 5}" r="5"/>'
+        if marker == "circle"
+        else f'  <rect class="{marker_class}" x="{x}" y="{y - 10}" width="10" height="10" rx="3"/>'
+    )
+    track_x = x + 18
+    track_y = y + 9
+    percentage_x = x + width
+    track_width = width - 58
+    filled_width = track_width * share / 100
+    count_class = "coverage-secondary" if count else "coverage-muted"
+    lines.extend(
+        (
+            marker_svg,
+            f'  <text class="coverage-primary" x="{x + 18}" y="{y}" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            f'font-size="14" font-weight="600">{escape(label)}</text>',
+            f'  <text class="{count_class}" x="{percentage_x}" y="{y}" text-anchor="end" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            f'font-size="11">{count}</text>',
+            f'  <rect class="coverage-track" x="{track_x}" y="{track_y}" '
+            f'width="{track_width}" height="5" rx="2.5"/>',
+        )
+    )
+    if filled_width > 0:
+        lines.extend(
+            (
+                f'  <rect class="coverage-accent {accent}" x="{track_x}" y="{track_y}" '
+                f'width="{filled_width:.2f}" height="5" rx="2.5" '
+                f'data-share="{share:.1f}" data-count="{count}">',
+                f"    <title>{escape(label)}: {count} ({share:.0f}%)</title>",
+                "  </rect>",
+            )
+        )
+    lines.append(
+        f'  <text class="coverage-muted" x="{percentage_x}" y="{y + 17}" text-anchor="end" '
+        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+        f'font-size="9">{share:.0f}%</text>'
+    )
+
+
 def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
     """Render a focused overview with nested composition rings and native profiles."""
 
@@ -354,21 +434,43 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         f'  <title id="coverage-title">{title}</title>',
         f'  <desc id="coverage-desc">{escape(description)}</desc>',
         "  <style>",
-        "    .coverage-background { fill: #f6f8fa; }",
-        "    .coverage-primary { fill: #1f2328; }",
-        "    .coverage-secondary { fill: #57606a; }",
-        "    .coverage-muted { fill: #6e7781; }",
-        "    .coverage-track { fill: #e8ecf1; }",
-        "    .coverage-track-stroke { stroke: #e8ecf1; }",
-        "    .coverage-divider { stroke: #d8dee4; }",
+        "    .coverage-background { fill: #eff1f5; }",
+        "    .coverage-primary { fill: #4c4f69; }",
+        "    .coverage-secondary { fill: #5c5f77; }",
+        "    .coverage-muted { fill: #6c6f85; }",
+        "    .coverage-track { fill: #ccd0da; }",
+        "    .coverage-track-stroke { stroke: #ccd0da; }",
+        "    .coverage-divider { stroke: #bcc0cc; }",
+        "    .coverage-yellow { fill: #df8e1d; stroke: #df8e1d; }",
+        "    .coverage-blue { fill: #1e66f5; stroke: #1e66f5; }",
+        "    .coverage-sapphire { fill: #209fb5; stroke: #209fb5; }",
+        "    .coverage-mauve { fill: #8839ef; stroke: #8839ef; }",
+        "    .coverage-green { fill: #40a02b; stroke: #40a02b; }",
+        "    .coverage-peach { fill: #fe640b; stroke: #fe640b; }",
+        "    .coverage-red { fill: #d20f39; stroke: #d20f39; }",
+        "    .coverage-teal { fill: #179299; stroke: #179299; }",
+        "    .coverage-overlay { fill: #7c7f93; stroke: #7c7f93; }",
+        "    .coverage-accent { opacity: 0.72; }",
+        "    .coverage-empty { opacity: 0.32; }",
         "    @media (prefers-color-scheme: dark) {",
-        "      .coverage-background { fill: #1d1e2c; }",
-        "      .coverage-primary { fill: #e6e9f2; }",
-        "      .coverage-secondary { fill: #b8c1d8; }",
-        "      .coverage-muted { fill: #8d99b2; }",
-        "      .coverage-track { fill: #34384a; }",
-        "      .coverage-track-stroke { stroke: #34384a; }",
-        "      .coverage-divider { stroke: #34384a; }",
+        "      .coverage-background { fill: #1e1e2e; }",
+        "      .coverage-primary { fill: #cdd6f4; }",
+        "      .coverage-secondary { fill: #bac2de; }",
+        "      .coverage-muted { fill: #a6adc8; }",
+        "      .coverage-track { fill: #313244; }",
+        "      .coverage-track-stroke { stroke: #313244; }",
+        "      .coverage-divider { stroke: #45475a; }",
+        "      .coverage-yellow { fill: #f9e2af; stroke: #f9e2af; }",
+        "      .coverage-blue { fill: #89b4fa; stroke: #89b4fa; }",
+        "      .coverage-sapphire { fill: #74c7ec; stroke: #74c7ec; }",
+        "      .coverage-mauve { fill: #cba6f7; stroke: #cba6f7; }",
+        "      .coverage-green { fill: #a6e3a1; stroke: #a6e3a1; }",
+        "      .coverage-peach { fill: #fab387; stroke: #fab387; }",
+        "      .coverage-red { fill: #f38ba8; stroke: #f38ba8; }",
+        "      .coverage-teal { fill: #94e2d5; stroke: #94e2d5; }",
+        "      .coverage-overlay { fill: #9399b2; stroke: #9399b2; }",
+        "      .coverage-accent { opacity: 1; }",
+        "      .coverage-empty { opacity: 0.45; }",
         "    }",
         "  </style>",
         f'  <rect class="coverage-background" width="{_WIDTH}" height="{height}" rx="16"/>',
@@ -387,7 +489,7 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         (
             coverage.spec.label,
             coverage.accepted,
-            _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)],
+            _PLATFORM_ACCENTS[index % len(_PLATFORM_ACCENTS)],
         )
         for index, coverage in enumerate(snapshot.platforms)
     )
@@ -395,7 +497,7 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         (
             language,
             count,
-            _LANGUAGE_COLORS.get(language, _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)]),
+            _LANGUAGE_ACCENTS.get(language, _PLATFORM_ACCENTS[index % len(_PLATFORM_ACCENTS)]),
         )
         for index, (language, count) in enumerate(snapshot.languages.items())
     )
@@ -450,18 +552,17 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
             if snapshot.accepted_problems
             else 0.0
         )
-        color = _PLATFORM_COLORS[index % len(_PLATFORM_COLORS)]
-        lines.extend(
-            (
-                f'  <circle cx="{x + 5}" cy="{y - 4}" r="5" fill="{color}"/>',
-                f'  <text class="coverage-primary" x="{x + 18}" y="{y}" '
-                'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-                f'font-size="14" font-weight="600">'
-                f"{escape(coverage.spec.coverage_label)}</text>",
-                f'  <text class="coverage-muted" x="{x + 18}" y="{y + 17}" '
-                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-                f'font-size="10">{coverage.accepted} · {share:.0f}%</text>',
-            )
+        accent = _PLATFORM_ACCENTS[index % len(_PLATFORM_ACCENTS)]
+        _render_share_item(
+            lines,
+            x=x,
+            y=y,
+            width=185,
+            label=coverage.spec.coverage_label,
+            count=coverage.accepted,
+            share=share,
+            accent=accent,
+            marker="circle",
         )
 
     language_total = sum(snapshot.languages.values())
@@ -469,17 +570,16 @@ def render_coverage_svg(snapshot: CoverageSnapshot) -> str:
         for index, (language, count, color) in enumerate(language_values):
             y = overview_top + 48 + index * 30
             share = count / language_total * 100 if language_total else 0.0
-            lines.extend(
-                (
-                    f'  <rect x="690" y="{y - 12}" width="10" height="10" rx="3" fill="{color}"/>',
-                    f'  <text class="coverage-primary" x="710" y="{y - 3}" '
-                    'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-                    f'font-size="13">{escape(language)}</text>',
-                    f'  <text class="coverage-secondary" x="860" y="{y - 3}" '
-                    'text-anchor="end" '
-                    'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-                    f'font-size="11">{count} · {share:.0f}%</text>',
-                )
+            _render_share_item(
+                lines,
+                x=690,
+                y=y - 3,
+                width=170,
+                label=language,
+                count=count,
+                share=share,
+                accent=color,
+                marker="square",
             )
     else:
         lines.append(

@@ -72,6 +72,10 @@ uv run axiom render
 make verify
 ```
 
+`uv run axiom render` regenerates the checked-in heatmap and coverage dashboard and refreshes the
+generated `recent-problems` section in both root READMEs. Do not edit those generated sections or
+SVG assets by hand.
+
 Summarize the state, accepted language, recorded complexities, code-review conclusions, and checks.
 If broader synthesis is valuable, defer it to a later `notes/YYYY-MM-DD` branch with
 `axiom-review`; do not start that work implicitly.

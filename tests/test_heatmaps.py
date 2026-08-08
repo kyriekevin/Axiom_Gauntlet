@@ -33,7 +33,7 @@ def test_discover_uses_exact_problem_layout_and_stable_order(tmp_path: Path) -> 
     assert discover(tmp_path) == (first, second)
 
 
-def test_aggregate_counts_activity_across_platforms_and_filters_year(tmp_path: Path) -> None:
+def test_aggregate_counts_activity_across_platforms_and_years(tmp_path: Path) -> None:
     _write_problem(
         tmp_path,
         "leetcode",
@@ -80,7 +80,8 @@ date = 2026-08-01
         '[[activity]]\ntype = "ac"\ndate = 2026-08-01\n',
     )
 
-    assert aggregate_activity(tmp_path, 2026) == {
+    assert aggregate_activity(tmp_path) == {
+        date(2025, 12, 31): 1,
         date(2026, 8, 1): 3,
         date(2026, 8, 2): 1,
     }
@@ -101,11 +102,11 @@ type = "ac"
 date = "not-a-date"
 """.lstrip(),
     )
-    assert aggregate_activity(tmp_path, 2026) == {}
+    assert aggregate_activity(tmp_path) == {}
 
     _write_problem(tmp_path, "leetcode", "broken", "this = [is not valid")
     with pytest.raises(HeatmapDataError, match="cannot read"):
-        aggregate_activity(tmp_path, 2026)
+        aggregate_activity(tmp_path)
 
 
 def test_render_is_deterministic_static_and_records_intensity() -> None:
@@ -113,11 +114,11 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
         date(2026, 1, 1): 1,
         date(2026, 1, 2): 2,
         date(2026, 1, 3): 4,
-        date(2025, 12, 31): 99,
+        date(2024, 12, 1): 99,
     }
 
-    first = render_heatmap(2026, counts)
-    second = render_heatmap(2026, dict(reversed(tuple(counts.items()))))
+    first = render_heatmap(date(2026, 1, 3), counts)
+    second = render_heatmap(date(2026, 1, 3), dict(reversed(tuple(counts.items()))))
 
     assert first == second
     assert "<script" not in first.lower()
@@ -127,28 +128,39 @@ def test_render_is_deterministic_static_and_records_intensity() -> None:
     assert 'data-date="2026-01-01" data-count="1" data-level="1"' in first
     assert 'data-date="2026-01-02" data-count="2" data-level="2"' in first
     assert 'data-date="2026-01-03" data-count="4" data-level="4"' in first
+    assert 'data-date="2024-12-01"' not in first
+    assert "53 WEEKS · THROUGH 2026-01-03" in first
+    assert 'width="1180"' in first
+    assert 'width="16" height="16" rx="4"' in first
     assert "@media (prefers-color-scheme: dark)" in first
     assert 'class="heatmap-cell heatmap-level-1"' in first
-    for color in ("#f6f8fa", "#e8ecf1", "#1d1e2c", "#34384a", "#a5f3fc"):
+    for color in ("#eff1f5", "#ccd0da", "#179299", "#1e1e2e", "#313244", "#94e2d5"):
         assert color in first
+    for opacity in ("0.35", "0.60", "0.80"):
+        assert f"fill-opacity: {opacity}" in first
     ET.fromstring(first)
 
 
-@pytest.mark.parametrize(
-    ("year", "expected_days"),
-    ((2025, 365), (2024, 366)),
-)
-def test_empty_heatmap_contains_every_day(year: int, expected_days: int) -> None:
-    svg = render_heatmap(year, {})
+def test_empty_heatmap_contains_trailing_53_weeks_through_cutoff() -> None:
+    svg = render_heatmap(date(2026, 8, 9), {})
     document = ET.fromstring(svg)
     namespace = {"svg": "http://www.w3.org/2000/svg"}
     day_cells = [
         cell for cell in document.findall("svg:rect", namespace) if "data-date" in cell.attrib
     ]
 
-    assert len(day_cells) == expected_days
-    assert "0 counted activities across 0 active days" in svg
+    assert len(day_cells) == 53 * 7
+    assert day_cells[0].attrib["data-date"] == "2025-08-04"
+    assert day_cells[-1].attrib["data-date"] == "2026-08-09"
+    assert "0 counted activities across 0 active days in the trailing 53 weeks" in svg
     assert "0 EVENTS · 0 ACTIVE DAYS" in svg
+
+
+def test_heatmap_omits_future_days_in_cutoff_week() -> None:
+    svg = render_heatmap(date(2026, 8, 8), {})
+
+    assert 'data-date="2026-08-08"' in svg
+    assert 'data-date="2026-08-09"' not in svg
 
 
 def test_generate_and_check_mode_detect_stale_assets_without_writing(tmp_path: Path) -> None:
@@ -163,21 +175,24 @@ date = 2026-08-01
 """.lstrip(),
     )
 
-    changed = generate_heatmaps(tmp_path, 2026)
+    changed = generate_heatmaps(tmp_path)
     assert tuple(path.name for path in changed) == ("total.svg",)
-    assert check_heatmaps(tmp_path, 2026)
-    assert generate_heatmaps(tmp_path, 2026, check=True) == ()
+    assert "53 WEEKS · THROUGH 2026-08-01" in (
+        tmp_path / "assets" / "heatmaps" / "total.svg"
+    ).read_text(encoding="utf-8")
+    assert check_heatmaps(tmp_path)
+    assert generate_heatmaps(tmp_path, check=True) == ()
 
     total = tmp_path / "assets" / "heatmaps" / "total.svg"
     total.write_text("stale\n", encoding="utf-8")
-    stale = generate_heatmaps(tmp_path, 2026, check=True)
+    stale = generate_heatmaps(tmp_path, check=True)
     assert stale == (total,)
     assert total.read_text(encoding="utf-8") == "stale\n"
 
-    assert generate_heatmaps(tmp_path, 2026) == (total,)
-    assert check_heatmaps(tmp_path, 2026)
+    assert generate_heatmaps(tmp_path) == (total,)
+    assert check_heatmaps(tmp_path)
 
 
-def test_rejects_invalid_year(tmp_path: Path) -> None:
-    with pytest.raises(ValueError, match="year"):
+def test_rejects_non_date_cutoff() -> None:
+    with pytest.raises(TypeError, match="as_of"):
         render_heatmap(0, {})
