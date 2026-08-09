@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:118A"
+platform = "codeforces"
+problem_id = "118A"
+title = "String Task"
+url = "https://codeforces.com/problemset/problem/118/A"
+state = "accepted"
+tags = ["implementation", "strings"]
+
+[difficulty]
+scheme = "rating"
+value = 1000
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n^2)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-09
+language = "python"
+reflection = "The filtering logic is correct, including y as a vowel; repeated immutable-string concatenation makes the accepted Python implementation quadratic, while list accumulation plus join would be linear."
