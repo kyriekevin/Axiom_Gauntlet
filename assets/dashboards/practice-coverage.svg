@@ -121,51 +121,61 @@
   <text class="coverage-primary" x="24" y="313" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="700">Native profiles</text>
   <circle class="coverage-accent coverage-peach" cx="31" cy="349" r="5"/>
   <text class="coverage-primary" x="44" y="355" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">LeetCode</text>
-  <text class="coverage-muted" x="44" y="374" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE · 6 AC</text>
-  <rect class="coverage-track" x="220" y="342" width="656" height="16" rx="6"/>
-  <clipPath id="leetcode-profile-clip"><rect x="220" y="342" width="656" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="342" width="218.67" height="16" class="coverage-accent coverage-teal" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Easy" data-count="2">
+  <text class="coverage-muted" x="44" y="374" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">LEVEL PROFILE · 6 AC</text>
+  <rect class="coverage-track" x="220" y="342" width="400" height="16" rx="6"/>
+  <clipPath id="leetcode-profile-clip"><rect x="220" y="342" width="400" height="16" rx="6"/></clipPath>
+  <rect x="220.00" y="342" width="133.33" height="16" class="coverage-accent coverage-teal" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Easy" data-count="2">
     <title>Easy: 2</title>
   </rect>
-  <rect x="438.67" y="342" width="328.00" height="16" class="coverage-accent coverage-peach" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Medium" data-count="3">
+  <rect x="353.33" y="342" width="200.00" height="16" class="coverage-accent coverage-peach" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Medium" data-count="3">
     <title>Medium: 3</title>
   </rect>
-  <rect x="766.67" y="342" width="109.33" height="16" class="coverage-accent coverage-red" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Hard" data-count="1">
+  <rect x="553.33" y="342" width="66.67" height="16" class="coverage-accent coverage-red" clip-path="url(#leetcode-profile-clip)" data-profile="leetcode" data-segment="Hard" data-count="1">
     <title>Hard: 1</title>
   </rect>
-  <text class="coverage-secondary" x="220" y="374" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">Easy 2 · Medium 3 · Hard 1</text>
+  <circle class="coverage-accent coverage-teal" cx="643" cy="351" r="3"/>
+  <text class="coverage-secondary" x="651" y="354" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="leetcode" data-segment="Easy" data-count="2">Easy 2</text>
+  <circle class="coverage-accent coverage-peach" cx="721" cy="351" r="3"/>
+  <text class="coverage-secondary" x="729" y="354" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="leetcode" data-segment="Medium" data-count="3">Medium 3</text>
+  <circle class="coverage-accent coverage-red" cx="799" cy="351" r="3"/>
+  <text class="coverage-secondary" x="807" y="354" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="leetcode" data-segment="Hard" data-count="1">Hard 1</text>
   <line class="coverage-divider" x1="24" y1="386" x2="876" y2="386"/>
   <circle class="coverage-accent coverage-sapphire" cx="31" cy="407" r="5"/>
   <text class="coverage-primary" x="44" y="413" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">AcWing</text>
-  <text class="coverage-muted" x="44" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">DIFFICULTY PROFILE · 3 AC</text>
-  <rect class="coverage-track" x="220" y="400" width="656" height="16" rx="6"/>
-  <clipPath id="acwing-profile-clip"><rect x="220" y="400" width="656" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="400" width="656.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Easy" data-count="3">
+  <text class="coverage-muted" x="44" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">LEVEL PROFILE · 3 AC</text>
+  <rect class="coverage-track" x="220" y="400" width="400" height="16" rx="6"/>
+  <clipPath id="acwing-profile-clip"><rect x="220" y="400" width="400" height="16" rx="6"/></clipPath>
+  <rect x="220.00" y="400" width="400.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#acwing-profile-clip)" data-profile="acwing" data-segment="Easy" data-count="3">
     <title>Easy: 3</title>
   </rect>
-  <text class="coverage-secondary" x="220" y="432" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">Easy 3</text>
+  <circle class="coverage-accent coverage-teal" cx="643" cy="409" r="3"/>
+  <text class="coverage-secondary" x="651" y="412" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="acwing" data-segment="Easy" data-count="3">Easy 3</text>
   <line class="coverage-divider" x1="24" y1="444" x2="876" y2="444"/>
   <circle class="coverage-accent coverage-mauve" cx="31" cy="465" r="5"/>
   <text class="coverage-primary" x="44" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Codeforces</text>
   <text class="coverage-muted" x="44" y="490" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">RATING PROFILE · 2 AC</text>
-  <rect class="coverage-track" x="220" y="458" width="656" height="16" rx="6"/>
-  <clipPath id="codeforces-profile-clip"><rect x="220" y="458" width="656" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="458" width="328.00" height="16" class="coverage-accent coverage-green" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="≤999" data-count="1">
+  <rect class="coverage-track" x="220" y="458" width="400" height="16" rx="6"/>
+  <clipPath id="codeforces-profile-clip"><rect x="220" y="458" width="400" height="16" rx="6"/></clipPath>
+  <rect x="220.00" y="458" width="200.00" height="16" class="coverage-accent coverage-green" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="≤999" data-count="1">
     <title>≤999: 1</title>
   </rect>
-  <rect x="548.00" y="458" width="328.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="1000–1199" data-count="1">
+  <rect x="420.00" y="458" width="200.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#codeforces-profile-clip)" data-profile="codeforces" data-segment="1000–1199" data-count="1">
     <title>1000–1199: 1</title>
   </rect>
-  <text class="coverage-secondary" x="220" y="490" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">≤999 1 · 1000–1199 1</text>
+  <circle class="coverage-accent coverage-green" cx="643" cy="458" r="3"/>
+  <text class="coverage-secondary" x="651" y="461" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="codeforces" data-segment="≤999" data-count="1">≤999 1</text>
+  <circle class="coverage-accent coverage-teal" cx="761" cy="458" r="3"/>
+  <text class="coverage-secondary" x="769" y="461" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="codeforces" data-segment="1000–1199" data-count="1">1000–1199 1</text>
   <line class="coverage-divider" x1="24" y1="502" x2="876" y2="502"/>
   <circle class="coverage-accent coverage-teal" cx="31" cy="523" r="5"/>
   <text class="coverage-primary" x="44" y="529" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Deep-ML</text>
-  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">CATEGORY × LEVEL · 2 AC</text>
-  <rect class="coverage-track" x="220" y="516" width="656" height="16" rx="6"/>
-  <clipPath id="deep-ml-profile-clip"><rect x="220" y="516" width="656" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="516" width="656.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#deep-ml-profile-clip)" data-profile="deep-ml" data-segment="Easy" data-count="2">
+  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">LEVEL PROFILE · 2 AC</text>
+  <rect class="coverage-track" x="220" y="516" width="400" height="16" rx="6"/>
+  <clipPath id="deep-ml-profile-clip"><rect x="220" y="516" width="400" height="16" rx="6"/></clipPath>
+  <rect x="220.00" y="516" width="400.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#deep-ml-profile-clip)" data-profile="deep-ml" data-segment="Easy" data-count="2">
     <title>Easy: 2</title>
   </rect>
-  <text class="coverage-secondary" x="220" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">Easy 2 · Linear Algebra 2</text>
+  <circle class="coverage-accent coverage-teal" cx="643" cy="525" r="3"/>
+  <text class="coverage-secondary" x="651" y="528" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="deep-ml" data-segment="Easy" data-count="2">Easy 2</text>
   <line class="coverage-divider" x1="24" y1="560" x2="876" y2="560"/>
 </svg>

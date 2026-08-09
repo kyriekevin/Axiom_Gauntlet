@@ -189,7 +189,8 @@ def test_render_is_static_accessible_and_keeps_empty_platforms_compact(tmp_path:
     assert ".coverage-accent { opacity: 0.72; }" in svg
     assert "      .coverage-accent { opacity: 1; }" in svg
     assert "1200–1399 1" in svg
-    assert "Linear Algebra 1" in svg
+    assert "Linear Algebra 1" not in svg
+    assert "LEVEL PROFILE" in svg
     assert "No accepted problems yet" in svg
     assert "<script" not in svg.lower()
     assert "animate" not in svg.lower()
@@ -226,17 +227,12 @@ def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
         'clip-path="url(#codeforces-profile-clip)" '
         'data-profile="codeforces" data-segment="≤999" data-count="1"'
     ) in svg
-    assert '<rect class="coverage-track" x="220" y="458" width="656" height="16"' in svg
-    assert "≤999 1 · 1000–1199 1 · 1200–1399 1 · 1400–1599 1 · 1600+ 1" in svg
-    assert (
-        '<text class="coverage-secondary" x="220" y="490" '
-        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">'
-    ) in svg
-    assert "Easy 2 · Medium 3 · Hard 2 · Linear Algebra 2 · ML 2 · CV 1" in svg
-    assert (
-        '<text class="coverage-secondary" x="220" y="548" '
-        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">'
-    ) in svg
+    assert '<rect class="coverage-track" x="220" y="458" width="400" height="16"' in svg
+    for label in ("≤999", "1000–1199", "1200–1399", "1400–1599", "1600+"):
+        assert f'data-profile-summary="codeforces" data-segment="{label}" data-count="1"' in svg
+    assert "Linear Algebra 2" not in svg
+    for label, count in (("Easy", 2), ("Medium", 3), ("Hard", 2)):
+        assert f'data-profile-summary="deep-ml" data-segment="{label}" data-count="{count}"' in svg
     ET.fromstring(svg)
 
 
@@ -271,7 +267,7 @@ def test_render_uses_compact_platform_label_without_losing_formal_name() -> None
     svg = render_coverage_svg(snapshot)
 
     assert ">Example OJ</text>" in svg
-    assert "DIFFICULTY PROFILE · 1 AC" in svg
+    assert "LEVEL PROFILE · 1 AC" in svg
     assert "<title>Example Online Judge With A Long Formal Name: 1</title>" in svg
     ET.fromstring(svg)
 
