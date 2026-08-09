@@ -151,24 +151,10 @@ def aggregate_coverage(root: str | Path) -> CoverageSnapshot:
     )
 
 
-def _category_label(category: str) -> str:
-    abbreviations = {
-        "computer-vision": "CV",
-        "deep-learning": "DL",
-        "machine-learning": "ML",
-        "nlp": "NLP",
-    }
-    if category in abbreviations:
-        return abbreviations[category]
-    return category.replace("-", " ").title()
-
-
 def _profile_label(coverage: PlatformCoverage) -> str:
     if coverage.spec.default_difficulty_scheme == "rating":
         return "RATING PROFILE"
-    if coverage.spec.coverage_categories:
-        return "CATEGORY × LEVEL"
-    return "DIFFICULTY PROFILE"
+    return "LEVEL PROFILE"
 
 
 def _render_segments(
@@ -224,16 +210,47 @@ def _profile_values(coverage: PlatformCoverage) -> tuple[tuple[str, int, str], .
     )
 
 
-def _profile_summary(coverage: PlatformCoverage, values: tuple[tuple[str, int, str], ...]) -> str:
-    populated = [f"{label} {count}" for label, count, _ in values if count > 0]
-    if coverage.spec.default_difficulty_scheme == "rating" and len(populated) > 1:
-        populated_values = [(label, count) for label, count, _ in values if count > 0]
-        first_label = populated_values[0][0]
-        last_label = populated_values[-1][0]
-        total = sum(count for _, count in populated_values)
-        noun = "problem" if total == 1 else "problems"
-        return f"{first_label} → {last_label} · {total} {noun}"
-    return " · ".join(populated)
+def _render_profile_legend(
+    lines: list[str],
+    *,
+    coverage: PlatformCoverage,
+    values: tuple[tuple[str, int, str], ...],
+    y: int,
+) -> None:
+    populated = [(label, count, color) for label, count, color in values if count > 0]
+    rating_profile = coverage.spec.default_difficulty_scheme == "rating"
+    if not populated:
+        missing_label = "Rating" if rating_profile else "Level"
+        lines.append(
+            f'  <text class="coverage-muted" x="640" y="{y + 26}" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            f'font-size="12">{missing_label} not recorded</text>'
+        )
+        return
+
+    columns = 3
+    column_width = 78
+    first_baseline = y + 18 if rating_profile else y + 25
+    row_gap = 18
+    for index, (label, count, color) in enumerate(populated):
+        row, column = divmod(index, columns)
+        x = 640 + column * column_width
+        baseline = first_baseline + row * row_gap
+        summary = f"{label} {count}"
+        fit_attributes = (
+            ' textLength="67" lengthAdjust="spacingAndGlyphs"' if len(summary) * 5.5 > 67 else ""
+        )
+        lines.extend(
+            (
+                f'  <circle class="coverage-accent {color}" cx="{x + 3}" '
+                f'cy="{baseline - 3}" r="3"/>',
+                f'  <text class="coverage-secondary" x="{x + 11}" y="{baseline}" '
+                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+                f'font-size="9"{fit_attributes} data-profile-summary="{coverage.spec.slug}" '
+                f'data-segment="{escape(label)}" data-count="{count}">'
+                f"{escape(summary)}</text>",
+            )
+        )
 
 
 def _render_ring(
@@ -309,7 +326,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
         lines.append(
             f'  <text class="coverage-muted" x="640" y="{y + 26}" '
             'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            'font-size="14">No accepted problems yet</text>'
+            'font-size="12">No accepted problems yet</text>'
         )
     else:
         values = _profile_values(coverage)
@@ -322,26 +339,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             values=values,
             data_prefix=coverage.spec.slug,
         )
-        summary = _profile_summary(coverage, values) or "Difficulty not recorded"
-        lines.append(
-            f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
-            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="11">{escape(summary)}</text>'
-        )
-
-        categories = sorted(
-            ((category, count) for category, count in coverage.categories.items() if count > 0),
-            key=lambda item: (-item[1], item[0]),
-        )[:3]
-        if categories:
-            category_summary = " · ".join(
-                f"{_category_label(category)} {count}" for category, count in categories
-            )
-            lines.append(
-                f'  <text class="coverage-muted" x="640" y="{y + 44}" '
-                'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-                f'font-size="10">{escape(category_summary)}</text>'
-            )
+        _render_profile_legend(lines, coverage=coverage, values=values, y=y)
 
     lines.append(
         f'  <line class="coverage-divider" x1="24" '
