@@ -226,13 +226,6 @@ def _profile_values(coverage: PlatformCoverage) -> tuple[tuple[str, int, str], .
 
 def _profile_summary(coverage: PlatformCoverage, values: tuple[tuple[str, int, str], ...]) -> str:
     populated = [f"{label} {count}" for label, count, _ in values if count > 0]
-    if coverage.spec.default_difficulty_scheme == "rating" and len(populated) > 1:
-        populated_values = [(label, count) for label, count, _ in values if count > 0]
-        first_label = populated_values[0][0]
-        last_label = populated_values[-1][0]
-        total = sum(count for _, count in populated_values)
-        noun = "problem" if total == 1 else "problems"
-        return f"{first_label} → {last_label} · {total} {noun}"
     return " · ".join(populated)
 
 
@@ -323,11 +316,18 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             data_prefix=coverage.spec.slug,
         )
         summary = _profile_summary(coverage, values) or "Difficulty not recorded"
-        lines.append(
-            f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
-            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-            f'font-size="11">{escape(summary)}</text>'
-        )
+        if coverage.spec.default_difficulty_scheme == "rating":
+            lines.append(
+                f'  <text class="coverage-secondary" x="220" y="{y + 45}" '
+                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+                f'font-size="10">{escape(summary)}</text>'
+            )
+        else:
+            lines.append(
+                f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
+                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+                f'font-size="11">{escape(summary)}</text>'
+            )
 
         categories = sorted(
             ((category, count) for category, count in coverage.categories.items() if count > 0),
@@ -338,7 +338,7 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
                 f"{_category_label(category)} {count}" for category, count in categories
             )
             lines.append(
-                f'  <text class="coverage-muted" x="640" y="{y + 44}" '
+                f'  <text class="coverage-muted" x="220" y="{y + 45}" '
                 'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
                 f'font-size="10">{escape(category_summary)}</text>'
             )

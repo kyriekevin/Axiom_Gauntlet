@@ -226,8 +226,16 @@ def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
         'clip-path="url(#codeforces-profile-clip)" '
         'data-profile="codeforces" data-segment="≤999" data-count="1"'
     ) in svg
-    assert "≤999 → 1600+ · 5 problems" in svg
+    assert "≤999 1 · 1000–1199 1 · 1200–1399 1 · 1400–1599 1 · 1600+ 1" in svg
+    assert (
+        '<text class="coverage-secondary" x="220" y="490" '
+        'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">'
+    ) in svg
     assert "Linear Algebra 2 · ML 2 · CV 1" in svg
+    assert (
+        '<text class="coverage-muted" x="220" y="548" '
+        'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10">'
+    ) in svg
     ET.fromstring(svg)
 
 
