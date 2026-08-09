@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:2"
+platform = "deep-ml"
+problem_id = "2"
+title = "Transpose of a Matrix"
+url = "https://www.deep-ml.com/problems/2"
+state = "accepted"
+tags = ["linear-algebra"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(mn)"
+space_complexity = "O(mn)"
+[[activity]]
+type = "ac"
+date = 2026-08-09
+language = "python"
+reflection = "The index swap res[j, i] = a_t[i, j] handles rectangular matrices; input coercion can require O(mn) auxiliary space."
