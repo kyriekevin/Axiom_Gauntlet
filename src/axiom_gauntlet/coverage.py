@@ -219,10 +219,10 @@ def _render_profile_legend(
 ) -> None:
     populated = [(label, count, color) for label, count, color in values if count > 0]
     rating_profile = coverage.spec.default_difficulty_scheme == "rating"
-    columns = 2 if rating_profile else 3
-    column_width = 118 if rating_profile else 78
-    first_baseline = y + 16 if rating_profile else y + 25
-    row_gap = 15
+    columns = 3
+    column_width = 78
+    first_baseline = y + 18 if rating_profile else y + 25
+    row_gap = 18
     for index, (label, count, color) in enumerate(populated):
         row, column = divmod(index, columns)
         x = 640 + column * column_width

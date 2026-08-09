@@ -230,6 +230,11 @@ def test_render_handles_populated_native_profiles(tmp_path: Path) -> None:
     assert '<rect class="coverage-track" x="220" y="458" width="400" height="16"' in svg
     for label in ("≤999", "1000–1199", "1200–1399", "1400–1599", "1600+"):
         assert f'data-profile-summary="codeforces" data-segment="{label}" data-count="1"' in svg
+    assert 'x="651" y="463"' in svg
+    assert 'x="729" y="463"' in svg
+    assert 'x="807" y="463"' in svg
+    assert 'x="651" y="481"' in svg
+    assert 'x="729" y="481"' in svg
     assert "Linear Algebra 2" not in svg
     for label, count in (("Easy", 2), ("Medium", 3), ("Hard", 2)):
         assert f'data-profile-summary="deep-ml" data-segment="{label}" data-count="{count}"' in svg
