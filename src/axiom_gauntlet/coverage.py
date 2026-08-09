@@ -294,15 +294,15 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             lines,
             x=220,
             y=y + 13,
-            width=400,
+            width=656,
             height=16,
             values=(),
             data_prefix=coverage.spec.slug,
         )
         lines.append(
-            f'  <text class="coverage-muted" x="640" y="{y + 26}" '
-            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-            'font-size="14">No accepted problems yet</text>'
+            f'  <text class="coverage-muted" x="220" y="{y + 45}" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            'font-size="10">No accepted problems yet</text>'
         )
     else:
         values = _profile_values(coverage)
@@ -310,24 +310,12 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             lines,
             x=220,
             y=y + 13,
-            width=400,
+            width=656,
             height=16,
             values=values,
             data_prefix=coverage.spec.slug,
         )
-        summary = _profile_summary(coverage, values) or "Difficulty not recorded"
-        if coverage.spec.default_difficulty_scheme == "rating":
-            lines.append(
-                f'  <text class="coverage-secondary" x="220" y="{y + 45}" '
-                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-                f'font-size="10">{escape(summary)}</text>'
-            )
-        else:
-            lines.append(
-                f'  <text class="coverage-secondary" x="640" y="{y + 25}" '
-                'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-                f'font-size="11">{escape(summary)}</text>'
-            )
+        summaries = [_profile_summary(coverage, values) or "Difficulty not recorded"]
 
         categories = sorted(
             ((category, count) for category, count in coverage.categories.items() if count > 0),
@@ -337,11 +325,12 @@ def _render_profile_row(lines: list[str], coverage: PlatformCoverage, index: int
             category_summary = " · ".join(
                 f"{_category_label(category)} {count}" for category, count in categories
             )
-            lines.append(
-                f'  <text class="coverage-muted" x="220" y="{y + 45}" '
-                'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
-                f'font-size="10">{escape(category_summary)}</text>'
-            )
+            summaries.append(category_summary)
+        lines.append(
+            f'  <text class="coverage-secondary" x="220" y="{y + 45}" '
+            'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+            f'font-size="10">{escape(" · ".join(summaries))}</text>'
+        )
 
     lines.append(
         f'  <line class="coverage-divider" x1="24" '
