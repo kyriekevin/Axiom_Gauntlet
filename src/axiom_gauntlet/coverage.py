@@ -219,6 +219,15 @@ def _render_profile_legend(
 ) -> None:
     populated = [(label, count, color) for label, count, color in values if count > 0]
     rating_profile = coverage.spec.default_difficulty_scheme == "rating"
+    if not populated:
+        missing_label = "Rating" if rating_profile else "Level"
+        lines.append(
+            f'  <text class="coverage-muted" x="640" y="{y + 26}" '
+            'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" '
+            f'font-size="12">{missing_label} not recorded</text>'
+        )
+        return
+
     columns = 3
     column_width = 78
     first_baseline = y + 18 if rating_profile else y + 25
@@ -227,15 +236,19 @@ def _render_profile_legend(
         row, column = divmod(index, columns)
         x = 640 + column * column_width
         baseline = first_baseline + row * row_gap
+        summary = f"{label} {count}"
+        fit_attributes = (
+            ' textLength="67" lengthAdjust="spacingAndGlyphs"' if len(summary) * 5.5 > 67 else ""
+        )
         lines.extend(
             (
                 f'  <circle class="coverage-accent {color}" cx="{x + 3}" '
                 f'cy="{baseline - 3}" r="3"/>',
                 f'  <text class="coverage-secondary" x="{x + 11}" y="{baseline}" '
                 'font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-                f'font-size="9" data-profile-summary="{coverage.spec.slug}" '
+                f'font-size="9"{fit_attributes} data-profile-summary="{coverage.spec.slug}" '
                 f'data-segment="{escape(label)}" data-count="{count}">'
-                f"{escape(label)} {count}</text>",
+                f"{escape(summary)}</text>",
             )
         )
 
