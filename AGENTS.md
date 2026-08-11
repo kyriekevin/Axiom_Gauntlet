@@ -27,6 +27,6 @@
 - Do not edit README content between the `recent-problems` markers by hand. Regenerate it with
   `uv run axiom render`.
 - Before handing off changes, run `make verify`.
-- After verification, commit only the session changes with a Conventional Commit, push the daily
-  practice branch, and create or update its pull request against `main`. Do not merge the pull
-  request unless the user explicitly asks.
+- After verifying a weekday practice session, commit only the session changes with a Conventional
+  Commit, push the daily practice branch, and create or update its pull request against `main`. Do
+  not merge the pull request unless the user explicitly asks.
