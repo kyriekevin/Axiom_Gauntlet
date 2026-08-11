@@ -47,9 +47,10 @@
 
 ```text
 在在线评测平台解题
-├── axiom new / accept ──→ problems/<平台>/<题号>/         problem.toml = 证据
-├── axiom knowledge ─────→ knowledge/<类别>/<主题>/        topic.toml = 可复用推理
-└── axiom render ────────→ README 表格、面板、热力图与索引
+├── axiom new / accept ──────→ problems/<平台>/<题号>/        problem.toml = 证据
+├── axiom knowledge ─────────→ knowledge/<类别>/<主题>/       topic.toml = 可复用推理
+├── axiom render ────────────→ README 表格、面板、热力图
+└── axiom knowledge render ──→ 知识索引
 ```
 
 所有生命周期状态变更都经由 `axiom` CLI 完成；生成的表格、面板与索引一律不手工编辑。
@@ -57,15 +58,27 @@
 ## 每日练习
 
 ```bash
-uv sync --locked --all-groups        # 克隆后执行一次
-git pull --ff-only                   # 从干净的 main 开始新的一天
-git switch -c practice/YYYY-MM-DD    # 创建或复用 Asia/Shanghai 当日分支
-uv run axiom new ...                 # 建题、解题、提交
-uv run axiom accept ...              # 记录平台确认的判定
-make verify                          # 提 PR 前的完整校验
+uv sync --locked --all-groups                 # 克隆后执行一次
+
+git switch main
+git pull --ff-only
+
+# 当天首次新建，之后每次自动复用
+git switch practice/YYYY-MM-DD 2>/dev/null \
+  || git switch -c practice/YYYY-MM-DD
+
+uv run axiom new codeforces 118A \
+  --title "String Task" --url <题目链接> --language cpp
+#   ↑ 只生成条目和代码骨架；解题与提交由你自己完成
+
+# 只有平台返回 Accepted 之后：
+uv run axiom accept codeforces 118A \
+  --language cpp --time-complexity "O(n)" --space-complexity "O(n)"
+
+make verify                                   # 提 PR 前的完整校验
 ```
 
-练习通过每日 PR 合入；延迟的知识沉淀走短生命周期的 `notes/YYYY-MM-DD` 分支。完整约定见
+练习通过每日 PR 合入；延迟的知识沉淀走临时的 `notes/YYYY-MM-DD` 分支。完整约定见
 [AGENTS.md](AGENTS.md)。
 
 ## 文档导航

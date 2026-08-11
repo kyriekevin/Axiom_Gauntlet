@@ -48,9 +48,10 @@ commits.
 
 ```text
 solve on an online judge
-├── axiom new / accept ──→ problems/<platform>/<id>/        problem.toml = evidence
-├── axiom knowledge ─────→ knowledge/<category>/<topic>/    topic.toml = reusable reasoning
-└── axiom render ────────→ README table, dashboards, heatmap, and indexes
+├── axiom new / accept ──────→ problems/<platform>/<id>/      problem.toml = evidence
+├── axiom knowledge ─────────→ knowledge/<category>/<topic>/  topic.toml = reusable reasoning
+├── axiom render ────────────→ README table, dashboards, heatmap
+└── axiom knowledge render ──→ knowledge indexes
 ```
 
 Every lifecycle transition goes through the `axiom` CLI. Generated tables, dashboards, and
@@ -59,12 +60,24 @@ indexes are never edited by hand.
 ## Daily practice
 
 ```bash
-uv sync --locked --all-groups        # once after cloning
-git pull --ff-only                   # start the day on a clean main
-git switch -c practice/YYYY-MM-DD    # create or reuse the Asia/Shanghai daily branch
-uv run axiom new ...                 # scaffold, solve, submit
-uv run axiom accept ...              # record the judge-confirmed verdict
-make verify                          # full gate before the pull request
+uv sync --locked --all-groups                 # once after cloning
+
+git switch main
+git pull --ff-only
+
+# created on the day's first session, reused by every later one
+git switch practice/YYYY-MM-DD 2>/dev/null \
+  || git switch -c practice/YYYY-MM-DD
+
+uv run axiom new codeforces 118A \
+  --title "String Task" --url <problem-url> --language cpp
+#   ↑ scaffolds the entry and a solution stub; solving and submitting are yours
+
+# only once the judge returns Accepted:
+uv run axiom accept codeforces 118A \
+  --language cpp --time-complexity "O(n)" --space-complexity "O(n)"
+
+make verify                                   # full gate before the pull request
 ```
 
 Practice lands through a daily pull request; delayed knowledge synthesis uses a short-lived
