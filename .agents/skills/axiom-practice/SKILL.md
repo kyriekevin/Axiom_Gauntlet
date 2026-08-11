@@ -15,6 +15,15 @@ leave reusable knowledge synthesis to `axiom-review`.
 3. Use Asia/Shanghai dates and pass explicit `--date YYYY-MM-DD` values.
 4. Keep recommendations, review scheduling, and knowledge-wiki editing out of scope.
 
+## Prepare the daily branch
+
+Treat repository bookkeeping as part of the agent workflow. Inspect the current branch and worktree
+before changing files, and preserve unrelated or uncommitted user work. Before the first repository
+mutation of the day, update a clean `main` with a fast-forward-only pull, then create or reuse
+`practice/YYYY-MM-DD` using the Asia/Shanghai date. Reuse the same branch for every practice problem
+that day, including an existing local or remote branch. Never commit practice changes directly to
+`main`.
+
 ## Start a problem
 
 Gather the platform, ID, title, official URL, difficulty, useful tags, and language. Never copy the
@@ -76,6 +85,10 @@ make verify
 generated `recent-problems` section in both root READMEs. Do not edit those generated sections or
 SVG assets by hand.
 
-Summarize the state, accepted language, recorded complexities, code-review conclusions, and checks.
-If broader synthesis is valuable, defer it to a later `notes/YYYY-MM-DD` branch with
-`axiom-review`; do not start that work implicitly.
+Inspect the final diff, commit only the session changes with a Conventional Commit, push the daily
+practice branch, and create or update one pull request against `main`. Do not merge it unless the
+user explicitly asks. Summarize the branch and pull request together with the state, accepted
+language, recorded complexities, code-review conclusions, and checks.
+
+If broader synthesis is valuable, defer it to a later `notes/YYYY-MM-DD` branch with `axiom-review`;
+do not start that work implicitly.
