@@ -12,6 +12,10 @@
 - Use `uv run axiom accept` and `uv run axiom knowledge document/review` for lifecycle transitions
   instead of editing state and activity fields by hand. Acceptance must record time and auxiliary
   space complexity for the accepted language.
+- Treat the Git lifecycle as part of weekday practice bookkeeping. Before the first repository
+  mutation of the day, update a clean `main` with `git pull --ff-only`, then create or reuse the
+  Asia/Shanghai-dated `practice/YYYY-MM-DD` branch. Reuse that branch for all practice that day and
+  never commit practice changes directly to `main`.
 - Keep weekday solving in the problem workflow and delayed synthesis in a short-lived
   `notes/YYYY-MM-DD` branch.
 - Regenerate knowledge indexes with `uv run axiom knowledge render`; do not edit them by hand.
@@ -23,3 +27,6 @@
 - Do not edit README content between the `recent-problems` markers by hand. Regenerate it with
   `uv run axiom render`.
 - Before handing off changes, run `make verify`.
+- After verification, commit only the session changes with a Conventional Commit, push the daily
+  practice branch, and create or update its pull request against `main`. Do not merge the pull
+  request unless the user explicitly asks.
