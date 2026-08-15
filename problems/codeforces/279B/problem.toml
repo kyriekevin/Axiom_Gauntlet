@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:279B"
+platform = "codeforces"
+problem_id = "279B"
+title = "Books"
+url = "https://codeforces.com/problemset/problem/279/B"
+state = "accepted"
+tags = []
+
+[difficulty]
+scheme = "rating"
+value = 1400
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-15
+language = "cpp"
+reflection = "阅读时间均为正数，右端点扩张后若总时长超限就持续右移左端点；每个端点至多移动 n 次，窗口始终表示满足总时长限制的连续书段。"

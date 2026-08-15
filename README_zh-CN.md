@@ -27,9 +27,9 @@
 | --- | --- | --- | --- |
 | 2026-08-15 | [数的范围](problems/acwing/789/) | AcWing | C++ |
 | 2026-08-15 | [数的三次方根](problems/acwing/790/) | AcWing | C++ |
+| 2026-08-15 | [Books](problems/codeforces/279B/) | Codeforces | C++ |
 | 2026-08-15 | [Longest Subsequence With Non-Zero Bitwise XOR](problems/leetcode/3702/) | LeetCode | Python |
 | 2026-08-11 | [Smallest Missing Integer Greater Than Sequential Prefix Sum](problems/leetcode/2996/) | LeetCode | Python |
-| 2026-08-09 | [String Task](problems/codeforces/118A/) | Codeforces | Python |
 
 <!-- recent-problems:end -->
 
