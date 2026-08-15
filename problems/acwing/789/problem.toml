@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:789"
+platform = "acwing"
+problem_id = "789"
+title = "数的范围"
+url = "https://www.acwing.com/problem/content/description/791/"
+state = "accepted"
+tags = ["binary-search"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n + q log n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-15
+language = "cpp"
+reflection = "每次查询先找第一个大于等于 x 的位置，确认存在后再找最后一个小于等于 x 的位置；两种二分分别对应下取整和上取整中点。"
