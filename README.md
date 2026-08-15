@@ -25,11 +25,11 @@
 
 | Date | Problem | Platform | Language |
 | --- | --- | --- | --- |
+| 2026-08-15 | [Longest Subsequence With Non-Zero Bitwise XOR](problems/leetcode/3702/) | LeetCode | Python |
+| 2026-08-11 | [Smallest Missing Integer Greater Than Sequential Prefix Sum](problems/leetcode/2996/) | LeetCode | Python |
 | 2026-08-09 | [String Task](problems/codeforces/118A/) | Codeforces | Python |
 | 2026-08-09 | [Transpose of a Matrix](problems/deep-ml/2/) | Deep-ML | Python |
 | 2026-08-08 | [归并排序](problems/acwing/787/) | AcWing | C++ |
-| 2026-08-08 | [Way Too Long Words](problems/codeforces/71A/) | Codeforces | C++ |
-| 2026-08-08 | [Matrix times Vector](problems/deep-ml/1/) | Deep-ML | Python |
 
 <!-- recent-problems:end -->
 
