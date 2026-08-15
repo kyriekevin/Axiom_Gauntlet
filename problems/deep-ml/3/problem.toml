@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:3"
+platform = "deep-ml"
+problem_id = "3"
+title = "Reshape Matrix"
+url = "https://www.deep-ml.com/problems/3"
+state = "accepted"
+tags = ["linear-algebra"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(mn)"
+space_complexity = "O(mn)"
+[[activity]]
+type = "ac"
+date = 2026-08-15
+language = "python"
+reflection = "先比较输入元素总数与目标形状容量；形状匹配时按行优先展平，再按目标列数切片重组，输入可以是列表、NumPy 数组或 PyTorch 张量。"

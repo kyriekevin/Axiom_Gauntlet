@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:790"
+platform = "acwing"
+problem_id = "790"
+title = "数的三次方根"
+url = "https://www.acwing.com/problem/content/description/792/"
+state = "accepted"
+tags = ["binary-search"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(log(range / epsilon))"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-15
+language = "cpp"
+reflection = "在包含负数的区间上利用立方函数单调递增做浮点二分；维护 cube(mid) >= x 时收缩右端点，直到区间宽度满足精度要求。"

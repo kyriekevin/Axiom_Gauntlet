@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:2996"
+platform = "leetcode"
+problem_id = "2996"
+title = "Smallest Missing Integer Greater Than Sequential Prefix Sum"
+url = "https://leetcode.com/problems/smallest-missing-integer-greater-than-sequential-prefix-sum/"
+state = "accepted"
+tags = ["array", "hash-table", "sorting"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-11
+language = "python"
+reflection = "先累加最长连续递增前缀，再用哈希集合从前缀和开始寻找首个缺失整数。"

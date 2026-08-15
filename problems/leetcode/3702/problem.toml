@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:3702"
+platform = "leetcode"
+problem_id = "3702"
+title = "Longest Subsequence With Non-Zero Bitwise XOR"
+url = "https://leetcode.com/problems/longest-subsequence-with-non-zero-bitwise-xor/"
+state = "accepted"
+tags = ["array", "bit-manipulation"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-15
+language = "python"
+reflection = "若全体异或非零，最长子序列就是整个数组；若全体为零则不存在合法子序列，否则删除一个非零元素即可得到长度 n-1。"

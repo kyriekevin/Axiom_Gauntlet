@@ -25,11 +25,11 @@
 
 | 日期 | 题目 | 平台 | 语言 |
 | --- | --- | --- | --- |
-| 2026-08-09 | [String Task](problems/codeforces/118A/) | Codeforces | Python |
-| 2026-08-09 | [Transpose of a Matrix](problems/deep-ml/2/) | Deep-ML | Python |
-| 2026-08-08 | [归并排序](problems/acwing/787/) | AcWing | C++ |
-| 2026-08-08 | [Way Too Long Words](problems/codeforces/71A/) | Codeforces | C++ |
-| 2026-08-08 | [Matrix times Vector](problems/deep-ml/1/) | Deep-ML | Python |
+| 2026-08-15 | [数的范围](problems/acwing/789/) | AcWing | C++ |
+| 2026-08-15 | [数的三次方根](problems/acwing/790/) | AcWing | C++ |
+| 2026-08-15 | [Books](problems/codeforces/279B/) | Codeforces | C++ |
+| 2026-08-15 | [Reshape Matrix](problems/deep-ml/3/) | Deep-ML | Python |
+| 2026-08-15 | [Longest Subsequence With Non-Zero Bitwise XOR](problems/leetcode/3702/) | LeetCode | Python |
 
 <!-- recent-problems:end -->
 
