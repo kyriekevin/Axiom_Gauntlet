@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:102"
+platform = "acwing"
+problem_id = "102"
+title = "最佳牛围栏"
+url = "https://www.acwing.com/problem/content/description/104/"
+state = "accepted"
+tags = ["binary-search", "maximum-average"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n log(2000 / 1e-5))"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-16
+language = "cpp"
+reflection = "二分答案后，将每项减去候选平均值；长度至少为 m 的连续子段存在非负和，即可判定该平均值可行。"
