@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:5"
+platform = "deep-ml"
+problem_id = "5"
+title = "Scalar Multiplication of a Matrix"
+url = "https://www.deep-ml.com/problems/5"
+state = "accepted"
+tags = ["linear-algebra", "numpy"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(rows × cols)"
+space_complexity = "O(rows × cols)"
+[[activity]]
+type = "ac"
+date = 2026-08-16
+language = "python"
+reflection = "将输入归一为浮点张量后使用逐元素乘法；PyTorch 会将标量广播到矩阵的每个位置。"

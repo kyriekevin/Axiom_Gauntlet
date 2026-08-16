@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:466C"
+platform = "codeforces"
+problem_id = "466C"
+title = "Number of Ways"
+url = "https://codeforces.com/problemset/problem/466/C"
+state = "accepted"
+tags = []
+
+[difficulty]
+scheme = "rating"
+value = 1700
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-16
+language = "cpp"
+reflection = "Count earlier prefix positions with sum S/3 before each prefix position with sum 2S/3; testing 2S/3 before incrementing the S/3 count keeps the middle segment non-empty, including when S = 0."

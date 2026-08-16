@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:4"
+platform = "deep-ml"
+problem_id = "4"
+title = "Calculate the Mean by Row or Column"
+url = "https://www.deep-ml.com/problems/4"
+state = "accepted"
+tags = ["linear-algebra", "numpy"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(rows × cols)"
+space_complexity = "O(rows × cols)"
+[[activity]]
+type = "ac"
+date = 2026-08-16
+language = "python"
+reflection = "将输入统一为浮点张量后，einsum 按指定轴求和并除以另一维长度；mode 同时决定保留的维度。"
