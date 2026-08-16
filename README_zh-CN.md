@@ -27,9 +27,9 @@
 | --- | --- | --- | --- |
 | 2026-08-16 | [最佳牛围栏](problems/acwing/102/) | AcWing | C++ |
 | 2026-08-16 | [Calculate the Mean by Row or Column](problems/deep-ml/4/) | Deep-ML | Python |
+| 2026-08-16 | [Scalar Multiplication of a Matrix](problems/deep-ml/5/) | Deep-ML | Python |
 | 2026-08-15 | [数的范围](problems/acwing/789/) | AcWing | C++ |
 | 2026-08-15 | [数的三次方根](problems/acwing/790/) | AcWing | C++ |
-| 2026-08-15 | [Books](problems/codeforces/279B/) | Codeforces | C++ |
 
 <!-- recent-problems:end -->
 
