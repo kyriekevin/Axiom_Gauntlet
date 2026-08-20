@@ -25,11 +25,11 @@
 
 | Date | Problem | Platform | Language |
 | --- | --- | --- | --- |
+| 2026-08-20 | [High Precision Addition](problems/acwing/791/) | AcWing | C++ |
+| 2026-08-20 | [Calculate Eigenvalues of a Matrix](problems/deep-ml/6/) | Deep-ML | Python |
+| 2026-08-20 | [Distribute Elements Into Two Arrays I](problems/leetcode/3069/) | LeetCode | Python |
 | 2026-08-16 | [最佳牛围栏](problems/acwing/102/) | AcWing | C++ |
 | 2026-08-16 | [Number of Ways](problems/codeforces/466C/) | Codeforces | C++ |
-| 2026-08-16 | [Calculate the Mean by Row or Column](problems/deep-ml/4/) | Deep-ML | Python |
-| 2026-08-16 | [Scalar Multiplication of a Matrix](problems/deep-ml/5/) | Deep-ML | Python |
-| 2026-08-15 | [数的范围](problems/acwing/789/) | AcWing | C++ |
 
 <!-- recent-problems:end -->
 

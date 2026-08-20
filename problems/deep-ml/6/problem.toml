@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:6"
+platform = "deep-ml"
+problem_id = "6"
+title = "Calculate Eigenvalues of a Matrix"
+url = "https://www.deep-ml.com/problems/6"
+state = "accepted"
+tags = ["linear-algebra", "eigenvalues"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(1)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-20
+language = "python"
+reflection = "For a 2x2 matrix, the trace and determinant give the characteristic quadratic directly; returning the plus root first preserves descending order."
