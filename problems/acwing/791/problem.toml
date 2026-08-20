@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:791"
+platform = "acwing"
+problem_id = "791"
+title = "High Precision Addition"
+url = "https://www.acwing.com/problem/content/793/"
+state = "accepted"
+tags = ["big-integer", "simulation"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-20
+language = "cpp"
+reflection = "Store digits in reverse order so carry propagation is a single left-to-right pass; append a final carry when needed."
