@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="583" viewBox="0 0 900 583" role="img" aria-labelledby="coverage-title coverage-desc">
   <title id="coverage-title">Practice coverage</title>
-  <desc id="coverage-desc">25 accepted problems across 4 active platforms, with native difficulty profiles and accepted solution languages.</desc>
+  <desc id="coverage-desc">26 accepted problems across 4 active platforms, with native difficulty profiles and accepted solution languages.</desc>
   <style>
     .coverage-background { fill: #eff1f5; }
     .coverage-primary { fill: #4c4f69; }
@@ -43,28 +43,28 @@
   </style>
   <rect class="coverage-background" width="900" height="583" rx="16"/>
   <text class="coverage-primary" x="24" y="37" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="22" font-weight="700">Practice Coverage</text>
-  <text class="coverage-muted" x="24" y="59" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12">25 accepted problems across 4 active platforms</text>
+  <text class="coverage-muted" x="24" y="59" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12">26 accepted problems across 4 active platforms</text>
   <circle class="coverage-track-stroke" cx="126" cy="166" r="67" fill="none" stroke-width="16"/>
-  <circle class="coverage-accent coverage-peach" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="148.55 272.42" stroke-dashoffset="-0.00" transform="rotate(-90 126 166)" data-ring="platform" data-segment="LeetCode" data-count="9">
+  <circle class="coverage-accent coverage-peach" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="142.72 278.25" stroke-dashoffset="-0.00" transform="rotate(-90 126 166)" data-ring="platform" data-segment="LeetCode" data-count="9">
     <title>LeetCode: 9</title>
   </circle>
-  <circle class="coverage-accent coverage-sapphire" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="114.87 306.10" stroke-dashoffset="-151.55" transform="rotate(-90 126 166)" data-ring="platform" data-segment="AcWing" data-count="7">
+  <circle class="coverage-accent coverage-sapphire" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="110.34 310.63" stroke-dashoffset="-145.72" transform="rotate(-90 126 166)" data-ring="platform" data-segment="AcWing" data-count="7">
     <title>AcWing: 7</title>
   </circle>
-  <circle class="coverage-accent coverage-mauve" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="64.36 356.62" stroke-dashoffset="-269.42" transform="rotate(-90 126 166)" data-ring="platform" data-segment="Codeforces" data-count="4">
+  <circle class="coverage-accent coverage-mauve" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="61.77 359.21" stroke-dashoffset="-259.06" transform="rotate(-90 126 166)" data-ring="platform" data-segment="Codeforces" data-count="4">
     <title>Codeforces: 4</title>
   </circle>
-  <circle class="coverage-accent coverage-teal" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="81.19 339.78" stroke-dashoffset="-336.78" transform="rotate(-90 126 166)" data-ring="platform" data-segment="Deep-ML" data-count="5">
-    <title>Deep-ML: 5</title>
+  <circle class="coverage-accent coverage-teal" cx="126" cy="166" r="67" style="fill:none" stroke-width="16" stroke-dasharray="94.15 326.83" stroke-dashoffset="-323.83" transform="rotate(-90 126 166)" data-ring="platform" data-segment="Deep-ML" data-count="6">
+    <title>Deep-ML: 6</title>
   </circle>
   <circle class="coverage-track-stroke" cx="126" cy="166" r="46" fill="none" stroke-width="10"/>
-  <circle class="coverage-accent coverage-blue" cx="126" cy="166" r="46" style="fill:none" stroke-width="10" stroke-dasharray="163.75 125.28" stroke-dashoffset="-0.00" transform="rotate(-90 126 166)" data-ring="language" data-segment="Python" data-count="15">
-    <title>Python: 15</title>
+  <circle class="coverage-accent coverage-blue" cx="126" cy="166" r="46" style="fill:none" stroke-width="10" stroke-dasharray="168.27 120.75" stroke-dashoffset="-0.00" transform="rotate(-90 126 166)" data-ring="language" data-segment="Python" data-count="16">
+    <title>Python: 16</title>
   </circle>
-  <circle class="coverage-accent coverage-mauve" cx="126" cy="166" r="46" style="fill:none" stroke-width="10" stroke-dasharray="119.28 169.75" stroke-dashoffset="-166.75" transform="rotate(-90 126 166)" data-ring="language" data-segment="C++" data-count="11">
+  <circle class="coverage-accent coverage-mauve" cx="126" cy="166" r="46" style="fill:none" stroke-width="10" stroke-dasharray="114.75 174.27" stroke-dashoffset="-171.27" transform="rotate(-90 126 166)" data-ring="language" data-segment="C++" data-count="11">
     <title>C++: 11</title>
   </circle>
-  <text class="coverage-primary" x="126" y="169" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="26" font-weight="700">25</text>
+  <text class="coverage-primary" x="126" y="169" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="26" font-weight="700">26</text>
   <text class="coverage-secondary" x="126" y="188" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">PROBLEMS</text>
   <text class="coverage-muted" x="126" y="266" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">OUTER PLATFORM · INNER LANGUAGE</text>
   <text class="coverage-muted" x="260" y="100" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">ACCEPTED BY PLATFORM</text>
@@ -73,50 +73,50 @@
   <text class="coverage-primary" x="278" y="130" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">LeetCode</text>
   <text class="coverage-secondary" x="445" y="130" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">9</text>
   <rect class="coverage-track" x="278" y="139" width="127" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-peach" x="278" y="139" width="45.72" height="5" rx="2.5" data-share="36.0" data-count="9">
-    <title>LeetCode: 9 (36%)</title>
+  <rect class="coverage-accent coverage-peach" x="278" y="139" width="43.96" height="5" rx="2.5" data-share="34.6" data-count="9">
+    <title>LeetCode: 9 (35%)</title>
   </rect>
-  <text class="coverage-muted" x="445" y="147" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">36%</text>
+  <text class="coverage-muted" x="445" y="147" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">35%</text>
   <circle class="coverage-accent coverage-sapphire" cx="265" cy="165" r="5"/>
   <text class="coverage-primary" x="278" y="170" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">AcWing</text>
   <text class="coverage-secondary" x="445" y="170" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">7</text>
   <rect class="coverage-track" x="278" y="179" width="127" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-sapphire" x="278" y="179" width="35.56" height="5" rx="2.5" data-share="28.0" data-count="7">
-    <title>AcWing: 7 (28%)</title>
+  <rect class="coverage-accent coverage-sapphire" x="278" y="179" width="34.19" height="5" rx="2.5" data-share="26.9" data-count="7">
+    <title>AcWing: 7 (27%)</title>
   </rect>
-  <text class="coverage-muted" x="445" y="187" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">28%</text>
+  <text class="coverage-muted" x="445" y="187" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">27%</text>
   <circle class="coverage-accent coverage-mauve" cx="470" cy="125" r="5"/>
   <text class="coverage-primary" x="483" y="130" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">Codeforces</text>
   <text class="coverage-secondary" x="650" y="130" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">4</text>
   <rect class="coverage-track" x="483" y="139" width="127" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-mauve" x="483" y="139" width="20.32" height="5" rx="2.5" data-share="16.0" data-count="4">
-    <title>Codeforces: 4 (16%)</title>
+  <rect class="coverage-accent coverage-mauve" x="483" y="139" width="19.54" height="5" rx="2.5" data-share="15.4" data-count="4">
+    <title>Codeforces: 4 (15%)</title>
   </rect>
-  <text class="coverage-muted" x="650" y="147" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">16%</text>
+  <text class="coverage-muted" x="650" y="147" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">15%</text>
   <circle class="coverage-accent coverage-teal" cx="470" cy="165" r="5"/>
   <text class="coverage-primary" x="483" y="170" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">Deep-ML</text>
-  <text class="coverage-secondary" x="650" y="170" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">5</text>
+  <text class="coverage-secondary" x="650" y="170" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">6</text>
   <rect class="coverage-track" x="483" y="179" width="127" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-teal" x="483" y="179" width="25.40" height="5" rx="2.5" data-share="20.0" data-count="5">
-    <title>Deep-ML: 5 (20%)</title>
+  <rect class="coverage-accent coverage-teal" x="483" y="179" width="29.31" height="5" rx="2.5" data-share="23.1" data-count="6">
+    <title>Deep-ML: 6 (23%)</title>
   </rect>
-  <text class="coverage-muted" x="650" y="187" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">20%</text>
+  <text class="coverage-muted" x="650" y="187" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">23%</text>
   <rect class="coverage-accent coverage-blue" x="690" y="117" width="10" height="10" rx="3"/>
   <text class="coverage-primary" x="708" y="127" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">Python</text>
-  <text class="coverage-secondary" x="860" y="127" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">15</text>
+  <text class="coverage-secondary" x="860" y="127" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">16</text>
   <rect class="coverage-track" x="708" y="136" width="112" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-blue" x="708" y="136" width="64.62" height="5" rx="2.5" data-share="57.7" data-count="15">
-    <title>Python: 15 (58%)</title>
+  <rect class="coverage-accent coverage-blue" x="708" y="136" width="66.37" height="5" rx="2.5" data-share="59.3" data-count="16">
+    <title>Python: 16 (59%)</title>
   </rect>
-  <text class="coverage-muted" x="860" y="144" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">58%</text>
+  <text class="coverage-muted" x="860" y="144" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">59%</text>
   <rect class="coverage-accent coverage-mauve" x="690" y="147" width="10" height="10" rx="3"/>
   <text class="coverage-primary" x="708" y="157" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="600">C++</text>
   <text class="coverage-secondary" x="860" y="157" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">11</text>
   <rect class="coverage-track" x="708" y="166" width="112" height="5" rx="2.5"/>
-  <rect class="coverage-accent coverage-mauve" x="708" y="166" width="47.38" height="5" rx="2.5" data-share="42.3" data-count="11">
-    <title>C++: 11 (42%)</title>
+  <rect class="coverage-accent coverage-mauve" x="708" y="166" width="45.63" height="5" rx="2.5" data-share="40.7" data-count="11">
+    <title>C++: 11 (41%)</title>
   </rect>
-  <text class="coverage-muted" x="860" y="174" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">42%</text>
+  <text class="coverage-muted" x="860" y="174" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">41%</text>
   <line class="coverage-divider" x1="24" y1="280" x2="876" y2="280"/>
   <text class="coverage-primary" x="24" y="313" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="700">Native profiles</text>
   <circle class="coverage-accent coverage-peach" cx="31" cy="349" r="5"/>
@@ -184,13 +184,18 @@
   <line class="coverage-divider" x1="24" y1="502" x2="876" y2="502"/>
   <circle class="coverage-accent coverage-teal" cx="31" cy="523" r="5"/>
   <text class="coverage-primary" x="44" y="529" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="16" font-weight="650">Deep-ML</text>
-  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">LEVEL PROFILE · 5 AC</text>
+  <text class="coverage-muted" x="44" y="548" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9">LEVEL PROFILE · 6 AC</text>
   <rect class="coverage-track" x="220" y="516" width="400" height="16" rx="6"/>
   <clipPath id="deep-ml-profile-clip"><rect x="220" y="516" width="400" height="16" rx="6"/></clipPath>
-  <rect x="220.00" y="516" width="400.00" height="16" class="coverage-accent coverage-teal" clip-path="url(#deep-ml-profile-clip)" data-profile="deep-ml" data-segment="Easy" data-count="5">
+  <rect x="220.00" y="516" width="333.33" height="16" class="coverage-accent coverage-teal" clip-path="url(#deep-ml-profile-clip)" data-profile="deep-ml" data-segment="Easy" data-count="5">
     <title>Easy: 5</title>
+  </rect>
+  <rect x="553.33" y="516" width="66.67" height="16" class="coverage-accent coverage-peach" clip-path="url(#deep-ml-profile-clip)" data-profile="deep-ml" data-segment="Medium" data-count="1">
+    <title>Medium: 1</title>
   </rect>
   <circle class="coverage-accent coverage-teal" cx="643" cy="525" r="3"/>
   <text class="coverage-secondary" x="651" y="528" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="deep-ml" data-segment="Easy" data-count="5">Easy 5</text>
+  <circle class="coverage-accent coverage-peach" cx="721" cy="525" r="3"/>
+  <text class="coverage-secondary" x="729" y="528" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9" data-profile-summary="deep-ml" data-segment="Medium" data-count="1">Medium 1</text>
   <line class="coverage-divider" x1="24" y1="560" x2="876" y2="560"/>
 </svg>
