@@ -25,11 +25,11 @@
 
 | 日期 | 题目 | 平台 | 语言 |
 | --- | --- | --- | --- |
+| 2026-08-22 | [前缀和](problems/acwing/795/) | AcWing | C++ |
+| 2026-08-22 | [Sigmoid Activation Function Understanding](problems/deep-ml/22/) | Deep-ML | Python |
+| 2026-08-22 | [Create a Float Tensor from a Python List](problems/deep-ml/880/) | Deep-ML | Python |
+| 2026-08-22 | [Check Divisibility by Digit Sum and Product](problems/leetcode/3622/) | LeetCode | Python |
 | 2026-08-20 | [High Precision Addition](problems/acwing/791/) | AcWing | C++ |
-| 2026-08-20 | [Calculate Eigenvalues of a Matrix](problems/deep-ml/6/) | Deep-ML | Python |
-| 2026-08-20 | [Distribute Elements Into Two Arrays I](problems/leetcode/3069/) | LeetCode | Python |
-| 2026-08-16 | [最佳牛围栏](problems/acwing/102/) | AcWing | C++ |
-| 2026-08-16 | [Number of Ways](problems/codeforces/466C/) | Codeforces | C++ |
 
 <!-- recent-problems:end -->
 

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="312" viewBox="0 0 1180 312" role="img" aria-labelledby="total-2026-08-20-title total-2026-08-20-desc">
-  <title id="total-2026-08-20-title">Axiom Gauntlet activity for 53 weeks through 2026-08-20</title>
-  <desc id="total-2026-08-20-desc">27 counted activities across 12 active days in the trailing 53 weeks. AC, note, and review events are included.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="312" viewBox="0 0 1180 312" role="img" aria-labelledby="total-2026-08-22-title total-2026-08-22-desc">
+  <title id="total-2026-08-22-title">Axiom Gauntlet activity for 53 weeks through 2026-08-22</title>
+  <desc id="total-2026-08-22-desc">31 counted activities across 13 active days in the trailing 53 weeks. AC, note, and review events are included.</desc>
   <style>
     .heatmap-background { fill: #eff1f5; }
     .heatmap-primary { fill: #4c4f69; }
@@ -28,9 +28,9 @@
   <circle cx="41" cy="27" r="5" fill="#febc2e"/>
   <circle cx="57" cy="27" r="5" fill="#28c840"/>
   <text class="heatmap-primary" x="76" y="35" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700">Axiom Gauntlet Activity</text>
-  <text class="heatmap-secondary" x="1154" y="34" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">53 WEEKS · THROUGH 2026-08-20</text>
+  <text class="heatmap-secondary" x="1154" y="34" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">53 WEEKS · THROUGH 2026-08-22</text>
   <text class="heatmap-secondary" x="25" y="66" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">ALL PLATFORMS · AC · NOTE · REVIEW</text>
-  <text class="heatmap-secondary" x="1154" y="66" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">27 EVENTS · 12 ACTIVE DAYS</text>
+  <text class="heatmap-secondary" x="1154" y="66" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">31 EVENTS · 13 ACTIVE DAYS</text>
   <text class="heatmap-secondary" x="98" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Sep</text>
   <text class="heatmap-secondary" x="178" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Oct</text>
   <text class="heatmap-secondary" x="258" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">Nov</text>
@@ -1149,6 +1149,12 @@
   </rect>
   <rect class="heatmap-cell heatmap-level-3" x="1098" y="168" width="16" height="16" rx="4" data-date="2026-08-20" data-count="3" data-level="3">
     <title>2026-08-20: 3 events</title>
+  </rect>
+  <rect class="heatmap-cell heatmap-level-0" x="1098" y="188" width="16" height="16" rx="4" data-date="2026-08-21" data-count="0" data-level="0">
+    <title>2026-08-21: 0 events</title>
+  </rect>
+  <rect class="heatmap-cell heatmap-level-4" x="1098" y="208" width="16" height="16" rx="4" data-date="2026-08-22" data-count="4" data-level="4">
+    <title>2026-08-22: 4 events</title>
   </rect>
   <text class="heatmap-muted" x="58" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">Less</text>
   <rect class="heatmap-level-0" x="92" y="268" width="16" height="16" rx="4"/>
