@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:795"
+platform = "acwing"
+problem_id = "795"
+title = "前缀和"
+url = "https://www.acwing.com/problem/content/797/"
+state = "accepted"
+tags = ["prefix-sum"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n + m)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-22
+language = "cpp"
+reflection = "预处理一维前缀和 g[i]，每个闭区间 [l, r] 的和可由 g[r] - g[l - 1] 在 O(1) 时间得到。"

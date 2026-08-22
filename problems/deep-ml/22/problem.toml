@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:22"
+platform = "deep-ml"
+problem_id = "22"
+title = "Sigmoid Activation Function Understanding"
+url = "https://www.deep-ml.com/problems/22"
+state = "accepted"
+tags = ["activation-functions"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(1)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-22
+language = "python"
+reflection = "将标量转换为 torch 张量后按 sigmoid 定义计算，并用 item() 取回 Python 标量、保留四位小数。"

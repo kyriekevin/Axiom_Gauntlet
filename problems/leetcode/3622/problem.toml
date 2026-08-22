@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:3622"
+platform = "leetcode"
+problem_id = "3622"
+title = "Check Divisibility by Digit Sum and Product"
+url = "https://leetcode.com/problems/check-divisibility-by-digit-sum-and-product/"
+state = "accepted"
+tags = ["math"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(log n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-22
+language = "python"
+reflection = "逐位同时计算数字和与数字积，最后直接检验原数能否整除两者之和。"

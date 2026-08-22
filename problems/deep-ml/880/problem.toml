@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:880"
+platform = "deep-ml"
+problem_id = "880"
+title = "Create a Float Tensor from a Python List"
+url = "https://www.deep-ml.com/problems/880"
+state = "accepted"
+tags = ["pytorch"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-22
+language = "python"
+reflection = "使用 torch.tensor 并显式指定 torch.float32，可保留输入的嵌套形状，同时将整数元素转换为浮点张量。"
