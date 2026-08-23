@@ -17,12 +17,13 @@ Coverage reuses the display label when it is compact; platforms with longer form
 short `coverage_label`. Difficulty schemes are limited to `level`, `rating`, and `unknown` across
 the registry, CLI, scaffolding, and validation.
 
-The registry supports positive-integer IDs, positive-integer-or-slug IDs,
+The registry supports positive-integer IDs, positive-integer-or-qualified-integer IDs,
 contest-number-plus-index IDs, and filesystem-safe slug IDs. Adding a platform that fits one of
 these strategies is a data-only registry change. A new ID strategy requires tooling and test
 changes. The stable UID is `<platform>:<canonical-id>` (for example, `deep-ml:1`). LeetCode uses
-four-digit padding for numeric main-site IDs and qualified slugs such as `lcof-03` for collection
-IDs that would otherwise collide with the main site.
+four-digit padding for numeric main-site IDs and registered collection prefixes for IDs that would
+otherwise collide with the main site. Each collection declares its numeric width, so `lcof-3`,
+`LCOF-03`, and `lcof-003` all resolve to `leetcode:lcof-03`; ordinary slugs are rejected.
 
 ```toml
 version = 1

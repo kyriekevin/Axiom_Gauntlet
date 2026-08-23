@@ -113,7 +113,7 @@ def test_new_command_creates_a_qualified_leetcode_draft(
     assert capsys.readouterr().out.strip() == "problems/leetcode/lcof-03"
     problem = load_problem(root / "problems" / "leetcode" / "lcof-03" / "problem.toml")
     assert problem.uid == "leetcode:lcof-03"
-    assert problem.problem_id == "lcof-03"
+    assert problem.problem_id == "lcof-3"
     assert problem.state == "draft"
 
 
