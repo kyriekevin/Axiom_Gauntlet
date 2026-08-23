@@ -11,7 +11,7 @@ from types import MappingProxyType
 from typing import Any
 
 REGISTRY_VERSION = 1
-ID_STRATEGIES = frozenset({"positive-integer", "contest-index", "slug"})
+ID_STRATEGIES = frozenset({"positive-integer", "positive-integer-or-slug", "contest-index", "slug"})
 DIFFICULTY_SCHEMES = frozenset({"level", "rating", "unknown"})
 MAX_COVERAGE_LABEL_LENGTH = 14
 _PLATFORM_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -85,9 +85,10 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
             raise PlatformRegistryError(
                 f"platform {slug!r} canonical_width must be a non-negative integer"
             )
-        if width and strategy != "positive-integer":
+        if width and strategy not in {"positive-integer", "positive-integer-or-slug"}:
             raise PlatformRegistryError(
-                f"platform {slug!r} canonical_width requires positive-integer IDs"
+                f"platform {slug!r} canonical_width requires an ID strategy "
+                "that supports positive integers"
             )
 
         label = _require_string(raw_spec, "label", slug)
@@ -167,13 +168,19 @@ def normalize_platform_problem_id(spec: PlatformSpec, problem_id: str) -> str:
     """Normalize a source problem ID according to a registered strategy."""
 
     raw = str(problem_id).strip()
-    if spec.id_strategy == "positive-integer":
-        if re.fullmatch(r"\d+", raw) is None:
+    if spec.id_strategy in {"positive-integer", "positive-integer-or-slug"}:
+        if re.fullmatch(r"\d+", raw) is not None:
+            number = int(raw)
+            if number <= 0:
+                raise ValueError(f"{spec.slug} problem_id must be greater than zero")
+            return str(number)
+        if spec.id_strategy == "positive-integer":
             raise ValueError(f"{spec.slug} problem_id must contain only digits")
-        number = int(raw)
-        if number <= 0:
-            raise ValueError(f"{spec.slug} problem_id must be greater than zero")
-        return str(number)
+        if re.fullmatch(r"[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*", raw) is None:
+            raise ValueError(
+                f"{spec.slug} problem_id must be a positive integer or a filesystem-safe slug"
+            )
+        return raw.lower()
 
     if spec.id_strategy == "contest-index":
         match = re.fullmatch(r"0*(\d+)([A-Za-z][A-Za-z0-9]*)", raw)
@@ -197,4 +204,6 @@ def canonical_platform_problem_id(spec: PlatformSpec, problem_id: str) -> str:
     """Return the stable directory ID for *problem_id*."""
 
     normalized = normalize_platform_problem_id(spec, problem_id)
-    return normalized.zfill(spec.canonical_width)
+    if normalized.isdigit():
+        return normalized.zfill(spec.canonical_width)
+    return normalized

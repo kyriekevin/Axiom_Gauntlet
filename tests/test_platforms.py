@@ -12,6 +12,7 @@ from axiom_gauntlet.platforms import (
 
 
 def test_bundled_registry_drives_existing_platform_behavior() -> None:
+    assert PLATFORM_SPECS["leetcode"].id_strategy == "positive-integer-or-slug"
     assert PLATFORM_SPECS["leetcode"].canonical_width == 4
     assert PLATFORM_SPECS["codeforces"].default_difficulty_scheme == "rating"
     assert PLATFORM_SPECS["deep-ml"].label == "Deep-ML"
@@ -45,6 +46,21 @@ def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:
     assert spec.coverage_label == "Example OJ"
     assert normalize_platform_problem_id(spec, "ABC-12") == "ABC-12"
     assert canonical_platform_problem_id(spec, "ABC-12") == "ABC-12"
+
+
+def test_integer_or_slug_strategy_pads_numeric_ids_and_preserves_qualified_ids() -> None:
+    spec = PLATFORM_SPECS["leetcode"]
+
+    assert normalize_platform_problem_id(spec, "0003") == "3"
+    assert canonical_platform_problem_id(spec, "0003") == "0003"
+    assert normalize_platform_problem_id(spec, "LCOF-03") == "lcof-03"
+    assert canonical_platform_problem_id(spec, "LCOF-03") == "lcof-03"
+
+
+@pytest.mark.parametrize("problem_id", ("0", "lcof/03", "lcof 03"))
+def test_integer_or_slug_strategy_rejects_invalid_ids(problem_id: str) -> None:
+    with pytest.raises(ValueError):
+        normalize_platform_problem_id(PLATFORM_SPECS["leetcode"], problem_id)
 
 
 @pytest.mark.parametrize(

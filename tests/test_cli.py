@@ -86,6 +86,37 @@ def test_new_command_creates_a_deep_ml_draft(
     assert problem.difficulty.scheme == "level"
 
 
+def test_new_command_creates_a_qualified_leetcode_draft(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = _empty_repo(tmp_path)
+
+    result = main(
+        [
+            "--root",
+            str(root),
+            "new",
+            "leetcode",
+            "lcof-03",
+            "--title",
+            "Find Repeat Number",
+            "--url",
+            "https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/",
+            "--difficulty",
+            "Easy",
+            "--language",
+            "python",
+        ]
+    )
+
+    assert result == 0
+    assert capsys.readouterr().out.strip() == "problems/leetcode/lcof-03"
+    problem = load_problem(root / "problems" / "leetcode" / "lcof-03" / "problem.toml")
+    assert problem.uid == "leetcode:lcof-03"
+    assert problem.problem_id == "lcof-03"
+    assert problem.state == "draft"
+
+
 def test_new_command_reports_user_errors_without_a_traceback(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

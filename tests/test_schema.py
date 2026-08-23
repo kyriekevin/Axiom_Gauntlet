@@ -111,10 +111,12 @@ Look up before inserting so the same element cannot be used twice.
 def test_platform_canonical_ids() -> None:
     assert canonical_problem_id("leetcode", "1") == "0001"
     assert canonical_problem_id("leetcode", "3536") == "3536"
+    assert canonical_problem_id("leetcode", "lcof-03") == "lcof-03"
     assert canonical_problem_id("acwing", "0785") == "785"
     assert canonical_problem_id("codeforces", "004a") == "4A"
     assert canonical_problem_id("deep-ml", "001") == "1"
     assert expected_uid("leetcode", "1") == "leetcode:0001"
+    assert expected_uid("leetcode", "lcof-03") == "leetcode:lcof-03"
     assert expected_uid("deep-ml", "1") == "deep-ml:1"
 
 
@@ -146,6 +148,26 @@ def test_scaffold_creates_draft_with_multiple_languages(tmp_path: Path) -> None:
     readme = (problem_dir / "README.md").read_text(encoding="utf-8")
     assert readme.startswith("# 0001. Two Sum\n")
     assert "[LeetCode](https://leetcode.com/problems/two-sum/)" in readme
+    assert validate_problem_dir(problem_dir) == []
+
+
+def test_scaffold_creates_qualified_leetcode_draft(tmp_path: Path) -> None:
+    root = _empty_repo(tmp_path)
+    problem_dir = create_problem(
+        root,
+        platform="leetcode",
+        problem_id="LCOF-03",
+        title="Find Repeat Number",
+        url="https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/",
+        difficulty_scheme="level",
+        difficulty_value="Easy",
+        languages=("python",),
+    )
+
+    assert problem_dir == root / "problems" / "leetcode" / "lcof-03"
+    problem = load_problem(problem_dir / "problem.toml")
+    assert problem.uid == "leetcode:lcof-03"
+    assert problem.problem_id == "lcof-03"
     assert validate_problem_dir(problem_dir) == []
 
 
