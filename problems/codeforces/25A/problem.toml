@@ -4,7 +4,7 @@ platform = "codeforces"
 problem_id = "25A"
 title = "IQ test"
 url = "https://codeforces.com/problemset/problem/25/A"
-state = "draft"
+state = "accepted"
 tags = ["brute-force"]
 
 [difficulty]
@@ -22,3 +22,10 @@ language = "cpp"
 # type = "ac"
 # date = 2026-08-01
 # language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-23
+language = "cpp"
+reflection = "一次遍历统计奇偶数量并保存对应位置，根据唯一少数类型输出下标；计数和位置均只需常量空间。"
