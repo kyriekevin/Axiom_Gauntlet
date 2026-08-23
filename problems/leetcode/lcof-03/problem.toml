@@ -1,0 +1,24 @@
+version = 1
+uid = "leetcode:lcof-03"
+platform = "leetcode"
+problem_id = "lcof-03"
+title = "Find Repeat Number"
+url = "https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/description/"
+state = "draft"
+tags = ["array", "hash-table"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
