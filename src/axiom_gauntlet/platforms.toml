@@ -2,8 +2,9 @@ version = 1
 
 [platforms.leetcode]
 label = "LeetCode"
-id_strategy = "positive-integer"
+id_strategy = "positive-integer-or-qualified-integer"
 canonical_width = 4
+qualified_id_widths = { lcof = 2, lcr = 3 }
 default_difficulty_scheme = "level"
 
 [platforms.acwing]

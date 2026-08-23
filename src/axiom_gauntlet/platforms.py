@@ -11,10 +11,13 @@ from types import MappingProxyType
 from typing import Any
 
 REGISTRY_VERSION = 1
-ID_STRATEGIES = frozenset({"positive-integer", "contest-index", "slug"})
+ID_STRATEGIES = frozenset(
+    {"positive-integer", "positive-integer-or-qualified-integer", "contest-index", "slug"}
+)
 DIFFICULTY_SCHEMES = frozenset({"level", "rating", "unknown"})
 MAX_COVERAGE_LABEL_LENGTH = 14
 _PLATFORM_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+_QUALIFIED_PREFIX_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 
 
 class PlatformRegistryError(ValueError):
@@ -30,6 +33,7 @@ class PlatformSpec:
     default_difficulty_scheme: str
     canonical_width: int = 0
     coverage_categories: tuple[str, ...] = ()
+    qualified_id_widths: tuple[tuple[str, int], ...] = ()
 
 
 def _require_string(raw: Mapping[str, Any], key: str, slug: str) -> str:
@@ -69,6 +73,7 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
                 "canonical_width",
                 "default_difficulty_scheme",
                 "coverage_categories",
+                "qualified_id_widths",
             }
         )
         if unknown:
@@ -85,9 +90,42 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
             raise PlatformRegistryError(
                 f"platform {slug!r} canonical_width must be a non-negative integer"
             )
-        if width and strategy != "positive-integer":
+        if width and strategy not in {
+            "positive-integer",
+            "positive-integer-or-qualified-integer",
+        }:
             raise PlatformRegistryError(
-                f"platform {slug!r} canonical_width requires positive-integer IDs"
+                f"platform {slug!r} canonical_width requires an ID strategy "
+                "that supports positive integers"
+            )
+
+        raw_qualified_widths = raw_spec.get("qualified_id_widths", {})
+        if not isinstance(raw_qualified_widths, Mapping):
+            raise PlatformRegistryError(f"platform {slug!r} qualified_id_widths must be a table")
+        if raw_qualified_widths and strategy != "positive-integer-or-qualified-integer":
+            raise PlatformRegistryError(
+                f"platform {slug!r} qualified_id_widths requires "
+                "positive-integer-or-qualified-integer IDs"
+            )
+        qualified_id_widths: list[tuple[str, int]] = []
+        for prefix, qualified_width in raw_qualified_widths.items():
+            if not isinstance(prefix, str) or _QUALIFIED_PREFIX_RE.fullmatch(prefix) is None:
+                raise PlatformRegistryError(
+                    f"platform {slug!r} qualified ID prefixes must be lowercase slugs "
+                    "starting with a letter"
+                )
+            if (
+                isinstance(qualified_width, bool)
+                or not isinstance(qualified_width, int)
+                or qualified_width <= 0
+            ):
+                raise PlatformRegistryError(
+                    f"platform {slug!r} qualified ID widths must be positive integers"
+                )
+            qualified_id_widths.append((prefix, qualified_width))
+        if strategy == "positive-integer-or-qualified-integer" and not qualified_id_widths:
+            raise PlatformRegistryError(
+                f"platform {slug!r} requires at least one qualified ID prefix"
             )
 
         label = _require_string(raw_spec, "label", slug)
@@ -135,6 +173,7 @@ def parse_platform_registry(raw: Mapping[str, Any]) -> Mapping[str, PlatformSpec
             default_difficulty_scheme=difficulty_scheme,
             canonical_width=width,
             coverage_categories=tuple(categories),
+            qualified_id_widths=tuple(sorted(qualified_id_widths)),
         )
     return MappingProxyType(specs)
 
@@ -167,13 +206,30 @@ def normalize_platform_problem_id(spec: PlatformSpec, problem_id: str) -> str:
     """Normalize a source problem ID according to a registered strategy."""
 
     raw = str(problem_id).strip()
-    if spec.id_strategy == "positive-integer":
-        if re.fullmatch(r"\d+", raw) is None:
+    if spec.id_strategy in {"positive-integer", "positive-integer-or-qualified-integer"}:
+        if re.fullmatch(r"\d+", raw) is not None:
+            number = int(raw)
+            if number <= 0:
+                raise ValueError(f"{spec.slug} problem_id must be greater than zero")
+            return str(number)
+        if spec.id_strategy == "positive-integer":
             raise ValueError(f"{spec.slug} problem_id must contain only digits")
-        number = int(raw)
+        match = re.fullmatch(r"([A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)*)-(\d+)", raw)
+        if match is None:
+            raise ValueError(
+                f"{spec.slug} problem_id must be a positive integer or a qualified integer ID"
+            )
+        prefix = match.group(1).lower()
+        widths = dict(spec.qualified_id_widths)
+        if prefix not in widths:
+            choices = ", ".join(sorted(widths))
+            raise ValueError(
+                f"unsupported {spec.slug} qualified ID prefix {prefix!r}; choose one of: {choices}"
+            )
+        number = int(match.group(2))
         if number <= 0:
-            raise ValueError(f"{spec.slug} problem_id must be greater than zero")
-        return str(number)
+            raise ValueError(f"{spec.slug} qualified problem number must be greater than zero")
+        return f"{prefix}-{number}"
 
     if spec.id_strategy == "contest-index":
         match = re.fullmatch(r"0*(\d+)([A-Za-z][A-Za-z0-9]*)", raw)
@@ -197,4 +253,9 @@ def canonical_platform_problem_id(spec: PlatformSpec, problem_id: str) -> str:
     """Return the stable directory ID for *problem_id*."""
 
     normalized = normalize_platform_problem_id(spec, problem_id)
-    return normalized.zfill(spec.canonical_width)
+    if normalized.isdigit():
+        return normalized.zfill(spec.canonical_width)
+    if spec.id_strategy == "positive-integer-or-qualified-integer":
+        prefix, number = normalized.rsplit("-", 1)
+        return f"{prefix}-{number.zfill(dict(spec.qualified_id_widths)[prefix])}"
+    return normalized
