@@ -167,7 +167,7 @@ def test_scaffold_creates_qualified_leetcode_draft(tmp_path: Path) -> None:
     assert problem_dir == root / "problems" / "leetcode" / "lcof-03"
     problem = load_problem(problem_dir / "problem.toml")
     assert problem.uid == "leetcode:lcof-03"
-    assert problem.problem_id == "lcof-03"
+    assert problem.problem_id == "lcof-3"
     assert validate_problem_dir(problem_dir) == []
 
 

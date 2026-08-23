@@ -12,8 +12,9 @@ from axiom_gauntlet.platforms import (
 
 
 def test_bundled_registry_drives_existing_platform_behavior() -> None:
-    assert PLATFORM_SPECS["leetcode"].id_strategy == "positive-integer-or-slug"
+    assert PLATFORM_SPECS["leetcode"].id_strategy == "positive-integer-or-qualified-integer"
     assert PLATFORM_SPECS["leetcode"].canonical_width == 4
+    assert PLATFORM_SPECS["leetcode"].qualified_id_widths == (("lcof", 2), ("lcr", 3))
     assert PLATFORM_SPECS["codeforces"].default_difficulty_scheme == "rating"
     assert PLATFORM_SPECS["deep-ml"].label == "Deep-ML"
     assert PLATFORM_SPECS["deep-ml"].coverage_label == "Deep-ML"
@@ -48,19 +49,49 @@ def test_data_only_platform_entry_uses_generic_slug_strategy() -> None:
     assert canonical_platform_problem_id(spec, "ABC-12") == "ABC-12"
 
 
-def test_integer_or_slug_strategy_pads_numeric_ids_and_preserves_qualified_ids() -> None:
+def test_integer_or_qualified_strategy_canonicalizes_supported_ids() -> None:
     spec = PLATFORM_SPECS["leetcode"]
 
     assert normalize_platform_problem_id(spec, "0003") == "3"
     assert canonical_platform_problem_id(spec, "0003") == "0003"
-    assert normalize_platform_problem_id(spec, "LCOF-03") == "lcof-03"
+    assert normalize_platform_problem_id(spec, "LCOF-03") == "lcof-3"
     assert canonical_platform_problem_id(spec, "LCOF-03") == "lcof-03"
+    assert canonical_platform_problem_id(spec, "lcof-3") == "lcof-03"
+    assert canonical_platform_problem_id(spec, "lcof-003") == "lcof-03"
+    assert canonical_platform_problem_id(spec, "lcr-16") == "lcr-016"
 
 
-@pytest.mark.parametrize("problem_id", ("0", "lcof/03", "lcof 03"))
-def test_integer_or_slug_strategy_rejects_invalid_ids(problem_id: str) -> None:
+@pytest.mark.parametrize(
+    "problem_id",
+    ("0", "two-sum", "lcof", "lcof/03", "lcof 03", "lcof-0", "offer-03"),
+)
+def test_integer_or_qualified_strategy_rejects_invalid_ids(problem_id: str) -> None:
     with pytest.raises(ValueError):
         normalize_platform_problem_id(PLATFORM_SPECS["leetcode"], problem_id)
+
+
+@pytest.mark.parametrize(
+    "qualified_id_widths",
+    ({}, {"LCOF": 2}, {"lcof": 0}, {"lcof": True}),
+)
+def test_registry_rejects_invalid_qualified_id_widths(
+    qualified_id_widths: dict[str, object],
+) -> None:
+    with pytest.raises(PlatformRegistryError):
+        parse_platform_registry(
+            {
+                "version": 1,
+                "platforms": {
+                    "example": {
+                        "label": "Example",
+                        "id_strategy": "positive-integer-or-qualified-integer",
+                        "canonical_width": 4,
+                        "qualified_id_widths": qualified_id_widths,
+                        "default_difficulty_scheme": "level",
+                    }
+                },
+            }
+        )
 
 
 @pytest.mark.parametrize(

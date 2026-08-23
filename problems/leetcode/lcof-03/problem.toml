@@ -1,7 +1,7 @@
 version = 1
 uid = "leetcode:lcof-03"
 platform = "leetcode"
-problem_id = "lcof-03"
+problem_id = "lcof-3"
 title = "Find Repeat Number"
 url = "https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/description/"
 state = "draft"
