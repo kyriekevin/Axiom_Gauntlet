@@ -88,6 +88,7 @@ Practice lands through a daily pull request; delayed knowledge synthesis uses a 
 | Guide | Covers |
 |---|---|
 | [Schema](docs/SCHEMA.md) | `problem.toml` and `topic.toml` contracts and generated outputs |
+| [Coach workflow](docs/COACH_WORKFLOW.md) | What to say each day and how selection hands off to practice and review |
 | [Style guide](docs/STYLE_GUIDE.md) | Writing and reviewing knowledge notes |
 | [Knowledge architecture](docs/KNOWLEDGE_ARCHITECTURE.md) | Why problem evidence and reusable knowledge are separated |
 | [Knowledge index](knowledge/INDEX.md) | The distilled topics themselves |

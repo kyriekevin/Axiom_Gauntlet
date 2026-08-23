@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Coach"
+  short_description: "Choose and calibrate the next learning session"
+  default_prompt: "Use $axiom-coach to choose one low-friction Algorithms or AI session for today."
