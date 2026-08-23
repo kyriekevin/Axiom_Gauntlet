@@ -25,11 +25,11 @@
 
 | Date | Problem | Platform | Language |
 | --- | --- | --- | --- |
+| 2026-08-23 | [Find Repeat Number](problems/leetcode/lcof-03/) | LeetCode | Python |
 | 2026-08-22 | [前缀和](problems/acwing/795/) | AcWing | C++ |
 | 2026-08-22 | [Sigmoid Activation Function Understanding](problems/deep-ml/22/) | Deep-ML | Python |
 | 2026-08-22 | [Create a Float Tensor from a Python List](problems/deep-ml/880/) | Deep-ML | Python |
 | 2026-08-22 | [Check Divisibility by Digit Sum and Product](problems/leetcode/3622/) | LeetCode | Python |
-| 2026-08-20 | [High Precision Addition](problems/acwing/791/) | AcWing | C++ |
 
 <!-- recent-problems:end -->
 
