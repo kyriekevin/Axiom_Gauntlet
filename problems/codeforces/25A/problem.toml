@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:25A"
+platform = "codeforces"
+problem_id = "25A"
+title = "IQ test"
+url = "https://codeforces.com/problemset/problem/25/A"
+state = "accepted"
+tags = ["brute-force"]
+
+[difficulty]
+scheme = "rating"
+value = 1300
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-23
+language = "cpp"
+reflection = "一次遍历统计奇偶数量并保存对应位置，根据唯一少数类型输出下标；计数和位置均只需常量空间。"

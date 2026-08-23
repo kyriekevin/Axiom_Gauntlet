@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:lcof-03"
+platform = "leetcode"
+problem_id = "lcof-3"
+title = "Find Repeat Number"
+url = "https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/description/"
+state = "accepted"
+tags = ["array", "hash-table"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-23
+language = "python"
+reflection = "利用数值范围与下标的一一对应关系，原地交换将数字放回目标位置，目标位置已有相同值时即可返回重复数字。"
