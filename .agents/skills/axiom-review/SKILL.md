@@ -1,6 +1,6 @@
 ---
 name: axiom-review
-description: Turn delayed or weekly review of accepted Axiom Gauntlet problems into reusable bilingual knowledge pages. Use when the user wants to review a week, group similar problems, reconstruct a technique, update the knowledge wiki, record a knowledge review result, or create a genuinely useful explanatory visual. Do not use for the initial weekday solve, problem recommendations, or recording an unconfirmed Accepted verdict.
+description: Turn delayed reconstruction or synthesis across accepted Axiom Gauntlet problems into reusable bilingual knowledge pages. Use when the user wants to synthesize accepted problems from a week, group similar problems, reconstruct a technique, update the knowledge wiki, record a knowledge review result, or create a genuinely useful explanatory visual. Do not use for the weekly learning overview, monthly route check, initial weekday solve, problem recommendations, or recording an unconfirmed Accepted verdict.
 ---
 
 # Axiom Review

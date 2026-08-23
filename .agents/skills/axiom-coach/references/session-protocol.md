@@ -3,6 +3,17 @@
 Read this reference when selecting a multi-step topic block, preparing a delayed blind check, or
 interpreting the outcome of a coached session.
 
+## Cadence
+
+| Scale | Trigger | Useful action | Stop condition |
+|---|---|---|---|
+| Daily | “今天练什么？” or a targeted request | Diagnose briefly, then learn, attempt, or solve one calibrated item | Stop after a useful learning result, attempt, blocker diagnosis, or AC |
+| Weekly | “复盘这周” and enough related evidence or delay | Use a delayed hidden-topic check as that day's practice; optionally identify one synthesis candidate | If evidence is sparse, summarize and skip; create no extra assignment |
+| Monthly | “做本月路线检查” | In 5–10 minutes decide what to continue, lighten, pause, or explore | Adjust only future direction; do not create catch-up work |
+
+These are three observation scales, not stacked obligations. Route weekly knowledge synthesis to
+`axiom-review`; keep the weekly learning overview and monthly route decision in Coach.
+
 ## Recommendation card
 
 Present a compact card with this shape:
@@ -38,6 +49,22 @@ constraint, representation, boundary, or modeling step without making several di
 once. An advanced-course problem is an optional checkpoint only when its prerequisites are present;
 it is not the universal endpoint of a topic.
 
+When a concrete problem is chosen, preserve this possible training loop:
+
+```text
+understand and model
+→ state invariant and complexity
+→ implement independently
+→ construct counterexamples or stress tests when useful
+→ debug model or code
+→ platform-confirmed AC
+→ review correctness, complexity, boundaries, and alternatives
+```
+
+The arrows are not mandatory form fields. Record only what actually happened, and allow a session
+to end with a useful attempt or diagnosed blocker. Hard problems are valuable only while the user
+can productively engage; learning a solution and returning later for a hidden check is valid.
+
 For a first recovery, prefer a focused blind check whose candidate pool mostly exercises the recent
 topic. Later use mixed blind checks across several recovered topics. A blind-check recommendation
 must not disclose tags, the topic, or a method-bearing reason before the attempt. Avoid a candidate
@@ -57,7 +84,31 @@ The dimensions may be completed in different sessions. A small function Accepted
 implementation evidence but does not establish model or experiment understanding. Not every topic
 needs its own Lab or Project; combine related topics into occasional capstones.
 
+An experiment should at least expose a hypothesis, baseline or metric, and interpretation of the
+result. One experiment is still one observation, not proof of general transfer.
+
+## Value and limits
+
+| Capability | Where the workflow exercises it | Evidence boundary |
+|---|---|---|
+| Retrieval and recognition | Closed-book recall and delayed hidden-topic problems | Immediate template replay is not delayed evidence |
+| Decomposition and modeling | Turning a statement into states, graph structure, or subproblems | AC alone does not expose the model used |
+| Correctness reasoning | Invariants, boundary analysis, and counterexamples | Judge tests are result evidence, not a proof |
+| Complexity intuition | Predicting and reviewing time and auxiliary space | Record the actual implementation, not an idealized rewrite |
+| Implementation fluency | Independent coding under exact constraints | Assisted completion should remain visibly assisted |
+| Testing and debugging | Hand cases, stress tests, differential checks, and failure localization | These count only when actually performed |
+| AI algorithm-code review | Checking generated models, invariants, boundaries, complexity, and counterexamples | This is not full architecture, security, maintainability, or systems review |
+| AI understanding | Concept, implementation, and experiment evidence | A Deep-ML function AC usually covers implementation only |
+
 ## Evidence language
+
+Keep three layers distinct:
+
+| Layer | Minimal evidence | Do not infer |
+|---|---|---|
+| Result | Accepted plus recorded time and space complexity | Topic mastery |
+| Process | Assistance level plus one useful model, counterexample, bug, or test strategy | Abilities that were not observed |
+| Ability | Delayed, hidden-topic, unfamiliar, mostly independent performance | Permanent mastery or a precise score |
 
 Describe dated events rather than permanent mastery:
 
@@ -68,7 +119,8 @@ Describe dated events rather than permanent mastery:
 - `review pass` or `review fail`: the outcome of one later reconstruction.
 
 Never translate one event into “verified forever”, a mastery percentage, contest readiness, or
-coverage of all variants.
+coverage of all variants. At weekly and monthly scales, use “observed”, “not yet observed”, and
+“needs another observation”.
 
 ## Mock acceptance criteria
 
@@ -81,3 +133,5 @@ The workflow is working when:
 - same-session transfer and delayed blind evidence remain distinct;
 - the user does not need to manage Git, rendering, or PR bookkeeping;
 - the session can end after an AC or short debrief without mandatory documentation.
+- weekly review can replace that day's practice and sparse weeks are skipped without debt;
+- monthly review changes future direction without producing a progress audit.
