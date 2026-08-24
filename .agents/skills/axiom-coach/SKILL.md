@@ -76,7 +76,8 @@ names, official links, problem identities, and original synthesized reasoning ar
 Default to one primary recommendation, not a menu of filters. Include:
 
 - lane and session role;
-- why it fits the recorded evidence, without claiming a hidden weakness;
+- why it fits the recorded evidence, without claiming a hidden weakness; for a Blind check, defer
+  this rationale until the attempt ends;
 - expected effort as a rough range;
 - the first action, usually one recall prompt;
 - two escape hatches: `Lighter` and `Switch lane`.

@@ -29,6 +29,9 @@ Today
 Options: Lighter | Switch lane | Not today
 ```
 
+For a Blind check, omit `Why now` before the attempt and provide the evidence-based selection
+rationale only after the attempt ends.
+
 Do not ask the user to choose a platform, mode, difficulty, and duration before making the default
 recommendation. Ask a follow-up only when a material constraint cannot be inferred safely.
 
