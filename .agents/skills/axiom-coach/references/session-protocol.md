@@ -37,15 +37,17 @@ recommendation. Ask a follow-up only when a material constraint cannot be inferr
 
 ## Algorithm session
 
-Use a recall prompt to locate the gap, then choose only the needed stages:
+Outside a Blind check, use a recall prompt to locate the gap, then choose only the needed stages:
 
 ```text
 Recall / diagnostic
 ├── concept blank ───────────────→ Learn → Anchor
 ├── implementation fuzzy ───────→ Anchor
-├── recognition weak ───────────→ Guided transfer
-└── recent transfer evidence ───→ Delayed blind check
+└── recognition weak ───────────→ Guided transfer
 ```
+
+When prior evidence supports a delayed Blind check, skip the topic-specific recall prompt and use
+the hidden problem itself as the diagnostic.
 
 A standard implementation can be an Anchor even if it is easy. Guided transfer should change a
 constraint, representation, boundary, or modeling step without making several difficulty jumps at

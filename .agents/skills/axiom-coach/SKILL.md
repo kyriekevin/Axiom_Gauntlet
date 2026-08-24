@@ -87,11 +87,13 @@ today” is a valid outcome and creates no debt.
 
 ## Diagnose before replaying a course
 
-Ask one compact closed-book question, usually answerable in two to five minutes, before revealing
-instruction. Route from the observed gap to only the needed Learn, Anchor, Guided transfer, or Blind
-check stages; never require a template problem merely to complete a pipeline. Same-session transfer
-is not blind evidence. Before a Blind check, do not reveal the topic, tags, intended technique, or
-selection rationale. Use the session protocol for the detailed route and delayed-evidence criteria.
+Outside a Blind check, ask one compact closed-book question, usually answerable in two to five
+minutes, before revealing instruction. Route from the observed gap to only the needed Learn, Anchor,
+or Guided transfer stages; never require a template problem merely to complete a pipeline. For a
+Blind check, skip the topic-specific recall prompt and use the hidden problem itself as the
+diagnostic. Same-session transfer is not blind evidence. Before a Blind check, do not reveal the
+topic, tags, intended technique, or selection rationale. Use the session protocol for the detailed
+route and delayed-evidence criteria.
 
 ## Handle difficulty as calibration
 
