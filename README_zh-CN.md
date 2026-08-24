@@ -86,6 +86,7 @@ make verify                                   # 提 PR 前的完整校验
 | 指南 | 内容 |
 |---|---|
 | [Schema](docs/SCHEMA_zh-CN.md) | `problem.toml` 与 `topic.toml` 契约及生成产物 |
+| [Coach 工作流](docs/COACH_WORKFLOW_zh-CN.md) | 每天说什么，以及选题如何交接给练题与复习 |
 | [写作规范](docs/STYLE_GUIDE_zh-CN.md) | 知识笔记的撰写与复习 |
 | [知识架构](docs/KNOWLEDGE_ARCHITECTURE_zh-CN.md) | 题目证据与可复用知识为何分离 |
 | [知识索引](knowledge/INDEX_zh-CN.md) | 已沉淀的主题本身 |

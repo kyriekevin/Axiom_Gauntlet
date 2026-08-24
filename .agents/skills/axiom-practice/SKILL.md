@@ -42,9 +42,13 @@ Report the created path and leave the state as `draft`.
 ## Protect independent solving
 
 - Do not reveal a complete solution unless the user explicitly asks for one.
+- Preserve the user's independent model, invariant, and expected complexity before implementation
+  when the problem is substantial enough to benefit from them.
 - Escalate help gradually: clarify constraints, give a directional hint, identify the key
   observation, explain an invariant, then offer pseudocode.
 - Inspect and debug the user's code when asked, but do not replace it silently.
+- Encourage the user to construct boundary cases, counterexamples, or a stress/differential test
+  when they would materially check the model or implementation.
 - Treat compilation and local tests as debugging evidence only. Never record AC from them.
 
 ## Record acceptance
