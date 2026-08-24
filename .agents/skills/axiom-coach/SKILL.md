@@ -34,8 +34,8 @@ itself; treat reminders or scheduled tasks as a separate, explicitly requested a
 4. Do not mutate the repository while merely selecting. Scaffold only after the user accepts a
    concrete problem.
 
-For cadence details, a planned topic block, or checkpoint interpretation, read
-[the session protocol](references/session-protocol.md).
+For cadence details, a planned topic block, blind-check preparation, or session-outcome
+interpretation, read [the session protocol](references/session-protocol.md).
 
 ## Treat cadence as observation, not homework
 
@@ -87,21 +87,10 @@ today” is a valid outcome and creates no debt.
 ## Diagnose before replaying a course
 
 Ask one compact closed-book question, usually answerable in two to five minutes, before revealing
-instruction. If the user can state the model, invariant, and complexity, skip the template. Route
-from the observed gap:
-
-- concept or invariant is blank: use the minimum useful Learn material;
-- concept is clear but implementation is fuzzy: go directly to Anchor;
-- standard form is available but recognition is weak: go directly to Guided transfer;
-- recent evidence is already strong: skip to an appropriately delayed Blind check.
-
-Stages are optional. Never require a template problem merely to complete a pipeline.
-
-Same-session transfer is not blind evidence. A Blind check must be delayed by another session or an
-unrelated problem, and its recommendation must not reveal the topic, tags, intended technique, or
-selection rationale. Prefer candidates whose titles do not name the intended technique. Show only
-neutral platform, difficulty, and effort information before the attempt. If scaffolding would expose
-tags, defer it or omit those tags until the attempt is over.
+instruction. Route from the observed gap to only the needed Learn, Anchor, Guided transfer, or Blind
+check stages; never require a template problem merely to complete a pipeline. Same-session transfer
+is not blind evidence. Before a Blind check, do not reveal the topic, tags, intended technique, or
+selection rationale. Use the session protocol for the detailed route and delayed-evidence criteria.
 
 ## Handle difficulty as calibration
 
@@ -119,34 +108,24 @@ Do not collapse them into a topic-level pass or fail.
 
 ## Preserve the complete algorithm training loop
 
-For a suitably challenging OJ session, preserve the natural loop rather than optimizing only for
-Accepted:
-
-1. understand and model the problem;
-2. state the central invariant and expected complexity;
-3. implement independently;
-4. construct counterexamples, boundary cases, or a stress test when useful;
-5. debug the model or implementation;
-6. obtain a platform-confirmed Accepted verdict;
-7. review correctness, complexity, alternatives, and any AI-generated suggestions.
-
-Only steps actually performed are training evidence. A plain solve-to-AC does not prove that stress
-testing, debugging, or review was exercised. The loop transfers most directly to reviewing
-AI-generated **algorithmic code**—models, invariants, boundaries, complexity, and counterexamples—
-not to complete software-engineering review.
+For a suitably challenging OJ session, preserve modeling, independent implementation, active
+testing and debugging, platform-confirmed Accepted, and code review rather than optimizing only for
+AC. Count only steps actually performed as process evidence. This transfers most directly to
+reviewing AI-generated **algorithmic code**, not complete software-engineering review. Follow the
+detailed training loop and capability boundaries in the session protocol.
 
 ## Keep evidence claims narrow
 
-- **Result evidence:** platform Accepted and recorded complexity show what happened on one problem.
-- **Process evidence:** observed modeling, implementation, tests, debugging, assistance, and review
-  show what was exercised in that session.
-- **Ability evidence:** delayed, hidden-topic, unfamiliar, mostly independent performance is a
-  stronger observation of retrieval and transfer.
+- **Result evidence** says what happened on one problem; Accepted and recorded complexity do not
+  establish topic mastery.
+- **Process evidence** says what was observed in that session; unobserved modeling, testing,
+  debugging, assistance, or review remains unknown.
+- **Ability evidence** is a stronger observation from delayed, hidden-topic, unfamiliar, mostly
+  independent performance; it is not permanent mastery or a precise score.
 
-One event never means permanent mastery. Missing process evidence remains unknown; never infer it
-from an AC count. Use “evidence observed”, “not yet observed”, or “needs another observation”, not
-mastery percentages, rankings, streaks, or problem-count goals. Keep any debrief to assistance plus
-one useful model, counterexample, bug, or test strategy; do not create a long diary.
+Do not infer one layer from another. Keep any debrief to assistance plus one useful model,
+counterexample, bug, or test strategy; do not create a long diary. Use the session protocol for
+event vocabulary, delayed-evidence judgments, and weekly or monthly wording.
 
 ## Hand off instead of absorbing other workflows
 

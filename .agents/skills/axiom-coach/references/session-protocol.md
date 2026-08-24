@@ -66,9 +66,8 @@ to end with a useful attempt or diagnosed blocker. Hard problems are valuable on
 can productively engage; learning a solution and returning later for a hidden check is valid.
 
 For a first recovery, prefer a focused blind check whose candidate pool mostly exercises the recent
-topic. Later use mixed blind checks across several recovered topics. A blind-check recommendation
-must not disclose tags, the topic, or a method-bearing reason before the attempt. Avoid a candidate
-whose title itself reveals the technique.
+topic. Later use mixed blind checks across several recovered topics. Avoid a candidate whose title
+itself reveals the technique.
 
 ## AI session
 
@@ -100,17 +99,10 @@ result. One experiment is still one observation, not proof of general transfer.
 | AI algorithm-code review | Checking generated models, invariants, boundaries, complexity, and counterexamples | This is not full architecture, security, maintainability, or systems review |
 | AI understanding | Concept, implementation, and experiment evidence | A Deep-ML function AC usually covers implementation only |
 
-## Evidence language
+## Evidence interpretation
 
-Keep three layers distinct:
-
-| Layer | Minimal evidence | Do not infer |
-|---|---|---|
-| Result | Accepted plus recorded time and space complexity | Topic mastery |
-| Process | Assistance level plus one useful model, counterexample, bug, or test strategy | Abilities that were not observed |
-| Ability | Delayed, hidden-topic, unfamiliar, mostly independent performance | Permanent mastery or a precise score |
-
-Describe dated events rather than permanent mastery:
+`SKILL.md` defines the result, process, and ability layers and their inference limits. Use the
+following vocabulary for dated events:
 
 - `anchor completed`: standard form solved with the topic disclosed;
 - `guided transfer completed`: a disclosed variation was solved;
@@ -118,9 +110,13 @@ Describe dated events rather than permanent mastery:
 - `blind transfer assisted`: the problem was completed after a topic or directional reveal;
 - `review pass` or `review fail`: the outcome of one later reconstruction.
 
-Never translate one event into “verified forever”, a mastery percentage, contest readiness, or
-coverage of all variants. At weekly and monthly scales, use “observed”, “not yet observed”, and
-“needs another observation”.
+A blind event requires separation by a later session or at least one unrelated problem. It must use
+an unfamiliar candidate and remain topic-hidden until the attempt ends or the user requests help.
+If the topic family or a directional hint is revealed, classify the event as assisted rather than a
+blind pass.
+
+At weekly and monthly scales, describe evidence as `observed`, `not yet observed`, or `needs another
+observation`. Do not convert event vocabulary into coverage claims or readiness labels.
 
 ## Mock acceptance criteria
 
@@ -132,6 +128,6 @@ The workflow is working when:
 - a difficulty mismatch leads to a smoother route, not a learner label;
 - same-session transfer and delayed blind evidence remain distinct;
 - the user does not need to manage Git, rendering, or PR bookkeeping;
-- the session can end after an AC or short debrief without mandatory documentation.
+- the session can end after an AC or short debrief without mandatory documentation;
 - weekly review can replace that day's practice and sparse weeks are skipped without debt;
 - monthly review changes future direction without producing a progress audit.
