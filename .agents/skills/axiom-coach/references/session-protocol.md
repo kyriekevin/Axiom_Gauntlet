@@ -110,10 +110,10 @@ following vocabulary for dated events:
 - `blind transfer assisted`: the problem was completed after a topic or directional reveal;
 - `review pass` or `review fail`: the outcome of one later reconstruction.
 
-A blind event requires separation by a later session or at least one unrelated problem. It must use
-an unfamiliar candidate and remain topic-hidden until the attempt ends or the user requests help.
-If the topic family or a directional hint is revealed, classify the event as assisted rather than a
-blind pass.
+A blind event must occur in a later session. An unrelated problem within the same session does not
+create delayed evidence. The candidate must be unfamiliar and remain topic-hidden until the attempt
+ends or the user requests help. If the topic family or a directional hint is revealed, classify the
+event as assisted rather than a blind pass.
 
 At weekly and monthly scales, describe evidence as `observed`, `not yet observed`, or `needs another
 observation`. Do not convert event vocabulary into coverage claims or readiness labels.
