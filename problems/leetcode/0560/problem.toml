@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:0560"
+platform = "leetcode"
+problem_id = "560"
+title = "Subarray Sum Equals K"
+url = "https://leetcode.com/problems/subarray-sum-equals-k/"
+state = "accepted"
+tags = ["prefix-sum"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "python"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-29
+language = "python"
+reflection = "将空前缀纳入前缀和序列，并先查询 cnt[s_i - k] 再记录 cnt[s_i]，既覆盖从下标 0 开始的区间，也避免当前前缀与自身配对。"
