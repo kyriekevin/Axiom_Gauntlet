@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:1398C"
+platform = "codeforces"
+problem_id = "1398C"
+title = "Good Subarrays"
+url = "https://codeforces.com/problemset/problem/1398/C"
+state = "accepted"
+tags = []
+
+[difficulty]
+scheme = "rating"
+value = 1600
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n log n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-29
+language = "cpp"
+reflection = "将好子数组条件变形成两个端点的 pref - index 状态相等；cnt[0] 纳入空前缀，逐点先累计历史同状态数量再更新计数，答案使用 long long。"

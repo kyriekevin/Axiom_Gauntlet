@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:1227"
+platform = "deep-ml"
+problem_id = "1227"
+title = "Numerically Stable Softmax"
+url = "https://www.deep-ml.com/problems/1227"
+state = "accepted"
+tags = ["activation-functions", "pytorch"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-29
+language = "python"
+reflection = "沿指定 dim 保留归约维度以支持广播；先减去该轴最大值，使指数输入不大于 0，再归一化得到每个切片和为 1 的稳定 Softmax。"

@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:1226"
+platform = "deep-ml"
+problem_id = "1226"
+title = "Implement ReLU and Leaky ReLU"
+url = "https://www.deep-ml.com/problems/1226"
+state = "accepted"
+tags = ["activation-functions", "pytorch"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-29
+language = "python"
+reflection = "使用 torch.where 逐元素选择正负分支；ReLU 将非正输入置零，Leaky ReLU 则以 slope 保留负半轴的小斜率，同时保持输入张量的形状。"

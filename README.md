@@ -25,11 +25,11 @@
 
 | Date | Problem | Platform | Language |
 | --- | --- | --- | --- |
+| 2026-08-29 | [Good Subarrays](problems/codeforces/1398C/) | Codeforces | C++ |
+| 2026-08-29 | [Implement ReLU and Leaky ReLU](problems/deep-ml/1226/) | Deep-ML | Python |
+| 2026-08-29 | [Numerically Stable Softmax](problems/deep-ml/1227/) | Deep-ML | Python |
+| 2026-08-29 | [Subarray Sum Equals K](problems/leetcode/0560/) | LeetCode | Python |
 | 2026-08-23 | [IQ test](problems/codeforces/25A/) | Codeforces | C++ |
-| 2026-08-23 | [Find Repeat Number](problems/leetcode/lcof-03/) | LeetCode | Python |
-| 2026-08-22 | [前缀和](problems/acwing/795/) | AcWing | C++ |
-| 2026-08-22 | [Sigmoid Activation Function Understanding](problems/deep-ml/22/) | Deep-ML | Python |
-| 2026-08-22 | [Create a Float Tensor from a Python List](problems/deep-ml/880/) | Deep-ML | Python |
 
 <!-- recent-problems:end -->
 
