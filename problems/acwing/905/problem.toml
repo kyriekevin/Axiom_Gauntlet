@@ -1,0 +1,31 @@
+version = 1
+uid = "acwing:905"
+platform = "acwing"
+problem_id = "905"
+title = "区间选点"
+url = "https://www.acwing.com/problem/content/907/"
+state = "accepted"
+tags = ["greedy", "intervals"]
+
+[difficulty]
+scheme = "level"
+value = "简单"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n log n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-30
+language = "cpp"
+reflection = "按右端点升序扫描；当前闭区间左端点严格大于上一次选点时，才选择该区间右端点，从而尽量覆盖后续区间。"
