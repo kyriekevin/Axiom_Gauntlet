@@ -1,0 +1,31 @@
+version = 1
+uid = "deep-ml:134"
+platform = "deep-ml"
+problem_id = "134"
+title = "Compute Multi-class Cross-Entropy Loss"
+url = "https://www.deep-ml.com/problems/134"
+state = "accepted"
+tags = ["loss-functions", "cross-entropy"]
+
+[difficulty]
+scheme = "level"
+value = "Easy"
+normalized = "easy"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(BC)"
+space_complexity = "O(BC)"
+[[activity]]
+type = "ac"
+date = 2026-08-30
+language = "python"
+reflection = "先把预测概率裁剪到 [epsilon, 1] 以避免 log(0)，再用 one-hot 标签选取真实类别的对数概率并对 batch 求平均交叉熵。"

@@ -25,11 +25,11 @@
 
 | 日期 | 题目 | 平台 | 语言 |
 | --- | --- | --- | --- |
+| 2026-08-30 | [区间选点](problems/acwing/905/) | AcWing | C++ |
+| 2026-08-30 | [Woodcutters](problems/codeforces/545C/) | Codeforces | C++ |
+| 2026-08-30 | [Compute Multi-class Cross-Entropy Loss](problems/deep-ml/134/) | Deep-ML | Python |
+| 2026-08-30 | [Removing Minimum and Maximum From Array](problems/leetcode/2091/) | LeetCode | Python |
 | 2026-08-29 | [Good Subarrays](problems/codeforces/1398C/) | Codeforces | C++ |
-| 2026-08-29 | [Implement ReLU and Leaky ReLU](problems/deep-ml/1226/) | Deep-ML | Python |
-| 2026-08-29 | [Numerically Stable Softmax](problems/deep-ml/1227/) | Deep-ML | Python |
-| 2026-08-29 | [Subarray Sum Equals K](problems/leetcode/0560/) | LeetCode | Python |
-| 2026-08-23 | [IQ test](problems/codeforces/25A/) | Codeforces | C++ |
 
 <!-- recent-problems:end -->
 

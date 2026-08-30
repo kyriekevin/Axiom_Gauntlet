@@ -1,0 +1,33 @@
+version = 1
+uid = "leetcode:2091"
+platform = "leetcode"
+problem_id = "2091"
+title = "Removing Minimum and Maximum From Array"
+url = "https://leetcode.com/problems/removing-minimum-and-maximum-from-array/"
+state = "accepted"
+tags = ["array", "greedy"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(1)"
+[[activity]]
+type = "ac"
+date = 2026-08-30
+language = "python"
+reflection = "Compare the three complete removal routes after locating the minimum and maximum indices: left only, right only, or opposite ends."

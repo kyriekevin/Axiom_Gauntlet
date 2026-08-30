@@ -1,0 +1,31 @@
+version = 1
+uid = "codeforces:545C"
+platform = "codeforces"
+problem_id = "545C"
+title = "Woodcutters"
+url = "https://codeforces.com/problemset/problem/545/C"
+state = "accepted"
+tags = []
+
+[difficulty]
+scheme = "rating"
+value = 1500
+normalized = "unknown"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-08-30
+language = "cpp"
+reflection = "从左到右维护已处理部分的最右占用边界；中间树优先在不碰撞时向左倒，否则在不影响下一棵树时向右倒，最后才保持直立。"
