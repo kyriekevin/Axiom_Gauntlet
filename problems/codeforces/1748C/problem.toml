@@ -4,7 +4,7 @@ platform = "codeforces"
 problem_id = "1748C"
 title = "Zero-Sum Prefixes"
 url = "https://codeforces.com/problemset/problem/1748/C"
-state = "draft"
+state = "accepted"
 tags = ["prefix-sum", "greedy"]
 
 [difficulty]
@@ -22,3 +22,10 @@ language = "cpp"
 # type = "ac"
 # date = 2026-08-01
 # language = "cpp"
+time_complexity = "O(n log n)"
+space_complexity = "O(n)"
+[[activity]]
+type = "ac"
+date = 2026-09-05
+language = "cpp"
+reflection = "将数组按 0 切段：每段内用 map 统计前缀和出现次数并清空，段首的 0 可改为任意整数以整体平移该段前缀和；首段取 cnt[0]，后续段取段内最大频次并考虑 cnt[0]==M 的特判。换用 std::map 后无哈希碰撞风险，复杂度 O(n log n) 通过。"
