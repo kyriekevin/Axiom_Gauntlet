@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:0974"
+platform = "leetcode"
+problem_id = "974"
+title = "Subarray Sums Divisible by K"
+url = "https://leetcode.com/problems/subarray-sums-divisible-by-k/"
+state = "accepted"
+tags = ["prefix-sum"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n)"
+space_complexity = "O(k)"
+[[activity]]
+type = "ac"
+date = 2026-09-05
+language = "python"
+reflection = "Python 的 % 对正除数返回非负余数，天然完成负数取模的归一化；用长度 k 的余数桶统计前缀和模 k 的计数，先查询后更新，避免当前前缀与自身配对。"
