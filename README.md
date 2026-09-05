@@ -25,11 +25,11 @@
 
 | Date | Problem | Platform | Language |
 | --- | --- | --- | --- |
+| 2026-09-05 | [Derivative of Cross-Entropy Loss w.r.t. Logits](problems/deep-ml/220/) | Deep-ML | Python |
 | 2026-09-05 | [Subarray Sums Divisible by K](problems/leetcode/0974/) | LeetCode | Python |
 | 2026-08-30 | [区间选点](problems/acwing/905/) | AcWing | C++ |
 | 2026-08-30 | [Woodcutters](problems/codeforces/545C/) | Codeforces | C++ |
 | 2026-08-30 | [Compute Multi-class Cross-Entropy Loss](problems/deep-ml/134/) | Deep-ML | Python |
-| 2026-08-30 | [Removing Minimum and Maximum From Array](problems/leetcode/2091/) | LeetCode | Python |
 
 <!-- recent-problems:end -->
 
