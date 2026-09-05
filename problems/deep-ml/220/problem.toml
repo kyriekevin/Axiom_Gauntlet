@@ -1,0 +1,24 @@
+version = 1
+uid = "deep-ml:220"
+platform = "deep-ml"
+problem_id = "220"
+title = "Derivative of Cross-Entropy Loss w.r.t. Logits"
+url = "https://www.deep-ml.com/problems/220"
+state = "draft"
+tags = ["calculus", "cross-entropy"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.py"
+language = "python"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
