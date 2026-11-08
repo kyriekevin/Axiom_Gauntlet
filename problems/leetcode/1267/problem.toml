@@ -1,0 +1,31 @@
+version = 1
+uid = "leetcode:1267"
+platform = "leetcode"
+problem_id = "1267"
+title = "Count Servers that Communicate"
+url = "https://leetcode.com/problems/count-servers-that-communicate/"
+state = "accepted"
+tags = ["array", "matrix", "counting"]
+
+[difficulty]
+scheme = "level"
+value = "Medium"
+normalized = "medium"
+
+[[solutions]]
+file = "solution.cpp"
+language = "cpp"
+
+# Add an activity only after the platform confirms the result.
+#
+# [[activity]]
+# type = "ac"
+# date = 2026-08-01
+# language = "cpp"
+time_complexity = "O(n * m) expected, where n and m are the grid dimensions; hash-table operations take expected O(1)"
+space_complexity = "O(n + m)"
+[[activity]]
+type = "ac"
+date = 2026-11-08
+language = "cpp"
+reflection = "先统计各行各列的服务器数，再用行计数大于 1 或列计数大于 1 判断每台服务器是否参与通信；同一台服务器只计数一次。"
