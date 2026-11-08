@@ -25,11 +25,11 @@
 
 | 日期 | 题目 | 平台 | 语言 |
 | --- | --- | --- | --- |
+| 2026-11-08 | [Count Servers that Communicate](problems/leetcode/1267/) | LeetCode | C++ |
 | 2026-09-05 | [Zero-Sum Prefixes](problems/codeforces/1748C/) | Codeforces | C++ |
 | 2026-09-05 | [Derivative of Cross-Entropy Loss w.r.t. Logits](problems/deep-ml/220/) | Deep-ML | Python |
 | 2026-09-05 | [Subarray Sums Divisible by K](problems/leetcode/0974/) | LeetCode | Python |
 | 2026-08-30 | [区间选点](problems/acwing/905/) | AcWing | C++ |
-| 2026-08-30 | [Woodcutters](problems/codeforces/545C/) | Codeforces | C++ |
 
 <!-- recent-problems:end -->
 
